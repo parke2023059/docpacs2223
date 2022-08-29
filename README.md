@@ -2,5 +2,5 @@
 Classroom documentation for school year 22-23
 
 ## Junior Developers:
-
+- Logan Danner
 ## Senior Developers:

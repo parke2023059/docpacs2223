@@ -2,5 +2,12 @@
 Classroom documentation for school year 22-23
 
 ## Junior Developers:
-Carmen Cedano
+- Carmen Cedano
+- Brandon Camacho
+- Luke Thompson
+- Logan Danner
+- Alexander Plitt
+
 ## Senior Developers:
+- Riley Rorrer
+- Jaysin Haugh

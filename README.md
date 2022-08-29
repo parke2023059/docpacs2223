@@ -3,6 +3,8 @@ Classroom documentation for school year 22-23
 
 ## Junior Developers:
 
-## Senior Developers:
 
-Riley Rorrer
+
+## Senior Developers:
+- Riley Rorrer
+- Jaysin Haugh

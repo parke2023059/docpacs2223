@@ -2,6 +2,7 @@
 Classroom documentation for school year 22-23
 
 ## Junior Developers:
+- Shane Winpigler
 - Talon Pauling
 - David Seifert
 - Carmen Cedano

@@ -2,6 +2,7 @@
 Classroom documentation for school year 22-23
 
 ## Junior Developers:
+- Talon Pauling
 - David Seifert
 - Carmen Cedano
 - Brandon Camacho

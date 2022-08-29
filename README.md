@@ -2,6 +2,7 @@
 Classroom documentation for school year 22-23
 
 ## Junior Developers:
+- Ryan Stevenson
 - Shane Winpigler
 - Talon Pauling
 - David Seifert
@@ -12,5 +13,6 @@ Classroom documentation for school year 22-23
 - Alexander Plitt
 
 ## Senior Developers:
+- Logan Hiller
 - Riley Rorrer
 - Jaysin Haugh

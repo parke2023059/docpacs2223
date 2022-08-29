@@ -1,6 +1,6 @@
 # docpacs2223
 Classroom documentation for school year 22-23
 
-## Junior Developers:
+## Junior Developers: Logan Cruz
 
-## Senior Developers:
+## Senior Developers: Parker Fink

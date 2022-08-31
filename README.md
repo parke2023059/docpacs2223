@@ -2,5 +2,28 @@
 Classroom documentation for school year 22-23
 
 ## Junior Developers:
-Wesley Welch
+- Wesley Welch
+- Ryan Stevenson
+- Shane Winpigler
+- Talon Pauling
+- David Seifert
+- Carmen Cedano
+- Brandon Camacho
+- Luke Thompson
+- Logan Danner
+- Alexander Plitt
+
 ## Senior Developers:
+- Logan Hiller
+- Riley Rorrer
+- Jaysin Haugh
+- Ethan Shimmel
+- Will Shealer
+
+## Approved Projects
+[DocPac Scanner / Database](https://github.com/csmith1188/docpacs2223)
+[Dudescanner](https://github.com/csmith1188/dudescanner)
+[Gaidos Bank](https://github.com/csmith1188/GaidosBank)
+[New Ytech Website](https://github.com/csmith1188/newsiteproposal)
+[Pog Catalogue](https://github.com/csmith1188/OnlyPogs)
+[Formbar Rewrite](https://github.com/csmith1188/Formbar.js)

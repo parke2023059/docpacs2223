@@ -22,6 +22,7 @@ Classroom documentation for school year 22-23
 - John Eckert
 - Ethan Shimmel
 - Will Shealer
+- Christian Boldt
 
 ## Approved Projects
 - [DocPac Scanner / Database](https://github.com/csmith1188/docpacs2223)

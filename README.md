@@ -2,6 +2,7 @@
 Classroom documentation for school year 22-23
 
 ## Junior Developers:
+- Wesley Welch
 - Ryan Stevenson
 - Shane Winpigler
 - Talon Pauling
@@ -11,16 +12,17 @@ Classroom documentation for school year 22-23
 - Luke Thompson
 - Logan Danner
 - Alexander Plitt
+- Beckham Phillips
 
 ## Senior Developers:
 - Logan Hiller
 - Riley Rorrer
 - Jaysin Haugh
 - John Eckert
-
+- Ethan Shimmel
+- Will Shealer
 
 ## Approved Projects
-
 [DocPac Scanner / Database](https://github.com/csmith1188/docpacs2223)
 [Dudescanner](https://github.com/csmith1188/dudescanner)
 [Gaidos Bank](https://github.com/csmith1188/GaidosBank)

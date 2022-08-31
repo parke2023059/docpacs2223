@@ -11,12 +11,13 @@ Classroom documentation for school year 22-23
 - Luke Thompson
 - Logan Danner
 - Alexander Plitt
+= Macarios Hoover
 
 ## Senior Developers:
 - Logan Hiller
 - Riley Rorrer
 - Jaysin Haugh
-
+- Jacob Smith
 
 ## Approved Projects
 

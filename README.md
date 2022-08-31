@@ -16,7 +16,7 @@ Classroom documentation for school year 22-23
 - Logan Hiller
 - Riley Rorrer
 - Jaysin Haugh
-
+- Will Shealer
 
 ## Approved Projects
 

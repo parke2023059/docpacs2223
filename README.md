@@ -12,6 +12,7 @@ Classroom documentation for school year 22-23
 - Luke Thompson
 - Logan Danner
 - Alexander Plitt
+- Beckham Phillips
 
 ## Senior Developers:
 - Logan Hiller

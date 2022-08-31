@@ -19,6 +19,7 @@ Classroom documentation for school year 22-23
 - Jaysin Haugh
 - Ethan Shimmel
 - Will Shealer
+- Christian Boldt
 
 ## Approved Projects
 [DocPac Scanner / Database](https://github.com/csmith1188/docpacs2223)

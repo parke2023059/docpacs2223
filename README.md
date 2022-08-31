@@ -18,6 +18,7 @@ Classroom documentation for school year 22-23
 - Logan Hiller
 - Riley Rorrer
 - Jaysin Haugh
+- Tyler Siegmund
 - John Eckert
 - Ethan Shimmel
 - Will Shealer

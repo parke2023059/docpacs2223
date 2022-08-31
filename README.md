@@ -2,6 +2,7 @@
 Classroom documentation for school year 22-23
 
 ## Junior Developers:
+- Wesley Welch
 - Ryan Stevenson
 - Shane Winpigler
 - Talon Pauling

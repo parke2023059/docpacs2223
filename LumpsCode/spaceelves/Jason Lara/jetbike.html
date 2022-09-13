@@ -114,12 +114,26 @@
         this.bike.setAttribute('data-facing', 'left');
         objects.attackbikes.push(this.bike);
       }
-
-        
-
-        
       } else {
-        
+        // Create img
+      this.flakeElement = document.createElement('img');
+      this.flakeElement.classList.add('thing');
+      this.flakeElement.src = "leaf.png";
+      this.flakeElement.style.width = '8px';
+      this.flakeElement.classList.add('leaf');
+      // Set position to absolute
+      this.flakeElement.style.position = 'absolute';
+      // random left between 0 and screen width
+      this.flakeElement.style.left = Math.round(Math.random() * window.innerWidth);
+      // Set top to 0
+      this.flakeElement.style.top = '-5';
+      // pick a direction (-3 to 3)
+      this.flakeElement.setAttribute('data-drift', dirCalc());
+      this.flakeElement.setAttribute('data-facing', 'down');
+      this.flakeElement.setAttribute('data-speed', 2)
+      document.body.appendChild(this.flakeElement);
+      objects.snowflakes.push(this.flakeElement);
+      console.log(objects.snowflakes);
       }
       
     }
@@ -215,7 +229,7 @@
       moveList(objects.attackbikes);
 	  //FIX:	As mentioned in the comment on line 109, I don't need these to be functions.
 	  //		After I make a new class I can just push a new object into the list of objects to track.
-      if (Math.floor(Math.random() * 10) == 0) newflake();
+      if (Math.floor(Math.random() * 10) == 0) new newObjects("flake");
       if (Math.floor(Math.random() * 100) == 0) new newObjects("jetbikes");
       if (Math.floor(Math.random() * 100) == 0) new newObjects("attackbike");
       if (!tickleLock) tickles--;
@@ -225,7 +239,9 @@
 </head>
 
 <body onclick="tickle()">
+  
   <h1>ジェットバイクに乗る宇宙エルフ</h1>
 </body>
 
 </html>
+

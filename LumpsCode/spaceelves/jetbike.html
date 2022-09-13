@@ -155,15 +155,15 @@
           list.splice(list.indexOf(unit), 1);
           unit.remove()
         } else {
-          if (unit.classList.contains('leaf') && Math.floor(RANDOM() * 1000) == 0) {
+          if (unit.classList.contains('leaf') && Math.floor(FLAKE * 1000) == 0) {
             unit.setAttribute('data-landed', 1);
             if (Math.floor(RANDOM() * 2)) unit.src = "leaf1.png";
             else unit.src = "leaf2.png";
           } else {
             let faceValue = 1;
             let corner = ['left', 'top'];
-            if (facing == 'left') faceValue = Math.floor(RANDOM() * (Number(unit.getAttribute('data-speed')) * -1));
-            else faceValue = Math.ceil(RANDOM() * (Number(unit.getAttribute('data-speed'))));
+            if (facing == 'left') faceValue = Math.floor(ABIKE * (Number(unit.getAttribute('data-speed')) * -1));
+            else faceValue = Math.ceil(ABIKE * (Number(unit.getAttribute('data-speed'))));
             if (facing == 'down') corner = ['top', 'left'];
             unit.style[corner[0]] = Number(unit.style[corner[0]].replaceAll('px', '')) + faceValue;
             // Add direction to left
@@ -183,9 +183,9 @@
       moveList(attackbikes);
 	  //FIX:	As mentioned in the comment on line 109, I don't need these to be functions.
 	  //		After I make a new class I can just push a new object into the list of objects to track.
-      if (Math.floor(RANDOM() * 10) == 0) newflake();
-      if (Math.floor(RANDOM() * 100) == 0) newjetbike();
-      if (Math.floor(RANDOM() * 100) == 0) newattackbike();
+      if (Math.floor(FLAKE * 10) == 0) newflake();
+      if (Math.floor(JBIKE * 100) == 0) newjetbike();
+      if (Math.floor(ABIKE * 100) == 0) newattackbike();
       if (!tickleLock) tickles--;
       if (tickles <= 0) tickles = 0;
     }, FRAMESPEED);

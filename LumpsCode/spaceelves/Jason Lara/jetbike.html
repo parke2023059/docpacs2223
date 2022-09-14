@@ -56,6 +56,10 @@
     var Bspawn = 100
     // Added in the chance to change it drift speed 1/(DriftChange)
     var DriftChange = 50 
+    // set the leaf speed falling down.
+    var LeafSpeed = 3
+    // set the chances for the leaf to land 1/(landchance). it loops
+    var Landchance = 1000
     
     function tickle() {
       // make the tickles number larger/increase
@@ -75,39 +79,6 @@
       return Math.round(Math.random() * MaxDriftspeed) - (DIRECTVARI / 2);
     }
 
-    function newattackbike() {
-      // Create img
-      let bike = document.createElement('img');
-      bike.classList.add('thing');
-      bike.src = "jetbike.png";
-      // bike.style.width = '64px';
-      // Set position to absolute
-      bike.style.position = 'absolute';
-      // random left between 0 and screen width
-      bike.style.top = Math.round(Math.random() * window.innerHeight);
-      // Set top to 0
-      bike.style.left = window.innerWidth + 32;
-      bike.style.transform = 'scaleX(-1)';
-      bike.style.filter = 'hue-rotate(180deg)';
-      // pick a direction (-3 to 3)
-      bike.setAttribute('data-drift', dirCalc() / 2);
-      bike.setAttribute('data-facing', 'left');
-      bike.setAttribute('data-speed', 3)
-      document.body.appendChild(bike);
-      objects.attackbikes.push(bike);
-    }
-
-
-
-	//FIX:  I have three very similar functions that each create a new img element
-	//		push it into a list of similar elements. Because they are all so similar,
-	//		I should have just created a class whose contructor create this element
-	//		as a property of that class. For example:
-	//		this.bike = document.createElement('img'); 
-	//		this.bike.classList.add('thing');
-	//		etc.
-	//		The constructor method of the class should take arguments that set if
-	//		you want to make a jetbike, attackbike, or snowflake.
   class newObjects {
     constructor(objtype) {
       //read the objtype in the agruments and do a certain block code base off the answer.
@@ -165,7 +136,7 @@
         // facing down. going down
       this.flakeElement.setAttribute('data-facing', 'down');
       // set the leaf speed
-      this.flakeElement.setAttribute('data-speed', 2)
+      this.flakeElement.setAttribute('data-speed', LeafSpeed)
       // document grab the data
       document.body.appendChild(this.flakeElement);
       //import the data to the snowflakes list in the objects list. 
@@ -174,50 +145,12 @@
       
     }
   }
-    function newjetbike() {
-      // Create img
-      let bike = document.createElement('img');
-      bike.classList.add('thing');
-      bike.src = "jetbike.png";
-      // bike.style.width = '64px';
-      // Set position to absolute
-      bike.style.position = 'absolute';
-      // random left between 0 and screen width
-      bike.style.top = Math.round(Math.random() * window.innerHeight);
-      // Set top to 0
-      bike.style.left = '-16';
-      // pick a direction (-3 to 3)
-      bike.setAttribute('data-drift', dirCalc() / 2);
-      bike.setAttribute('data-facing', 'right');
-      bike.setAttribute('data-speed', 3)
-      document.body.appendChild(bike);
-      jetbikes.push(bike);
-    }
-
-    function newflake() {
-      // Create img
-      let flakeElement = document.createElement('img');
-      flakeElement.classList.add('thing');
-      flakeElement.src = "leaf.png";
-      flakeElement.style.width = '8px';
-      flakeElement.classList.add('leaf');
-      // Set position to absolute
-      flakeElement.style.position = 'absolute';
-      // random left between 0 and screen width
-      flakeElement.style.left = Math.round(Math.random() * window.innerWidth);
-      // Set top to 0
-      flakeElement.style.top = '-5';
-      // pick a direction (-3 to 3)
-      flakeElement.setAttribute('data-drift', dirCalc());
-      flakeElement.setAttribute('data-facing', 'down');
-      flakeElement.setAttribute('data-speed', 2)
-      document.body.appendChild(flakeElement);
-      objects.snowflakes.push(flakeElement);
-    }
 
     function moveList(list) {
       for (unit of list) {
+        // it is for leafs and it tell if the leaf landed on the screen.
         let landed = unit.getAttribute('data-landed');
+        // move foward depending on the facing diraction.
         let facing = unit.getAttribute('data-facing')
         let leftPX = Number(unit.style.left.replaceAll('px', ''))
         let topPX = Number(unit.style.top.replaceAll('px', ''))
@@ -238,18 +171,24 @@
           list.splice(list.indexOf(unit), 1);
           unit.remove()
         } else {
-          if (unit.classList.contains('leaf') && Math.floor(Math.random() * 1000) == 0) {
+          // have a chance for the leaf to land on the screen aka ground.it just stop
+          if (unit.classList.contains('leaf') && Math.floor(Math.random() * Landchance) == 0) {
             unit.setAttribute('data-landed', 1);
+            // a 50% chance to change it leaf landed diraction.
             if (Math.floor(Math.random()* 2)) unit.src = "leaf1.png";
             else unit.src = "leaf2.png";
           } else {
             let faceValue = 1;
             let corner = ['left', 'top'];
+            // when it face left. it move left.
             if (facing == 'left') faceValue = Math.floor(Math.random() * (Number(unit.getAttribute('data-speed')) * -1));
+            // it when it face right. than it move right. 
             else faceValue = Math.ceil(Math.random() * (Number(unit.getAttribute('data-speed'))));
+
             if (facing == 'down') corner = ['top', 'left'];
+            // set the leaf diraction to the right.
             unit.style[corner[0]] = Number(unit.style[corner[0]].replaceAll('px', '')) + faceValue;
-            // Add direction to left
+            // set the leaf diraction to the left
             unit.style[corner[1]] = Number(unit.style[corner[1]].replaceAll('px', '')) + Number(unit.getAttribute('data-drift'));
             // Have a chance to change it drift speed.
             if (Math.floor(Math.random() * DriftChange) == 0) {
@@ -267,6 +206,7 @@
       moveList(objects.attackbikes);
 	  //FIX:	As mentioned in the comment on line 109, I don't need these to be functions.
 	  //		After I make a new class I can just push a new object into the list of objects to track.
+    // three line below all called the new constructor to make a image for html.
       if (Math.floor(Math.random() * Fspawn) == 0) new newObjects("flake");
       if (Math.floor(Math.random() * Bspawn) == 0) new newObjects("jetbikes");
       if (Math.floor(Math.random() * Bspawn) == 0) new newObjects("attackbike");
@@ -274,6 +214,7 @@
       if (!tickleLock) tickles--;
       // stop the tickles from going below zero.
       if (tickles <= 0) tickles = 0;
+      // change it frame speed of the browser.
     }, FRAMESPEED);
   </script>
 </head>

@@ -33,12 +33,13 @@
     //constants define what values go into random number spots
 
     const dirCalcNum = 3  
-    const atkBikeNum = window.innerHeight
-    const jetBikeNum = window.innerHeight
-    const flakeNum = window.innerHeight
     const leafPickNum = 2
-    //const getAttributeNum = Number(unit.getAttribute('data-speed'))
     const dataDriftNum = 50
+
+
+    const leafSpawnRate = 10
+    const atkBikeSpawn = 100
+    const jetBikeSpawn = 100
 
     const FRAMESPEED = 25; //How fast the frames redraw
     const DIRECTVARI = 3; //How wide the variance in direction changes are
@@ -64,27 +65,7 @@
       return Math.round(Math.random() * dirCalcNum) - (DIRECTVARI / 2);
     }
 
-    function newattackbike() {
-      // Create img
-      let bike = document.createElement('img');
-      bike.classList.add('thing');
-      bike.src = "jetbike.png";
-      // bike.style.width = '64px';
-      // Set position to absolute
-      bike.style.position = 'absolute';
-      // random left between 0 and screen width
-      bike.style.top = Math.round(Math.random() * window.innerHeight);
-      // Set top to 0
-      bike.style.left = window.innerWidth + 32;
-      bike.style.transform = 'scaleX(-1)';
-      bike.style.filter = 'hue-rotate(180deg)';
-      // pick a direction (-3 to 3)
-      bike.setAttribute('data-drift', dirCalc() / 2);
-      bike.setAttribute('data-facing', 'left');
-      bike.setAttribute('data-speed', 3)
-      document.body.appendChild(bike);
-      bigList.push(bike);
-    }
+  
 
 	
 
@@ -102,7 +83,7 @@
     class newItem {
       constructor(type) {
         if (type == 1) {
-           this.bike = document.createElement('img');
+      this.bike = document.createElement('img');
       this.bike.classList.add('thing');
       this.bike.src = "jetbike.png";
       // bike.style.width = '64px';
@@ -111,17 +92,19 @@
       // random left between 0 and screen width
       this.bike.style.top = Math.round(Math.random() * window.innerHeight);
       // Set top to 0
-      this.bike.style.left = '-16';
+      this.bike.style.left = window.innerWidth + 32;
+      this.bike.style.transform = 'scaleX(-1)';
+      this.bike.style.filter = 'hue-rotate(180deg)';
       // pick a direction (-3 to 3)
       this.bike.setAttribute('data-drift', dirCalc() / 2);
-      this.bike.setAttribute('data-facing', 'right');
+      this.bike.setAttribute('data-facing', 'left');
       this.bike.setAttribute('data-speed', 3)
-      document.body.appendChild(bike);
-      bigList.push(bike);
+      document.body.appendChild(this.bike);
+      bigList.push(this.bike);
         }
 
         if (type == 2) {
-           this.bike = document.createElement('img');
+      this.bike = document.createElement('img');
       this.bike.classList.add('thing');
       this.bike.src = "jetbike.png";
       // bike.style.width = '64px';
@@ -135,12 +118,12 @@
       this.bike.setAttribute('data-drift', dirCalc() / 2);
       this.bike.setAttribute('data-facing', 'right');
       this.bike.setAttribute('data-speed', 3)
-      document.body.appendChild(bike);
-      bigList.push(bike);
+      document.body.appendChild(this.bike);
+      bigList.push(this.bike);
         }
 
         if (type == 3) {
-           this.flakeElement = document.createElement('img');
+      this.flakeElement = document.createElement('img');
       this.flakeElement.classList.add('thing');
       this.flakeElement.src = "leaf.png";
       this.flakeElement.style.width = '8px';
@@ -155,18 +138,15 @@
       this.flakeElement.setAttribute('data-drift', dirCalc());
       this.flakeElement.setAttribute('data-facing', 'down');
       this.flakeElement.setAttribute('data-speed', 2)
-      document.body.appendChild(flakeElement);
-      bigList.push(flakeElement);
+      document.body.appendChild(this.flakeElement);
+      bigList.push(this.flakeElement);
         }
 
       }
     }
 
-    newItem(1)
-    newItem(2)
-    newItem(3)
-
     
+
     function moveList(list) {
       for (unit of list) {
         let landed = unit.getAttribute('data-landed');
@@ -202,7 +182,7 @@
             unit.style[corner[0]] = Number(unit.style[corner[0]].replaceAll('px', '')) + faceValue;
             // Add direction to left
             unit.style[corner[1]] = Number(unit.style[corner[1]].replaceAll('px', '')) + Number(unit.getAttribute('data-drift'));
-            if (Math.floor(Math.random() * 50) == 0) {
+            if (Math.floor(Math.random() * dataDriftNum) == 0) {
               unit.setAttribute('data-drift', dirCalc() / 2);
             }
           }
@@ -216,9 +196,10 @@
       
 	  //FIX:	As mentioned in the comment on line 109, I don't need these to be functions.
 	  //		After I make a new class I can just push a new object into the list of objects to track.
-      if (Math.floor(Math.random() * 10) == 0) newflake();
-      if (Math.floor(Math.random() * 100) == 0) newjetbike();
-      if (Math.floor(Math.random() * 100) == 0) newattackbike();
+      if (Math.floor(Math.random() * leafSpawnRate) == 0) new newItem(3);
+      if (Math.floor(Math.random() * atkBikeSpawn) == 0) new newItem(2);
+      if (Math.floor(Math.random() * jetBikeSpawn) == 0) new newItem(1);
+;
       if (!tickleLock) tickles--;
       if (tickles <= 0) tickles = 0;
     }, FRAMESPEED);
@@ -230,3 +211,7 @@
 </body>
 
 </html>
+
+
+
+    

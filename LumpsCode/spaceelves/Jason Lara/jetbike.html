@@ -38,25 +38,41 @@
     const FRAMESPEED = 25; //How fast the frames redraw
     const DIRECTVARI = 3; //How wide the variance in direction changes are
     const CLEARTIME = 5000; //How long a dead thing stays on the screen
-	//FIX:	I used three different arrays to track the leaves (snowflakes), jetbikes,
-	//		and attackbikes. Looking back, I only needed one list for all of them.
 
-    var objects = {jetbikes: [], attackbikes: [], snowflakes: []};
     // set the three moving objects in one array.
+    var objects = {jetbikes: [], attackbikes: [], snowflakes: []};
+    //tickles number affect the tickle function if statment.
     var tickles = 0;
     var tickleLock = false;
-
+    //adjust the bike speed.Bigger is faster.
+    var BikeSpeed = 3
+    // adjust the maxium drift speed the bike going to have. no matter what number it is, it still going to have drift unless Directvari change.
+    var MaxDriftspeed = 3
+    // change the hue color for attack bikes
+    var huechange = 90
+    //flake spawn chance 1/(Fspawn)
+    var Fspawn = 10
+    //bike spawn chance 1/(Bspawn)
+    var Bspawn = 100
+    // Added in the chance to change it drift speed 1/(DriftChange)
+    var DriftChange = 50 
+    
     function tickle() {
+      // make the tickles number larger/increase
       tickles += 15;
+      //once tickles number reach 100. It change the background and add in new text.
       if (tickles > 100 && !tickleLock) {
+        //the change background
         document.body.style.backgroundImage = "url('grassbg.jpg')";
+        // the added in text.
         document.getElementsByTagName('h1')[0].innerHTML += "<br>Now With GTI 3080Ti Raytracing Enabled"
+        // stop the tickle number from decreasing.
         tickleLock = true;
       }
     }
 
     function dirCalc() {
-      return Math.round(Math.random() * 3) - (DIRECTVARI / 2);
+      return Math.round(Math.random() * MaxDriftspeed) - (DIRECTVARI / 2);
     }
 
     function newattackbike() {
@@ -94,46 +110,66 @@
 	//		you want to make a jetbike, attackbike, or snowflake.
   class newObjects {
     constructor(objtype) {
+      //read the objtype in the agruments and do a certain block code base off the answer.
       if (objtype != "flake"){
+        // create a new image for html.
         this.bike = document.createElement('img');
         this.bike.classList.add('thing');
+        //set the newly created image to the bike image.
         this.bike.src = "jetbike.png";
+        //have the bike start any where in height. from 0 to the screen height 
         this.bike.style.top = Math.round(Math.random() * window.innerHeight);
+        // set it position to absolute. not strecth the image.
         this.bike.style.position = 'absolute'
-        this.bike.setAttribute('data-speed', 3)
+        // set the bike speed
+        this.bike.setAttribute('data-speed', BikeSpeed)
         this.bike.setAttribute('data-drift', dirCalc() / 2);
+        // the document image grab the information.
         document.body.appendChild(this.bike);
+        
         if (objtype == "jetbikes"){          
+          // face the bike to the right.
           this.bike.setAttribute('data-facing', 'right');
+          //start from the left side
           this.bike.style.left = '-16';
+          //import the data to the jetbikes list in the objects list.
           objects.jetbikes.push(this.bike);
       } else {
+        // start the bike on the right side
         this.bike.style.left = window.innerWidth + 32;
         this.bike.style.transform = 'scaleX(-1)';
-        this.bike.style.filter = 'hue-rotate(180deg)';
+        //change it hue to blue.
+        this.bike.style.filter = `hue-rotate(${huechange}deg)`;
+        // have the bike face left
         this.bike.setAttribute('data-facing', 'left');
+        //import the data to the attackbikes list in the objects list.
         objects.attackbikes.push(this.bike);
       }
       } else {
-        // Create img
+        // Create a  img
       this.flakeElement = document.createElement('img');
       this.flakeElement.classList.add('thing');
+      // set the new img to the leaf image 
       this.flakeElement.src = "leaf.png";
+      // set it width size
       this.flakeElement.style.width = '8px';
       this.flakeElement.classList.add('leaf');
-      // Set position to absolute
+      // Set position to absolute no strecth
       this.flakeElement.style.position = 'absolute';
-      // random left between 0 and screen width
+      // spawn anywhere from left to right. the width of the screen
       this.flakeElement.style.left = Math.round(Math.random() * window.innerWidth);
-      // Set top to 0
+      // spawn at the top
       this.flakeElement.style.top = '-5';
-      // pick a direction (-3 to 3)
+      // It drift speed when falling
       this.flakeElement.setAttribute('data-drift', dirCalc());
+        // facing down. going down
       this.flakeElement.setAttribute('data-facing', 'down');
+      // set the leaf speed
       this.flakeElement.setAttribute('data-speed', 2)
+      // document grab the data
       document.body.appendChild(this.flakeElement);
+      //import the data to the snowflakes list in the objects list. 
       objects.snowflakes.push(this.flakeElement);
-      console.log(objects.snowflakes);
       }
       
     }
@@ -186,7 +222,7 @@
         let leftPX = Number(unit.style.left.replaceAll('px', ''))
         let topPX = Number(unit.style.top.replaceAll('px', ''))
 
-        // Crazy Dave Mode
+        // Crazy Dave Mode. ALL objects have crazy random colers repeating.
         // let hue = Math.round(Math.random()*360)
         // unit.style.filter = `hue-rotate(${hue}deg)`;
 
@@ -198,6 +234,7 @@
             unit.setAttribute('data-landed', Number(landed) + 1);
           }
         } else if ((leftPX > window.innerWidth && facing == 'right') || (leftPX < 0 - unit.width && facing == 'left') || (topPX > window.innerHeight && facing == 'down') || (topPX < 0 && facing == 'up')) {
+          // remove the images if it hits any edges of the screen except their starting edge.
           list.splice(list.indexOf(unit), 1);
           unit.remove()
         } else {
@@ -214,7 +251,8 @@
             unit.style[corner[0]] = Number(unit.style[corner[0]].replaceAll('px', '')) + faceValue;
             // Add direction to left
             unit.style[corner[1]] = Number(unit.style[corner[1]].replaceAll('px', '')) + Number(unit.getAttribute('data-drift'));
-            if (Math.floor(Math.random() * 50) == 0) {
+            // Have a chance to change it drift speed.
+            if (Math.floor(Math.random() * DriftChange) == 0) {
               unit.setAttribute('data-drift', dirCalc() / 2);
             }
           }
@@ -229,17 +267,19 @@
       moveList(objects.attackbikes);
 	  //FIX:	As mentioned in the comment on line 109, I don't need these to be functions.
 	  //		After I make a new class I can just push a new object into the list of objects to track.
-      if (Math.floor(Math.random() * 10) == 0) new newObjects("flake");
-      if (Math.floor(Math.random() * 100) == 0) new newObjects("jetbikes");
-      if (Math.floor(Math.random() * 100) == 0) new newObjects("attackbike");
+      if (Math.floor(Math.random() * Fspawn) == 0) new newObjects("flake");
+      if (Math.floor(Math.random() * Bspawn) == 0) new newObjects("jetbikes");
+      if (Math.floor(Math.random() * Bspawn) == 0) new newObjects("attackbike");
+      // if ticklelock is not true, tickles will slowely decrease.
       if (!tickleLock) tickles--;
+      // stop the tickles from going below zero.
       if (tickles <= 0) tickles = 0;
     }, FRAMESPEED);
   </script>
 </head>
-
+<!-- When the page it click. it start the tickle function.    -->
 <body onclick="tickle()">
-  
+  <!-- The Main title of the webpage.-->
   <h1>ジェットバイクに乗る宇宙エルフ</h1>
 </body>
 

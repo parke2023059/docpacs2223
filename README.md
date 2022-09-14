@@ -1,6 +1,7 @@
 # docpacs2223
 Classroom documentation for school year 22-23
 
+<<<<<<< HEAD
 ## Junior Developers:
 - Wesley Welch
 - Ryan Stevenson
@@ -32,3 +33,8 @@ Classroom documentation for school year 22-23
 - [Pog Catalogue](https://github.com/csmith1188/OnlyPogs)
 - [Formbar Rewrite](https://github.com/csmith1188/Formbar.js)
 - [Login Page Boilerplate](https://github.com/csmith1188/NEELite_loginBoilerplate)
+=======
+## Junior Developers: Logan Cruz
+
+## Senior Developers: Parker Fink
+>>>>>>> 7b83898e8923f1a69662ad2fde88d6a846827548

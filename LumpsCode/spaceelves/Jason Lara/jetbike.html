@@ -9,7 +9,7 @@
     body {
       overflow: hidden;
       color: #ffffff;
-      /* background-image: url('grassbg.jpg'); */
+      /* background-image: url('grassbg.jpg'); get added in when tickle is ativated */ 
       background-size: 300px;
       background-color: #999966;
       /* background-color: #6e5200; */
@@ -24,17 +24,10 @@
     }
   </style>
   <script>
-	//FIX:	There are a lot of comments that describe something I was doing on the
-	//		line below that aren't accurate, because I changed what the code did later.
-	//		I should update these, and maybe even add more where it's confusing.
+
   
   
-	//FIX:	There are a bunch of places where I made random chance rates.
-	//		I didn't have the foresight to make a "constant" at the beginning
-	//		of my code to adjust these random chance multipliers (basically anytime
-	//		your see "Math.random" multiplied by a number), so now I have to track
-	//		them down in my code every time I want to change them.
-	//		I should have made them constants like the three lines below.
+
     const FRAMESPEED = 25; //How fast the frames redraw
     const DIRECTVARI = 3; //How wide the variance in direction changes are
     const CLEARTIME = 5000; //How long a dead thing stays on the screen
@@ -82,65 +75,59 @@
   class newObjects {
     constructor(objtype) {
       //read the objtype in the agruments and do a certain block code base off the answer.
+      // create a new image for html.
+      this.element = document.createElement('img');
+      this.element.classList.add('thing');
+      // set it position to absolute. not strecth the image.
+      this.element.style.position = 'absolute'
+      //set it drift speed.
+      this.element.setAttribute('data-drift', dirCalc() / 2);
       if (objtype != "flake"){
-        // create a new image for html.
-        this.bike = document.createElement('img');
-        this.bike.classList.add('thing');
         //set the newly created image to the bike image.
-        this.bike.src = "jetbike.png";
+        this.element.src = "jetbike.png";
         //have the bike start any where in height. from 0 to the screen height 
-        this.bike.style.top = Math.round(Math.random() * window.innerHeight);
-        // set it position to absolute. not strecth the image.
-        this.bike.style.position = 'absolute'
+        this.element.style.top = Math.round(Math.random() * window.innerHeight);
         // set the bike speed
-        this.bike.setAttribute('data-speed', BikeSpeed)
-        this.bike.setAttribute('data-drift', dirCalc() / 2);
+        this.element.setAttribute('data-speed', BikeSpeed)
         // the document image grab the information.
-        document.body.appendChild(this.bike);
-        
+        document.body.appendChild(this.element);
+        //start this if the objtype is "jetbikes".
         if (objtype == "jetbikes"){          
           // face the bike to the right.
-          this.bike.setAttribute('data-facing', 'right');
+          this.element.setAttribute('data-facing', 'right');
           //start from the left side
-          this.bike.style.left = '-16';
+          this.element.style.left = '-16';
           //import the data to the jetbikes list in the objects list.
-          objects.jetbikes.push(this.bike);
+          objects.jetbikes.push(this.element);
       } else {
         // start the bike on the right side
-        this.bike.style.left = window.innerWidth + 32;
-        this.bike.style.transform = 'scaleX(-1)';
+        this.element.style.left = window.innerWidth + 32;
+        this.element.style.transform = 'scaleX(-1)';
         //change it hue to blue.
-        this.bike.style.filter = `hue-rotate(${huechange}deg)`;
+        this.element.style.filter = `hue-rotate(${huechange}deg)`;
         // have the bike face left
-        this.bike.setAttribute('data-facing', 'left');
+        this.element.setAttribute('data-facing', 'left');
         //import the data to the attackbikes list in the objects list.
-        objects.attackbikes.push(this.bike);
+        objects.attackbikes.push(this.element);
       }
       } else {
-        // Create a  img
-      this.flakeElement = document.createElement('img');
-      this.flakeElement.classList.add('thing');
       // set the new img to the leaf image 
-      this.flakeElement.src = "leaf.png";
+      this.element.src = "leaf.png";
       // set it width size
-      this.flakeElement.style.width = '8px';
-      this.flakeElement.classList.add('leaf');
-      // Set position to absolute no strecth
-      this.flakeElement.style.position = 'absolute';
+      this.element.style.width = '8px';
+      this.element.classList.add('leaf');
       // spawn anywhere from left to right. the width of the screen
-      this.flakeElement.style.left = Math.round(Math.random() * window.innerWidth);
+      this.element.style.left = Math.round(Math.random() * window.innerWidth);
       // spawn at the top
-      this.flakeElement.style.top = '-5';
-      // It drift speed when falling
-      this.flakeElement.setAttribute('data-drift', dirCalc());
+      this.element.style.top = '-5';
         // facing down. going down
-      this.flakeElement.setAttribute('data-facing', 'down');
+      this.element.setAttribute('data-facing', 'down');
       // set the leaf speed
-      this.flakeElement.setAttribute('data-speed', LeafSpeed)
+      this.element.setAttribute('data-speed', LeafSpeed)
       // document grab the data
-      document.body.appendChild(this.flakeElement);
+      document.body.appendChild(this.element);
       //import the data to the snowflakes list in the objects list. 
-      objects.snowflakes.push(this.flakeElement);
+      objects.snowflakes.push(this.element);
       }
       
     }
@@ -200,12 +187,11 @@
     }
 
     setInterval(() => {
-      // moveFlake();
+      //it called the movelist function which move the object according to the face value and it also 
       moveList(objects.snowflakes);
       moveList(objects.jetbikes);
       moveList(objects.attackbikes);
-	  //FIX:	As mentioned in the comment on line 109, I don't need these to be functions.
-	  //		After I make a new class I can just push a new object into the list of objects to track.
+      
     // three line below all called the new constructor to make a image for html.
       if (Math.floor(Math.random() * Fspawn) == 0) new newObjects("flake");
       if (Math.floor(Math.random() * Bspawn) == 0) new newObjects("jetbikes");

@@ -42,6 +42,7 @@
     const newFlakeSpeed = 30 // flake spawn speed
     const newBikeSpeed = 100 // bike spawn speed
     const newAttackBikeSpeed = 100 // attack bike spawn speed
+    const bikeStyleTop = 0
 
 	//FIX:	I used three different arrays to track the leaves (snowflakes), jetbikes,
 	//		and attackbikes. Looking back, I only needed one list for all of them.
@@ -95,7 +96,7 @@
     
 
 
-	//FIX:  I have three very similar functions that each create a new img element
+	//FIX:  I have three very similar functions that each create a new img element                                          -working on-
 	//		push it into a list of similar elements. Because they are all so similar,
 	//		I should have just created a class whose contructor create this element
 	//		as a property of that class. For example:
@@ -104,6 +105,19 @@
 	//		etc.
 	//		The constructor method of the class should take arguments that set if
 	//		you want to make a jetbike, attackbike, or snowflake.
+
+class Spawn {
+  constructor(spawnItem){
+    this.spawnItem = spawnItem
+  }
+let test = Math.floor(Math.random() * 4) + 1
+
+}
+let spawnitem = new spawnItem(test)
+console.log(spawnitem);
+
+
+
     function newjetbike() {
       // Create img
       let bike = document.createElement('img');
@@ -195,14 +209,6 @@
       moveList(attackbikes);
 	  //FIX:	As mentioned in the comment on line 109, I don't need these to be functions.
 	  //After I make a new class I can just push a new object into the list of objects to track.
-
-
-
-
-      const myCar = {}
-
-
-
 
 
 

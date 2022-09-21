@@ -24,7 +24,9 @@ Classroom documentation for school year 22-23
 - Ethan Shimmel
 - Will Shealer
 - Christian Boldt
+- Trey Floto
 - Jacob Smith
+
 
 ## Approved Projects
 - [DocPac Scanner / Database](https://github.com/csmith1188/docpacs2223)

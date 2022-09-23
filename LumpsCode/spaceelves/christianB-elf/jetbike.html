@@ -1,0 +1,157 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      overflow: hidden;
+      color: #ffffff;
+      /* background-image: url('grassbg.jpg'); */
+      background-size: 300px;
+      background-color: #999966;
+      /* background-color: #6e5200; */
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .thing {
+      transition: 0.20;
+    }
+  </style>
+  <script>
+    const BIKESPEED = 3
+    const FLAKESPEED = 3
+    const LEAFRANDIR = 2
+    const FACELEFT = -1
+    const LEAFFALL = 1000
+    const DRIFTVAL = 50
+    const ABIKERATE = 100
+    const JBIKERATE = 100
+    const FLAKERATE = 10
+    const FRAMESPEED = 25; //How fast the frames redraw
+    const DIRECTVARI = 3; //How wide the variance in direction changes are
+    const CLEARTIME = 5000; //How long a dead thing stays on the screen
+    var bikeFlake = [];
+
+    var tickles = 0;
+    var tickleLock = false;
+
+    function tickle() {
+      tickles += 15;
+      if (tickles > 100 && !tickleLock) {
+        document.body.style.backgroundImage = "url('walt.jpg')";
+        document.getElementsByTagName('h1')[0].innerHTML += "<br>Now With GTI 3080Ti Raytracing Enabled"
+        tickleLock = true;
+      }
+    }
+
+    function dirCalc() {
+      return Math.round(Math.random() * DIRECTVARI) - (DIRECTVARI / 2);
+    }
+
+    class obj {
+      constructor(value) {
+        if (value == 1) {
+          this.bike = document.createElement('img');
+          this.bike.classList.add('thing');
+          this.bike.src = "jetbike.png";
+          this.bike.style.position = 'absolute';
+          this.bike.style.top = Math.round(Math.random() * window.innerHeight);
+          this.bike.style.left = window.innerWidth + 32;
+          this.bike.style.transform = 'scaleX(-1)';
+          this.bike.style.filter = 'hue-rotate(180deg)';
+          this.bike.setAttribute('data-drift', dirCalc() / 2);
+          this.bike.setAttribute('data-facing', 'left');
+          this.bike.setAttribute('data-speed', BIKESPEED)
+          document.body.appendChild(this.bike);
+          bikeFlake.push(this.bike);
+
+        } if (value == 2) {
+          this.bike = document.createElement('img');
+          this.bike.classList.add('thing');
+          this.bike.src = "jetbike.png";
+          this.bike.style.position = 'absolute';
+          this.bike.style.top = Math.round(Math.random() * window.innerHeight);
+          this.bike.style.left = '-16';
+          this.bike.setAttribute('data-drift', dirCalc() / 2);
+          this.bike.setAttribute('data-facing', 'right');
+          this.bike.setAttribute('data-speed', BIKESPEED)
+          document.body.appendChild(this.bike);
+          bikeFlake.push(this.bike);
+        } if (value == 3) {
+          this.flakeElement = document.createElement('img');
+          this.flakeElement.classList.add('thing');
+          this.flakeElement.src = "leaf.png";
+          this.flakeElement.style.width = '8px';
+          this.flakeElement.classList.add('leaf');
+          this.flakeElement.style.position = 'absolute';
+          this.flakeElement.style.left = Math.round(Math.random() * window.innerWidth);
+          this.flakeElement.style.top = '-5';
+          this.flakeElement.setAttribute('data-drift', dirCalc());
+          this.flakeElement.setAttribute('data-facing', 'down');
+          this.flakeElement.setAttribute('data-speed', FLAKESPEED)
+          document.body.appendChild(this.flakeElement);
+          bikeFlake.push(this.flakeElement);
+        }
+      }
+    }
+
+    function moveList(list) {
+      for (unit of list) {
+        let landed = unit.getAttribute('data-landed');
+        let facing = unit.getAttribute('data-facing')
+        let leftPX = Number(unit.style.left.replaceAll('px', ''))
+        let topPX = Number(unit.style.top.replaceAll('px', ''))
+
+        if (landed) {
+          if (Number(landed) > CLEARTIME) {
+            list.splice(list.indexOf(unit), 1);
+            unit.remove()
+          } else {
+            unit.setAttribute('data-landed', Number(landed) + 1);
+          }
+        } else if ((leftPX > window.innerWidth && facing == 'right') || (leftPX < 0 - unit.width && facing == 'left') || (topPX > window.innerHeight && facing == 'down') || (topPX < 0 && facing == 'up')) {
+          list.splice(list.indexOf(unit), 1);
+          unit.remove()
+        } else {
+          if (unit.classList.contains('leaf') && Math.floor(Math.random() * LEAFFALL) == 0) {
+            unit.setAttribute('data-landed', 1);
+            if (Math.floor(Math.random()* LEAFRANDIR)) unit.src = "leaf1.png";
+            else unit.src = "leaf2.png";
+          } else {
+            let faceValue = 1;
+            let corner = ['left', 'top'];
+            if (facing == 'left') faceValue = Math.floor(Math.random() * (Number(unit.getAttribute('data-speed')) * FACELEFT));
+            else faceValue = Math.ceil(Math.random() * (Number(unit.getAttribute('data-speed'))));
+            if (facing == 'down') corner = ['top', 'left'];
+            unit.style[corner[0]] = Number(unit.style[corner[0]].replaceAll('px', '')) + faceValue;
+            unit.style[corner[1]] = Number(unit.style[corner[1]].replaceAll('px', '')) + Number(unit.getAttribute('data-drift'));
+            if (Math.floor(Math.random() * DRIFTVAL) == 0) {
+              unit.setAttribute('data-drift', dirCalc() / 2);
+            }
+          }
+        }
+      }
+    }
+
+    setInterval(() => {
+      moveList(bikeFlake);
+      if (Math.floor(Math.random() * FLAKERATE) == 0) new obj(3);
+      if (Math.floor(Math.random() * JBIKERATE) == 0) new obj(2);
+      if (Math.floor(Math.random() * ABIKERATE) == 0) new obj(1);
+      if (!tickleLock) tickles--;
+      if (tickles <= 0) tickles = 0;
+    }, FRAMESPEED);
+  </script>
+</head>
+
+<body onclick="tickle()">
+  <h1>أنا أكرهك تماما</h1>
+</body>
+
+</html>

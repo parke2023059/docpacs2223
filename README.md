@@ -14,6 +14,7 @@ Classroom documentation for school year 22-23
 - Alexander Plitt
 - Beckham Phillips
 - Macarios Hoover
+- Logan Cruz
 
 ## Senior Developers:
 - Logan Hiller
@@ -24,6 +25,7 @@ Classroom documentation for school year 22-23
 - Ethan Shimmel
 - Will Shealer
 - Christian Boldt
+- Trey Floto
 - Jacob Smith
 
 ## Approved Projects

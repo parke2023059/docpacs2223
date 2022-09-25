@@ -1,0 +1,177 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      overflow: hidden;
+      color: #ffffff;
+      /* background-image: url('grassbg.jpg'); */
+      background-size: 300px;
+      background-color: #999966;
+      /* background-color: #6e5200; */
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .thing {
+      transition: 0.20;
+    }
+  </style>
+  <script>
+
+    const FRAMESPEED = 25; //How fast the frames redraw
+    const DIRECTVARI = 3; //How wide the variance in direction changes are
+    const CLEARTIME = 500; //How long a dead thing stays on the screen
+    const FLAKESPEED = 15; // Flake drop rate
+    const FLAKETIME = 435; // Flake land on screen rate
+    const JBIKE = 5; // Attackbike spawn rate
+    const ABIKE = 5; // Jetbike spawn rate
+    const dirRand = 1;
+
+    var hugeList = [];
+
+    var tickles = 0;
+    var tickleLock = false;
+
+    function tickle() {
+      tickles += 15;
+      if (tickles > 100 && !tickleLock) {
+        document.body.style.backgroundImage = "url('grassbg.jpg')";
+        document.getElementsByTagName('h1')[0].innerHTML += "<br>Now With GTI 3080Ti Raytracing Enabled"
+        tickleLock = true;
+      }
+    }
+
+    function dirCalc() {
+      return Math.round(Math.random() * dirRand) - (DIRECTVARI / 2);
+    }
+
+    // Class and constructor that creates the attackbikes, jetbikes, and leaves falling. 
+    class newobject {
+      constructor(type) {
+        // Jetbikes
+        if (type == 0) {
+          // The bike in this if statement will create the image of the jetbike
+          this.bike = document.createElement('img');
+          // Adds the bike to the classlist
+          this.bike.classList.add('thing');
+          // Finds the image for the bike
+          this.bike.src = "jetbike.png";
+          this.bike.style.position = 'absolute';
+          // Randomly chooses their spawn position based off your window's height
+          this.bike.style.top = Math.round(Math.random() * window.innerHeight);
+          this.bike.style.left = '-16';
+          // Bike speed, direction they're facing, and drift
+          this.bike.setAttribute('data-drift', dirCalc() / 2);
+          this.bike.setAttribute('data-facing', 'right');
+          this.bike.setAttribute('data-speed', 3)
+          document.body.appendChild(this.bike);
+          // Adds the newly created bike to the list
+          hugeList.push(this.bike);
+        };
+        // Leaves
+        if (type == 1) {
+          // These three if statements do the same thing, just for different objects.
+         this.flakeElement = document.createElement('img');
+         this.flakeElement.classList.add('thing');
+         this.flakeElement.src = "leaf.png";
+         this.flakeElement.style.width = '8px';
+         this.flakeElement.classList.add('leaf');
+         this.flakeElement.style.position = 'absolute';
+         this.flakeElement.style.left = Math.round(Math.random() * window.innerWidth);
+         this.flakeElement.style.top = '-5';
+         this.flakeElement.setAttribute('data-drift', dirCalc());
+         this.flakeElement.setAttribute('data-facing', 'down');
+         this.flakeElement.setAttribute('data-speed', 2)
+         document.body.appendChild(this.flakeElement);
+         hugeList.push(this.flakeElement);
+        };
+        // Attackbikes
+        if (type == 2) {
+          this.bike = document.createElement('img');
+          this.bike.classList.add('thing');
+          this.bike.src = "jetbike.png";
+          this.bike.style.position = 'absolute';
+          this.bike.style.top = Math.round(Math.random() * window.innerHeight);
+          this.bike.style.left = window.innerWidth + 32;
+          this.bike.style.transform = 'scaleX(-1)';
+          this.bike.style.filter = 'hue-rotate(180deg)';
+          this.bike.setAttribute('data-drift', dirCalc() / 2);
+          this.bike.setAttribute('data-facing', 'left');
+          this.bike.setAttribute('data-speed', 3);
+          document.body.appendChild(this.bike);
+          hugeList.push(this.bike);
+        };
+      };
+    };
+
+
+    function moveList(list) {
+      for (unit of list) {
+        let landed = unit.getAttribute('data-landed');
+        let facing = unit.getAttribute('data-facing')
+        let leftPX = Number(unit.style.left.replaceAll('px', ''))
+        let topPX = Number(unit.style.top.replaceAll('px', ''))
+
+        // Crazy Dave Mode
+        // let hue = Math.round(Math.random()*360)
+        // unit.style.filter = `hue-rotate(${hue}deg)`;
+
+        // If the leaves have landed, clear them out after a certain number of leaves.
+        if (landed) {
+          if (Number(landed) > CLEARTIME) {
+            list.splice(list.indexOf(unit), 1);
+            unit.remove()
+            // If there are not more leaves than the clear time, add one to the counter for number landed.
+          } else {
+            unit.setAttribute('data-landed', Number(landed) + 1);
+          }
+        } else if ((leftPX > window.innerWidth && facing == 'right') || (leftPX < 0 - unit.width && facing == 'left') || (topPX > window.innerHeight && facing == 'down') || (topPX < 0 && facing == 'up')) {
+          list.splice(list.indexOf(unit), 1);
+          unit.remove()
+        } else {
+          if (unit.classList.contains('leaf') && Math.floor(Math.random() * FLAKETIME) == 0) {
+            unit.setAttribute('data-landed', 1);
+            if (Math.floor(Math.random()* 2)) unit.src = "leaf1.png";
+            else unit.src = "leaf2.png";
+          } else {
+            let faceValue = 1;
+            let corner = ['left', 'top'];
+            if (facing == 'left') faceValue = Math.floor(Math.random() * (Number(unit.getAttribute('data-speed')) * -1));
+            else faceValue = Math.ceil(Math.random() * (Number(unit.getAttribute('data-speed'))));
+            if (facing == 'down') corner = ['top', 'left'];
+            unit.style[corner[0]] = Number(unit.style[corner[0]].replaceAll('px', '')) + faceValue;
+            unit.style[corner[1]] = Number(unit.style[corner[1]].replaceAll('px', '')) + Number(unit.getAttribute('data-drift'));
+            if (Math.floor(Math.random() * 50) == 0) {
+              unit.setAttribute('data-drift', dirCalc() / 2);
+            }
+          }
+        }
+      }
+    }
+
+    setInterval(() => {
+      moveList(hugeList);
+      // If there are no leaves, make a new leaf
+      if (Math.floor(Math.random() * FLAKESPEED) == 0) new newobject(1);
+      // If there are no attack bikes, make a new bike
+      if (Math.floor(Math.random() * ABIKE) == 0) new newobject(2);
+      // If there are no jet bikes, make a new bike
+      if (Math.floor(Math.random() * JBIKE) == 0) new newobject(0);
+      if (!tickleLock) tickles--;
+      if (tickles <= 0) tickles = 0;
+    }, FRAMESPEED);
+  </script>
+</head>
+
+<body onclick="tickle()">
+  <h1>ジェットバイクに乗る宇宙エルフ</h1>
+</body>
+
+</html>

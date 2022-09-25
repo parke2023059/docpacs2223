@@ -1,0 +1,206 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      overflow: hidden;
+      color: #ffffff;
+      /* background-image: url('grassbg.jpg'); */
+      background-size: 300px;
+      background-color: #999966;
+      /* background-color: #6e5200; */
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .thing {
+      transition: 0.20;
+    }
+  </style>
+  <script>
+	//FIX:	There are a lot of comments that describe something I was doing on the
+	//		line below that aren't accurate, because I changed what the code did later.
+	//		I should update these, and maybe even add more where it's confusing.
+  
+  
+	//FIX:	There are a bunch of places where I made random chance rates.
+	//		I didn't have the foresight to make a "constant" at the beginning
+	//		of my code to adjust these random chance multipliers (basically anytime
+	//		your see "Math.random" multiplied by a number), so now I have to track
+	//		them down in my code every time I want to change them.
+	//		I should have made them constants like the three lines below.
+    const BIKECHANCE = 1000;
+    const FLAKECHANCE = 10;
+    const LEAFLAND = 1000;
+    const LEAFDRIFT = 50;
+    const FRAMESPEED = 25; //How fast the frames redraw
+    const DIRECTVARI = 3; //How wide the variance in direction changes are
+    const CLEARTIME = 5000; //How long a dead thing stays on the screen
+	//FIX:	I used three different arrays to track the leaves (snowflakes), jetbikes,
+	//		and attackbikes. Looking back, I only needed one list for all of them.
+    var allObjects = [];
+
+    var tickles = 0;
+    var tickleLock = false;
+
+    function tickle() {
+      tickles += 15;
+      if (tickles > 100 && !tickleLock) {
+        document.body.style.backgroundImage = "url('grassbg.jpg')";
+        document.getElementsByTagName('h1')[0].innerHTML += "<br>Now With GTI 3080Ti Raytracing Enabled"
+        tickleLock = true;
+      }
+    }
+
+    function dirCalc() {
+      return Math.round(Math.random() * 3) - (DIRECTVARI / 2);
+    }
+
+    function newattackbike() {
+
+    }
+
+	//FIX:  I have three very similar functions that each create a new img element
+	//		push it into a list of similar elements. Because they are all so similar,
+	//		I should have just created a class whose contructor create this element
+	//		as a property of that class. For example:
+	//		this.bike = document.createElement('img'); 
+	//		this.bike.classList.add('thing');
+	//		etc.
+	//		The constructor method of the class should take arguments that set if
+	//		you want to make a jetbike, attackbike, or snowflake.
+    class newObject {
+      constructor(objType) {
+      if (objType == "jetbike") {
+      // Create img
+      this.bike = document.createElement('img');
+      this.bike.classList.add('thing');
+      this.bike.src = "jetbike.png";
+      // bike.style.width = '64px';
+      // Set position to absolute
+      this.bike.style.position = 'absolute';
+      // random left between 0 and screen width
+      this.bike.style.top = Math.round(Math.random() * window.innerHeight);
+      // Set top to 0
+      this.bike.style.left = '-16';
+      // pick a direction (-3 to 3)
+      this.bike.setAttribute('data-drift', dirCalc() / 2);
+      this.bike.setAttribute('data-facing', 'right');
+      this.bike.setAttribute('data-speed', 3)
+      document.body.appendChild(this.bike);
+      allObjects.push(this.bike);
+      } else if (objType == "attackbike") {
+      // Create img
+      this.bike = document.createElement('img');
+      this.bike.classList.add('thing');
+      this.bike.src = "jetbike.png";
+      // bike.style.width = '64px';
+      // Set position to absolute
+      this.bike.style.position = 'absolute';
+      // random left between 0 and screen width
+      this.bike.style.top = Math.round(Math.random() * window.innerHeight);
+      // Set top to 0
+      this.bike.style.left = window.innerWidth + 32;
+      this.bike.style.transform = 'scaleX(-1)';
+      this.bike.style.filter = 'hue-rotate(180deg)';
+      // pick a direction (-3 to 3)
+      this.bike.setAttribute('data-drift', dirCalc() / 2);
+      this.bike.setAttribute('data-facing', 'left');
+      this.bike.setAttribute('data-speed', 3)
+      document.body.appendChild(this.bike);
+      allObjects.push(this.bike);
+      } else if (objType == "flake") {
+      // Create img
+      this.flakeElement = document.createElement('img');
+      this.flakeElement.classList.add('thing');
+      this.flakeElement.src = "leaf.png";
+      this.flakeElement.style.width = '8px';
+      this.flakeElement.classList.add('leaf');
+      // Set position to absolute
+      this.flakeElement.style.position = 'absolute';
+      // random left between 0 and screen width
+      this.flakeElement.style.left = Math.round(Math.random() * window.innerWidth);
+      // Set top to 0
+      this.flakeElement.style.top = '-5';
+      // pick a direction (-3 to 3)
+      this.flakeElement.setAttribute('data-drift', dirCalc());
+      this.flakeElement.setAttribute('data-facing', 'down');
+      this.flakeElement.setAttribute('data-speed', 2)
+      document.body.appendChild(this.flakeElement);
+      allObjects.push(this.flakeElement);
+      }
+    }
+
+
+
+ 
+  }
+
+    function moveList(list) {
+      for (unit of list) {
+        let landed = unit.getAttribute('data-landed');
+        let facing = unit.getAttribute('data-facing')
+        let leftPX = Number(unit.style.left.replaceAll('px', ''))
+        let topPX = Number(unit.style.top.replaceAll('px', ''))
+
+        // Crazy Dave Mode
+        // let hue = Math.round(Math.random()*360)
+        // unit.style.filter = `hue-rotate(${hue}deg)`;
+
+        if (landed) {
+          if (Number(landed) > CLEARTIME) {
+            list.splice(list.indexOf(unit), 1);
+            unit.remove()
+          } else {
+            unit.setAttribute('data-landed', Number(landed) + 1);
+          }
+        } else if ((leftPX > window.innerWidth && facing == 'right') || (leftPX < 0 - unit.width && facing == 'left') || (topPX > window.innerHeight && facing == 'down') || (topPX < 0 && facing == 'up')) {
+          list.splice(list.indexOf(unit), 1);
+          unit.remove()
+        } else {
+          if (unit.classList.contains('leaf') && Math.floor(Math.random() * LEAFLAND) == 0) {
+            unit.setAttribute('data-landed', 1);
+            if (Math.floor(Math.random()* 2)) unit.src = "leaf1.png";
+            else unit.src = "leaf2.png";
+          } else {
+            let faceValue = 1;
+            let corner = ['left', 'top'];
+            if (facing == 'left') faceValue = Math.floor(Math.random() * (Number(unit.getAttribute('data-speed')) * -1));
+            else faceValue = Math.ceil(Math.random() * (Number(unit.getAttribute('data-speed'))));
+            if (facing == 'down') corner = ['top', 'left'];
+            unit.style[corner[0]] = Number(unit.style[corner[0]].replaceAll('px', '')) + faceValue;
+            // Add direction to left
+            unit.style[corner[1]] = Number(unit.style[corner[1]].replaceAll('px', '')) + Number(unit.getAttribute('data-drift'));
+            if (Math.floor(Math.random() * LEAFDRIFT) == 0) {
+              unit.setAttribute('data-drift', dirCalc() / 2);
+            }
+          }
+        }
+      }
+    }
+
+    setInterval(() => {
+      // moveFlake();
+      moveList(allObjects);
+	  //FIX:	As mentioned in the comment on line 109, I don't need these to be functions.
+	  //		After I make a new class I can just push a new object into the list of objects to track.
+      if (Math.floor(Math.random() * FLAKECHANCE) == 0) new newObject('flake');
+      if (Math.floor(Math.random() * BIKECHANCE) == 0) new newObject('jetbike');
+      if (Math.floor(Math.random() * BIKECHANCE) == 0) new newObject('attackbike');
+      if (!tickleLock) tickles--;
+      if (tickles <= 0) tickles = 0;
+    }, FRAMESPEED);
+  </script>
+</head>
+
+<body onclick="tickle()">
+  <h1>ジェットバイクに乗る宇宙エルフ</h1>
+</body>
+
+</html>

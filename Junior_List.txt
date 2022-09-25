@@ -1,0 +1,18 @@
+604: Demonstrate how to identify and solve errors with a debugger (read errors)
+605: Demonstrate how to identify and locate errors by error output messages (read errors)
+606: Explain the different types of errors (Syntax, Logic, Compilation, Runtime, Resource, Interface, File/Data) (read errors)
+641: Demonstrate how conditional expression are resolved in a conditional statement (Conditional Statements)
+656: Demonstrate substituting return values (Substition) 
+
+702: Demonstrate how to use Javascript to interact with HTML elements on a page (
+706: Demonstrate sending POST requests and handling the response (Input/Output)
+710: Demonstrate competency in Javascscript in a nodeJS context (stand-alone interpreter) (Launching a JS file with nodeJS)
+720: Demonstrate using server platforms such as nodeJS to create and host an HTTP server to serve static web pages (Launching a JS with nodeJS)
+733: Explore and use differenct types of SQL applications (SQLite3, MySQL, MongoDB, MariaDB, etc) (Datatypes)
+
+
+829: Demonstrate error-checking with automated unit testing (Reading Errors)
+830: Demonstrate tracking bugs and features using Issues (Reading Errors)
+
+
+

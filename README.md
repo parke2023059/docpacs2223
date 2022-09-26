@@ -27,6 +27,7 @@ Classroom documentation for school year 22-23
 - Christian Boldt
 - Trey Floto
 - Jacob Smith
+- Parker Fink
 
 ## Approved Projects
 - [DocPac Scanner / Database](https://github.com/csmith1188/docpacs2223)

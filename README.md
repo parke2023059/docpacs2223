@@ -13,6 +13,8 @@ Classroom documentation for school year 22-23
 - Logan Danner
 - Alexander Plitt
 - Beckham Phillips
+- Macarios Hoover
+- Logan Cruz
 
 ## Senior Developers:
 - Logan Hiller
@@ -23,6 +25,9 @@ Classroom documentation for school year 22-23
 - Ethan Shimmel
 - Will Shealer
 - Christian Boldt
+- Trey Floto
+- Jacob Smith
+- Parker Fink
 
 ## Approved Projects
 - [DocPac Scanner / Database](https://github.com/csmith1188/docpacs2223)

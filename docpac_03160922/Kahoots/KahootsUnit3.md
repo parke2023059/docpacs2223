@@ -22,3 +22,5 @@ Beckham Phillips
 https://play.kahoot.it/v2/?quizId=e159014b-581d-4145-a3eb-6dda3e3f1067
 Ryan Stevenson:
 https://play.kahoot.it/v2/?quizId=60fbd615-3857-42b5-8cb1-9eb03787b4ca
+Talon Pauling
+https://create.kahoot.it/share/unit-3/da76c4db-47da-46d1-b7ab-f38df3cb41c7

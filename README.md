@@ -3,6 +3,7 @@ Classroom documentation for school year 22-23
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ## Junior Developers:
 - Wesley Welch
 - Ryan Stevenson
@@ -19,6 +20,8 @@ Classroom documentation for school year 22-23
 - Logan Cruz
 
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 <<<<<<< HEAD
@@ -45,6 +48,9 @@ Classroom documentation for school year 22-23
 - Logan Cruz
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -70,8 +76,11 @@ Classroom documentation for school year 22-23
 - [Formbar Rewrite](https://github.com/csmith1188/Formbar.js)
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 - [Login Page Boilerplate](https://github.com/csmith1188/NEELite_loginBoilerplate)
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 <<<<<<< HEAD
@@ -80,6 +89,9 @@ Classroom documentation for school year 22-23
 - [Login Page Boilerplate](https://github.com/csmith1188/NEELite_loginBoilerplate)
 >>>>>>> 8b951ebe51cb8c68fc94614401c6dc1b659db758
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

@@ -2,6 +2,7 @@
 Classroom documentation for school year 22-23
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ## Junior Developers:
 - Wesley Welch
 - Ryan Stevenson
@@ -18,6 +19,8 @@ Classroom documentation for school year 22-23
 - Logan Cruz
 
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 <<<<<<< HEAD
 ## Junior Developers: Logan Cruz
@@ -41,6 +44,9 @@ Classroom documentation for school year 22-23
 - Macarios Hoover
 - Logan Cruz
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 ## Senior Developers:
 - Logan Hiller
@@ -63,11 +69,17 @@ Classroom documentation for school year 22-23
 - [Pog Catalogue](https://github.com/csmith1188/OnlyPogs)
 - [Formbar Rewrite](https://github.com/csmith1188/Formbar.js)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 - [Login Page Boilerplate](https://github.com/csmith1188/NEELite_loginBoilerplate)
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 >>>>>>> upstream/main
 =======
 - [Login Page Boilerplate](https://github.com/csmith1188/NEELite_loginBoilerplate)
 >>>>>>> 8b951ebe51cb8c68fc94614401c6dc1b659db758
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

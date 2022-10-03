@@ -1,0 +1,110 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Masher Game</title>
+</head>
+<body>
+    <script>
+        var score = 0
+        var direction = 0
+        var time = 20
+        setInterval(function (){
+                if (time > 0){
+                    time = time - 1
+                    let TimerBox = document.getElementById('Timer');
+                    TimerBox.innerHTML = "Timer: " + time;
+                }
+        }, 1000 )
+        setInterval(function (){
+            direction = Math.floor(Math.random()* 4)
+            directionBox = document.getElementById('DirectionBox')
+            if (direction == 0){
+                directionBox.innerHTML = 'Up'
+            }
+            else if (direction == 1){
+                directionBox.innerHTML = 'Right'
+            }
+            else if (direction == 2){
+                directionBox.innerHTML = 'Down'
+            }
+            else if (direction == 3) {
+                directionBox.innerHTML = 'Left'
+            }
+        },2000 )
+        //const cont = navigator.getGamepads()[0];
+       // if (cont.buttons[0].pressed){
+           // if (time > 0  ){
+            //    score = score +1
+            //    scoreBox = document.getElementById('scoreBox')
+             //   scoreBox= score
+          //  }
+      //  }
+        window.addEventListener('gamepadconnected', (event) => {
+             const update = () => {
+                const output = document.getElementById('axes');
+                output.innerHTML = ''//clears output for us
+
+                for (const gamepad of navigator.getGamepads()) {
+                    if (!gamepad) continue;
+                    for (const [index, axis] of gamepad.axes.entries()) {
+                        output.innerHTML +=`
+                        <label>${gamepad.index}, ${index}
+                        <progress value=${axis * 0.5 + 0.5}></progress>
+                        </label>
+                        `
+                    }
+                }
+                 //Only read the first controller
+         const cont = navigator.getGamepads()[0];
+        console.log(cont);
+        //If the A button was pressed
+        if (cont.buttons[0].pressed) {
+           cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+             duration: 100,
+             weakMagnitude: 1.0,
+           strongMagnitude: 1.0,
+          });
+        }
+                requestAnimationFrame(update);
+
+             };
+            update();
+            //Up and down axix
+        if (cont.axes[1] >= 0.8) { //Down
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        } else if (cont.axes[1] <= -0.8) { //Up
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        }
+        })
+        
+    </script>
+    Press button on controller to connect
+
+    <div id ='axes' style = 'display: flex; flex-direction: column;'>
+        
+    </div>
+    <div id = 'Timer' style = 'display:block;'>
+
+    </div>
+    <div id ='DirectionBox'>
+
+    </div>
+    <div id ='scoreBox'>   
+        
+    </div>
+
+</body>
+</html>

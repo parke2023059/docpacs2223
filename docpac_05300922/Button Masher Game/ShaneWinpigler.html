@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" context="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script>
+            window.addEventListener('gamepadconnected', (event) => {
+                const update = () => {
+                    const output = document.getElementById(' axes ');
+                    output.innerHTML = '', //clear the output
+
+                    for (const gamepad of navigator.getGamepads()) {
+                        if (!gamepad) continue;
+                        for (const [index, axes] of gamepad.axes.entries()) {
+                            output.innerHTML += `
+                                <label> ${gamepad.index}, ${index}
+                                <progress value=${axis * 0.5}></progress>
+                                </label>
+                            `
+                        }
+                    }
+                    requestAnimationFrame(update);
+                }
+                update();
+            })
+        </script>
+    </head>
+    <body>
+        Press button on controller to connect.
+    <div id="axes" style="display: flex; flex-direction: column;"></div>    
+    </body>
+</html>

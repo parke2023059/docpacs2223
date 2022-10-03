@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+                window.addEventListener('gamepadconnected', (event) => {
+            const update = () => {
+                const output = document.getElementById('axes');
+                output.innerHTML = ''; //clear output
+                
+                for (const gamepad of navigator.getGamepads()) {
+                    if (!gamepad) continue;
+                    for (const [index, axis] of gamepad.axes.entries()) {
+                        output.innerHTML += `
+                        <label>${gamepad.index}, ${index}
+                        <progress value=${axis * 0.5 + 0.5}></progress>
+                        </label>
+                        `
+                    }
+                }
+                requestAnimationFrame(update);  
+            };
+            update();
+        });
+        var score = 0
+        var timer = 20
+        var direction = 0
+
+
+        function myTimer(){
+            if(timer > 0){
+                timer = timer - 1
+            }
+            document.getElementById('timer box').innerHTML = "timer: " + timer
+        }
+        setInterval(myTimer, 1000)
+
+        function myDirection(){
+            direction = Math.floor(Math.random() * 4)
+            if(direction == 0){
+                direction = "up"
+            }
+            else if(direction == 1){
+                direction = "right"
+            }
+            else if(direction == 2){
+                direction = "down"
+            }
+            else if(direction == 3){
+                direction = "left"
+            }
+            document.getElementById("direction box").innerHTML = 'direction' + direction
+        }
+        while(timer > 0){
+            setInterval(myDirection, 2000)
+        }
+
+
+
+        window.addEventListener('gamepadconnected', (event) => {
+        // Update Controller
+        const update = () => {
+          //Only read the first controller
+          const cont = navigator.getGamepads()[0];
+          console.log(cont);
+          //This will loop the update every "animation frame"
+          requestAnimationFrame(update);
+
+        //If the A button was pressed
+        if (cont.buttons[0].pressed) {
+         cont.vibrationActuator.playEffect('dual-rumble', {
+             startDelay: 0,
+             duration: 100,
+             weakMagnitude: 1.0,
+             strongMagnitude: 1.0,
+           });
+        }
+                //Up and down axis
+                if (cont.axes[1] >= 0.8) { //Down
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        } else if (cont.axes[1] <= -0.8) { //Up
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        }
+
+        }; //End Update Controller
+        //Kick off the loop
+        update();
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    </script>
+</head>
+<body>
+    Press Button on Controller to Connect
+    <div id="axes" style="display: flex; flex-direction: column;"></div>
+    <div id="score box">
+
+    </div>
+
+    <div id="timer box">
+        
+    </div>
+
+    <div id="direction box">
+
+    </div>
+
+
+
+
+</body>
+<html>

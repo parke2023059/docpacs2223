@@ -1,0 +1,68 @@
+<div class="game">
+    <div class="game">
+        <h3>BlackJack</h3>
+
+    <div class="game-body">
+        <div class="game-options">
+            <input type="button" id="btnstart" class="btn" value="start" onclick="startBlackJack()">
+            <input type="button" class="btn" value="hit me" onclick="hitMe()">
+            <input type="button" class="btn" value="stay" onclick="stay()">
+        </div>
+        <div class="status" id="status"></div>
+        <div id="deck" class="deck">
+            <div id="deckCount">52</div>
+        </div>
+        <div id="players" class="players"></div>
+        <div class="clear"></div>
+    </div>
+    </div>
+</div>
+
+<script>
+    var suits = ["Spades", "Hearts", "Diamonds", "Clubs"]
+    var values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+    var deck = new Array();
+
+    function createdeck(){
+        deck = new Array();
+        for (var i = 0 ; i < values.length ; i++){
+            for (var x = 0 ; x < suits.length ; x++){
+                var weight = parseInt(values[i]);
+                if (values[i] == "J" || values[i] == "Q" || values[i] == "K"){
+                    weight = 10;
+                }
+                if (values[i] == "A"){
+                    weight =11;
+                }
+                var card = {Value: values[i], Suit: suits[x], Weight: weight};
+                deck.push(card);
+            }
+        }
+    }
+
+function shuffle(){
+    for (var i = 0; i < 1000; i++) {
+        var location1 = Math.floor((Math.random() * deck.length));
+        var location2 = Math.floor((Math.random() * deck.length));
+        var tmp = deck[location1];
+
+        deck[location1] = deck[location2];
+        deck[location2] = tmp;
+    }
+
+}
+var players = new Array();
+function createPlayer(num) {
+    players = new Array();
+    for (var i = 0; i < players.length; i++) {
+        var hand = new Array();
+        var player = {Name: 'Player' + i, ID:i, Points: 0, Hand: hand};
+        players.push(player);
+    }
+}
+
+function createPlayerUI() {
+    document.getElementById('players').innerHTML='';
+    for(var i = 0, i < players.length; i++)
+}
+</script>

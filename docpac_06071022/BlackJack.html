@@ -1,97 +1,67 @@
-<div class="game">
-    <div class="game">
-        <h3>BlackJack</h3>
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>BlackJack</h1>
 
-    <div class="game-body">
-        <div class="game-options">
-            <input type="button" id="btnstart" class="btn" value="start" onclick="startBlackJack()">
-            <input type="button" class="btn" value="hit me" onclick="hitMe()">
-            <input type="button" class="btn" value="stay" onclick="stay()">
-        </div>
-        <div class="status" id="status"></div>
-        <div id="deck" class="deck">
-            <div id="deckCount">52</div>
-        </div>
-        <div id="players" class="players"></div>
-        <div class="clear"></div>
-    </div>
-    </div>
-</div>
+        <p id="text-area">Welcome to BlackJack</p>
+        <button id="new-game-button">New Game</button>
+        <button id = "hit-button">Hit</button>
+        <button id = "stay-button">Stay</button>
+    </body>    
+</html>
+
+
 
 <script>
-    var suits = ["Spades", "Hearts", "Diamonds", "Clubs"]
-    var values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
-    var deck = new Array();
+    let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
+    let values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
+    
+    let textArea = document.getElementById('text-area');
+    let newGameButton = document.getElementById('new-game-button');
+    let hitButton = document.getElementById('hit-button');
+    let stayButton = document.getElementById('stay-button');
 
-    function createdeck(){
-        deck = new Array();
-        for (var i = 0 ; i < values.length ; i++){
-            for (var x = 0 ; x < suits.length ; x++){
-                var weight = parseInt(values[i]);
-                if (values[i] == "J" || values[i] == "Q" || values[i] == "K"){
-                    weight = 10;
+    hitButton.style.display = 'none';
+    stayButton.style.display = 'none';
+
+    let gameStart = false,
+        gameOver = false,
+        playWon = false,
+        dealerCards = [],
+        playerCards = [],
+        dealerScore = 0,
+        playerScore = 0,
+        deck = [];
+
+    newGameButton.addEventListener('click', function(){
+        gameStarted = true;
+        gameOver = false;
+        playWon = false;
+
+        deck = createDeck();
+        shuffleDeck(deck);
+        dealerCards = [getNextCard(), getNextCard()];
+        playerCards = [getNextCard(), getNextCard()];
+        newGameButton.style.display = 'none';
+        hitButton.style.display = 'inline';
+        stayButton.style.display = 'inline';
+        showStatus();
+    })
+    function createDeck() {
+        let deck = []
+        for (let suitIdx = 0; suitIdx < suits.length; suitIdx++) {
+            for (let valueIdx = 0; valueIdx < values.length; valueIdx++) {
+                let card = {
+                    suit: suits[suitIdx],
+                    value: values[valueIdx]
                 }
-                if (values[i] == "A"){
-                    weight =11;
-                }
-                var card = {Value: values[i], Suit: suits[x], Weight: weight};
                 deck.push(card);
             }
         }
+        return deck;
     }
 
-function shuffle(){
-    for (var i = 0; i < 1000; i++) {
-        var location1 = Math.floor((Math.random() * deck.length));
-        var location2 = Math.floor((Math.random() * deck.length));
-        var tmp = deck[location1];
-
-        deck[location1] = deck[location2];
-        deck[location2] = tmp;
+    function shuffleDeck(deck) {
+        for (let i = 0; i < deck.length; i++)
     }
-
-}
-var players = new Array();
-function createPlayer(num) {
-    players = new Array();
-    for (var i = 0; i < players.length; i++) {
-        var hand = new Array();
-        var player = {Name: 'Player' + i, ID:i, Points: 0, Hand: hand};
-        players.push(player);
-    }
-}
-
-function createPlayerUI() {
-    document.getElementById('players').innerHTML='';
-    for(var i = 0, i < players.length; i++){
-        var div_player = document.createElement('div');
-        var div_playerid = document.createElement('div');
-        var div_hand = document.createElement('div');
-        var div_points = document.createElement('div');
-
-        div_points.className = 'points';
-        div_points.id = 'points_' + i;
-        div_player.id = 'player_' + i;
-        div_player.className = 'player';
-        div_hand.id = 'hand_' + i;
-
-        div_playerid.innerHTML = players[i].ID;
-        div_player.appendChild(div_playerid);
-        div_player.appendChild(div_hand);
-        div_player.appendChild(div_points);
-        document.getElementById('players').appendChild(div_player)
-    }
-}
-function startBlackJack() {
-    document.getElementById('btnStart').value = 'Restart';
-    document.getElementById('status').style.display = 'none';
-    currentPlayer = 0;
-    createdeck();
-    shuffle();
-    createPlayer(2)
-    createPlayerUI();
-    dealHands();
-    document.getElementById('player_' + createPlayer).classList.add('active');
-}
-
 </script>

@@ -63,6 +63,35 @@ function createPlayer(num) {
 
 function createPlayerUI() {
     document.getElementById('players').innerHTML='';
-    for(var i = 0, i < players.length; i++)
+    for(var i = 0, i < players.length; i++){
+        var div_player = document.createElement('div');
+        var div_playerid = document.createElement('div');
+        var div_hand = document.createElement('div');
+        var div_points = document.createElement('div');
+
+        div_points.className = 'points';
+        div_points.id = 'points_' + i;
+        div_player.id = 'player_' + i;
+        div_player.className = 'player';
+        div_hand.id = 'hand_' + i;
+
+        div_playerid.innerHTML = players[i].ID;
+        div_player.appendChild(div_playerid);
+        div_player.appendChild(div_hand);
+        div_player.appendChild(div_points);
+        document.getElementById('players').appendChild(div_player)
+    }
 }
+function startBlackJack() {
+    document.getElementById('btnStart').value = 'Restart';
+    document.getElementById('status').style.display = 'none';
+    currentPlayer = 0;
+    createdeck();
+    shuffle();
+    createPlayer(2)
+    createPlayerUI();
+    dealHands();
+    document.getElementById('player_' + createPlayer).classList.add('active');
+}
+
 </script>

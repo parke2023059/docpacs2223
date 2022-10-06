@@ -88,8 +88,9 @@
                     var div = document.createElement("div");
                     div.style.width = 200 + "px";
                     div.style.height = 250 + "px";
-                    div.innerHTML = "Card Value: " + card.value + "\nCard Suit: " + card.suit;
-                    div.style.border = "thick Solid #000000";
+                    div.innerHTML = card.face + " of " + card.suit + "<br>" + "Card Value: " + card.value + "<br>" + "Card Suit: " + card.suit;
+                    div.style.border = "solid";
+                    div.style.borderWidth = 1 + "px" + " " + 5 + "px";
                     div.style.margin = 5 + 'px';
                     div.style.display = "inline-block";
                     document.body.appendChild(div);

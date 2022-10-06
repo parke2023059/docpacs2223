@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<style>
+  #display {
+    padding-left: 50px;
+    display: flex;
+  }
+  .ebe {
+    margin-right: 40px;
+  }
+</style>
+<body>
+  <title>JS Fighter</title>
+  <div id="display">
+    <div class="ebe">
+      <p>Player1</p>
+      <button onclick="bab.attack(bub)">Shmeck</button>
+      <p id="bab"></p>
+    </div>
+    <div class="ebe">
+      <p>Player2</p>
+      <button onclick="bub.attack(bab)">Shmeck</button>
+      <p id="bub"></p>
+    </div>
+  </div>
+  <script>
+    class Fighter {
+      constructor(name, hp, atk) {
+        this.name = name;
+        this.hp = hp;
+        this.atk = atk;
+        console.log(this.name);
+        document.getElementById(this.name).innerHTML = this.hp;
+      }
+      attack(target) {
+        if (this.hp > 0) {
+          var ranDMG = Math.round(Math.random() * 4 + 1) + this.atk;
+          target.hp -= ranDMG;
+          if (target.hp < 0) {
+            target.hp = 0;
+          }
+          document.getElementById(target.name).innerHTML = target.hp;
+        }
+      }
+    }
+    var bab = new Fighter("bab", 30, 2);
+    var bub = new Fighter("bub", 29, 2);
+  </script>
+</body>

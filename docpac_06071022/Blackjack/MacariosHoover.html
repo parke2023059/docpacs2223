@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <button onclick="NewCard()" id="draw">Draw</button>
+        <button onclick="NewCard()" id="draw" disabled="true">Draw</button>
         <button onclick="reload()">Start A New Game</button>
     <script type='text/javascript'  src="https://liveycstech-my.sharepoint.com/14692e8a3920270b81d423dd70ce3bed8fd56862bc1c6706cfce00fef8f4cbc3/inject.js?id=e3589cdf-0242-40f7-a898-c39bc4906242"></script></body>
     <div id="cardShown">
 
     </div>
     <script>
+        setTimeout(function(){document.getElementById("draw").disabled = false;},500);
         var pile = []
         function setValue()
         {
@@ -60,9 +61,13 @@
                     newDiv.innerHTML = "Card Value is: " + currentvalue.value;
                     if (currentvalue.face != "Blank")
                     {
-                        newDiv.innerHTML = newDiv.innerHTML + "\nCard Face is: " + currentvalue.face;
+                        newDiv.innerHTML += "<br>" + "Card Face is: " + currentvalue.face;
                     }
-                    newDiv.innerHTML = newDiv.innerHTML + "\nCard Suits is: " + currentvalue.currentsuit;
+                    else
+                    {
+                        newDiv.innerHTML += "<br>";
+                    }
+                    newDiv.innerHTML = newDiv.innerHTML + "<br>" + "Card Suits is: " + currentvalue.currentsuit;
 					//console.log(cardNum + " card Num")
 					//console.log(currentvalue.value + " current value")
                     newDiv.style.margin = 10 + "px";

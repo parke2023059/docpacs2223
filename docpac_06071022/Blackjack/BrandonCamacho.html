@@ -81,7 +81,12 @@
                     score = score + currentcard.cardValue;
                     var div = document.createElement("div");
                     div.innerHTML = currentcard.cardFace + ' of ' + currentcard.cardSuit;
-                    div.style.border = "thick Solid #000000"
+                    if (currentcard.cardSuit == 'Spades' || currentcard.cardSuit == 'Clubs') {
+                        div.style.border = "thick Solid #000000"
+                    }
+                    if (currentcard.cardSuit == 'Diamonds' || currentcard.cardSuit == 'Hearts') {
+                        div.style.border = "thick Solid #ff0000"
+                    }
                     div.style.width = 150 + "px";
                     div.style.height = 225 + "px";
                     div.style.display = "inline-block";

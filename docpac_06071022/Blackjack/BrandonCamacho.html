@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack HTML</title>
+</head>
+<body>
+    <h1>
+        <button onclick='newGame()'>New Game</button>
+        <button onclick='newCard()' id="1">Draw a Card</button>
+    </h1>
+    <script>
+        function newGame() {
+            location.reload()
+        }
+
+        var cardPile = []
+        var score = 0;
+        function setValue() 
+        {
+            var cardNumber = Math.floor(Math.random() * 13 + 1);
+            var cardFace = "Placeholder";
+            var cardValue = 0;
+            var cardDisplayed = false;
+            var cardSuit = Math.floor(Math.random() * 4)
+
+            if (cardNumber == 1) {
+                cardFace = 'Ace'
+                cardValue = 1
+            }
+            if (cardNumber > 1 && cardNumber < 11) {
+                cardFace = cardNumber
+                cardValue = cardNumber
+            }
+            if (cardNumber == 11) {
+                cardFace = 'Jack'
+                cardValue = 11
+            }
+            if (cardNumber == 12) {
+                cardFace = 'Queen'
+                cardValue = 11
+            }
+            if (cardNumber == 13) {
+                cardFace = 'King'
+                cardValue = 11
+            }
+
+            if (cardSuit == 0) {
+                cardSuit = 'Spades'
+            }
+            if (cardSuit == 1) {
+                cardSuit = 'Clubs'
+            }
+            if ( cardSuit == 2) {
+                cardSuit = 'Diamonds'
+            }
+            if (cardSuit == 3) {
+                cardSuit = 'Hearts'
+            }
+
+           cardPile.push({
+                cardNumber: cardNumber,
+                cardFace: cardFace,
+                cardValue: cardValue,
+                cardDisplayed: cardDisplayed,
+                cardSuit: cardSuit
+           })
+        }
+
+        function newCard() 
+        {
+            if (score < 21) 
+            {            
+                setValue();
+            }
+            cardPile.forEach((currentcard) =>  {
+                if (currentcard.cardDisplayed == false)
+                {
+                    score = score + currentcard.cardValue;
+                    var div = document.createElement("div");
+                    div.innerHTML = currentcard.cardFace + ' of ' + currentcard.cardSuit;
+                    div.style.border = "thick Solid #000000"
+                    div.style.width = 150 + "px";
+                    div.style.height = 225 + "px";
+                    div.style.display = "inline-block";
+                    div.style.margin = 15 + "px";
+                    document.body.appendChild(div);
+                    currentcard.cardDisplayed = true;
+                }
+                });
+
+            if (score > 21) {
+                document.getElementById("1").innerHTML = "Your score is greater than 21."
+            }
+            if (score == 21) {
+                document.getElementById("1").innerHTML = "Your score is equal to 21."
+            }
+        }
+    </script>
+</body>
+</html>

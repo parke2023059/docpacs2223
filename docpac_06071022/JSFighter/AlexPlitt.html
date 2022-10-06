@@ -18,6 +18,9 @@
         </p>
         <button type="button" id="player2Attack" onclick = "player2.attack(player1)">Attack</button>
     </div>
+    <br>
+    <br>
+    <button type="button" id="newGame" onclick = "location.reload()">New Game</button>
     <script>
         var player1P = document.getElementById("player1Hp");
         var player2P = document.getElementById("player2Hp");
@@ -37,6 +40,8 @@
                 }
                 else if (target.hp == 0){
                     target.hp = target.hp;
+                    document.getElementById("player1Attack").disabled = true;
+                    document.getElementById("player2Attack").disabled = true;
                 };
                 player1P.innerHTML = "Player 1's HP is: " + player1.hp;
                 player2P.innerHTML = "Player 2's HP is: " + player2.hp;

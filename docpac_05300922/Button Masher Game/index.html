@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #head {
+      text-align: center;
+    }
+
+    .content {
+      width: 400px;
+      margin: auto;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .statBox {
+      width: 100px;
+      /* height: 100px; */
+      border: 1px solid black;
+      border-radius: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h3 id="head">Press a Gamepad button to start!</h3>
+  <div class="content">
+    <div class="statBox">Direction</div>
+    <div class="statBox">Time</div>
+    <div class="statBox">Score</div>
+  </div>
+  <div class="content">
+    <div id="direction" class="statBox">--</div>
+    <div id="timer" class="statBox">0</div>
+    <div id="score" class="statBox">0</div>
+  </div>
+</body>
+
+<script>
+
+  var score = 0;
+  var timer = 0;
+  var direction = 0;
+
+  const directionBox = document.getElementById('direction');
+  const scoreBox = document.getElementById('score');
+  const timerBox = document.getElementById('timer');
+
+  var buttonPressed = false;
+
+  function increaseScore(cont) {
+    cont.vibrationActuator.playEffect('dual-rumble', {
+      startDelay: 0,
+      duration: 50,
+      weakMagnitude: 1.0,
+      strongMagnitude: 1.0,
+    });
+    score++;
+    scoreBox.innerHTML = score;
+    buttonPressed = true;
+  }
+
+  //Hit any button on the Gamepad to start
+  window.addEventListener('gamepadconnected', (event) => {
+    timer = 20;
+    document.getElementById('head').innerHTML = 'Joystick in the direction and smash A!'
+    directionBox.innerHTML = 'Up';
+    // Update Controller
+    const update = () => {
+      var cont = navigator.getGamepads()[0];
+      //Only read the first controller
+      // console.log(cont);
+      //If the A button was pressed
+      if (cont.buttons[0].pressed && timer > 0) {
+        if (!buttonPressed) {
+          //Up and down axix
+          if (cont.axes[1] >= 0.9 && direction == 2) { //Down
+            increaseScore(cont)
+          } else if (cont.axes[1] <= -0.9 && direction == 0) { //Up
+            increaseScore(cont)
+          } else if (cont.axes[0] >= 0.9 && direction == 1) { //Right
+            increaseScore(cont)
+          } else if (cont.axes[0] <= -0.9 && direction == 3) { //Left
+            increaseScore(cont)
+          }
+        }
+      } else {
+        buttonPressed = false;
+      }
+      if (cont.buttons[9].pressed) {
+        location.reload();
+      }
+      //This will loop the update every "animation frame"
+      requestAnimationFrame(update);
+    }; //End Update Controller
+    //Kick off the loop
+    update();
+  });
+
+  //Change direction every two seconds
+  setInterval(() => {
+    if (timer > 0) {
+      direction = Math.floor(Math.random() * 4);
+      switch (direction) {
+        case 0:
+          directionBox.innerHTML = 'Up';
+          break;
+        case 1:
+          directionBox.innerHTML = 'Right';
+          break;
+        case 2:
+          directionBox.innerHTML = 'Down';
+          break;
+        case 3:
+          directionBox.innerHTML = 'Left';
+          break;
+        default:
+          break;
+      }
+    }
+  }, 2000);
+
+  setInterval(() => {
+    if (timer > 0) {
+      timer--; }
+    else {
+      directionBox.innerHTML = '--';
+      document.getElementById('head').innerHTML = 'Press Start to refresh!'
+    }
+    timerBox.innerHTML = timer;
+  }, 1000);
+
+</script>
+
+</html>

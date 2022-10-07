@@ -21,9 +21,15 @@
     <br>
     <br>
     <button type="button" id="newGame" onclick = "location.reload()">New Game</button>
+    <br>
+    <br>
+    <div id="win">
+
+    </div>
     <script>
         var player1P = document.getElementById("player1Hp");
         var player2P = document.getElementById("player2Hp");
+        var youWin = document.getElementById("win");
 
         class Fighter {
             constructor(){
@@ -36,12 +42,13 @@
                     target.hp -= Math.floor(Math.random() * 5) + 1 + this.atk;
                     if (target.hp < 0){
                         target.hp = 0;
+                        document.getElementById("player1Attack").disabled = true;
+                        document.getElementById("player2Attack").disabled = true;
+                        youWin.innerHTML = this.name + " wins!"
                     };
                 }
                 else if (target.hp == 0){
                     target.hp = target.hp;
-                    document.getElementById("player1Attack").disabled = true;
-                    document.getElementById("player2Attack").disabled = true;
                 };
                 player1P.innerHTML = "Player 1's HP is: " + player1.hp;
                 player2P.innerHTML = "Player 2's HP is: " + player2.hp;

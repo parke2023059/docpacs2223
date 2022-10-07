@@ -6,6 +6,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <script>
+            let score = 0
+            let timer = 20
+            let direction = 0
+
+            function time() {
+                if (timer > 0){
+                    timer -= 1
+                    let timerbox = document.getElementById('Timer Box');
+                    timerbox.innerHTML = "Timer: " + timer;
+                }
+            }
+            setInterval(time, 1000)
+
+            function directionfunc() {
+                direction = Math.floor(Math.random() * 4)
+                if (direction == 0) {
+                    direction = 'UP'
+                } 
+                else if (direction == 1) {
+                    direction = 'RIGHT'
+                }
+                else if (direction == 2) {
+                    direction = 'LEFT'
+                }
+                else if (direction == 3) {
+                    direction = 'DOWN'
+                }
+            }
+
             window.addEventListener('gamepadconnected', (event) => {
                 const update = () => {
                     const output = document.getElementById(' axes ');
@@ -25,10 +54,41 @@
                 }
                 update();
             })
+            const cont = navigator.getGamepads()[0]
+            console.log(cont);
+            if (cont.buttons[0].pressed) {
+                cont.vibrationActuator.playEffect('dual-rumble', {
+                startDelay: 0,
+                duration: 100,
+                weakMagnitude: 1.0,
+                strongMagnitude: 1.0,
+                });
+            }
+                requestAnimationFrame(update);
+            update();
+            if (cont.axes[1] >= 0.8) { 
+                cont.vibrationActuator.playEffect('dual-rumble', {
+                startDelay: 0,
+                duration: 100,
+                weakMagnitude: 1.0,
+                strongMagnitude: 1.0,
+            });
+            } else if (cont.axes[1] <= -0.8) { 
+                cont.vibrationActuator.playEffect('dual-rumble', {
+                startDelay: 0,
+                duration: 100,
+                weakMagnitude: 1.0,
+                strongMagnitude: 1.0,
+            });
+        }
+    
         </script>
     </head>
     <body>
         Press button on controller to connect.
     <div id="axes" style="display: flex; flex-direction: column;"></div>    
+    <div id="Score Box"></div>
+    <div id="Timer Box"></div>
+    <div id="Direction Box"></div>
     </body>
 </html>

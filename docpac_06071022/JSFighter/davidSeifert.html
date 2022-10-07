@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Fighter</title>
+</head>
+<body>
+    <script>
+        class Fighter{
+            constructor(name, hp, atk){
+                this.name = "Bob",
+                this.hp = 200,
+                this.atk = 25
+            }
+            attack(target){
+                if (target.hp > 0){
+                    target.hp -= Math.floor(Math.random() * 4) + 1 + this.atk
+                }
+                if (target.hp <= 0){
+                    target.hp = 0
+                    document.getElementById("player1atk").disabled = true
+                    document.getElementById("player2atk").disabled = true
+                }
+
+                player1health.innerHTML = "Bob's health is " + player1.hp
+                player2health.innerHTML = "Suzie's health is " + player2.hp
+            }
+
+        }
+
+        var player1 = new Fighter();
+        var player2 = new Fighter();
+
+    </script>
+    <div id="player1">
+        <p id="player1health">
+            Bob's health is 200
+        </p>
+        <button id="player1atk" onclick="player1.attack(player2)">Attack</button>
+    </div>
+    <div id="player2">
+        <p id="player2health">
+            Suzie's health is 200
+        </p>
+        <button id="player2atk" onclick="player2.attack(player1)">Attack</button>
+    </div>
+</body>
+</html>

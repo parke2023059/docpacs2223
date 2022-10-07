@@ -22,5 +22,8 @@ Beckham Phillips
 https://play.kahoot.it/v2/?quizId=e159014b-581d-4145-a3eb-6dda3e3f1067
 Ryan Stevenson:
 https://play.kahoot.it/v2/?quizId=60fbd615-3857-42b5-8cb1-9eb03787b4ca
+<<<<<<< Updated upstream
 Logan Danner:
 https://create.kahoot.it/share/programming/6f2255cf-1219-4a79-9cdc-68913173c431
+=======
+>>>>>>> Stashed changes

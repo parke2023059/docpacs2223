@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <button onclick="NewCard()" id="draw" disabled="true">Draw</button>
+        <button onclick="reload()">Start A New Game</button>
+    </body>
+    <div id="cardShown">
+
+    </div>
+    <script>
+        setTimeout(function(){document.getElementById("draw").disabled = false;},500);
+        var pile = []
+        function setValue()
+        {
+                var number = Math.floor(Math.random() * 13 + 1);
+                var value = number;
+                var face = "Blank";
+                var randsuit = Math.floor(Math.random() * 3);
+                var suits = ["Spades", "Clubs", "Hearts", "Diamonds"]
+                var currentsuit = suits[randsuit];
+				var displayed = false;
+
+                if (number > 11) value = 11;
+                if (number == 1) face = "Ace";
+                if (number == 11) face = "Jack";
+                if (number == 12) face = "Queen";
+                if (number == 13) face = "King";
+
+                pile.push({
+                    number: number,
+                    value: value,
+                    face: face,
+                    currentsuit: currentsuit,
+					displayed: displayed
+                })
+				//console.log(pile + " pile");
+        }
+        var total = 0;
+        var cardNum = 1;
+		var firstcard = false;
+
+        NewCard()
+        NewCard()
+        NewCard()
+
+        function NewCard() 
+        {
+            //Real Code
+            pile.forEach((currentvalue) => {
+                if (cardNum != 100 && currentvalue.displayed == false)
+                {
+					//console.log("Run2?")
+                    total = total + currentvalue.value;
+                    //console.log(total + " total amount")  
+                    var newDiv = document.createElement("div");
+                    newDiv.style.width = 150 + "px";
+                    newDiv.style.height = 225 + "px";
+                    newDiv.style.display = "inline-block";
+                    newDiv.style.border = "thick solid #000000";
+                    
+                    newDiv.innerHTML = "Card Value is: " + currentvalue.value;
+                    if (currentvalue.face != "Blank")
+                    {
+                        newDiv.innerHTML += "<br>" + "Card Face is: " + currentvalue.face;
+                    }
+                    else
+                    {
+                        newDiv.innerHTML += "<br>";
+                    }
+                    newDiv.innerHTML = newDiv.innerHTML + "<br>" + "Card Suits is: " + currentvalue.currentsuit;
+					//console.log(cardNum + " card Num")
+					//console.log(currentvalue.value + " current value")
+                    newDiv.style.margin = 10 + "px";
+                    newDiv.style.top = 30 + "px";
+                    document.body.appendChild(newDiv);
+                    cardNum = cardNum + 1;    
+					currentvalue.displayed = true;
+                }         
+            });
+			//Testing
+            //console.log("Run?")
+			if (firstcard == true)
+			{
+				document.getElementById("draw").innerHTML = "Draw";
+				firstcard = false;
+			}
+
+            if (total < 21)
+            {
+                setValue();
+                //console.log(pile)
+            }
+			if (total > 21)
+			{
+				document.getElementById("draw").innerHTML = "Failed";
+			}
+			if (total == 21)
+			{
+				document.getElementById("draw").innerHTML = "Won";
+			}
+        }
+
+		function reload() 
+		{
+			location.reload();
+		}
+    </script>
+</html>

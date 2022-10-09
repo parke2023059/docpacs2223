@@ -1,0 +1,45 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>JSFighter</title>
+	</head>
+	<body>
+		<div id="fighters">
+			<div id="fighter1">
+				<h2>fighter2</h2>
+				<p id="fighter1Hp"></p>
+				<button onclick="fighter1.attack(fighter2)">attack</button>
+			</div>
+			<hr />
+			<div id="fighter2">
+				<h2>fighter2</h2>
+				<p id="fighter2Hp"></p>
+				<button onclick="fighter2.attack(fighter1)">attack</button>
+			</div>
+		</div>
+		<script>
+			class fighter {
+				constructor(name, hp, atk) {
+					this.name = name
+					this.hp = hp
+					this.atk = atk
+					document.getElementById(this.name + 'Hp').innerHTML =
+						'HP: ' + this.hp
+				}
+				attack(target) {
+					if (this.hp > 0) {
+						let damage = Math.round(Math.random() * 4 + 1) + this.atk
+						target.hp -= damage
+						if (target.hp < 0) target.hp = 0
+						document.getElementById(target.name + 'Hp').innerText =
+							target.hp
+					}
+				}
+			}
+			let fighter1 = new fighter('fighter1', 50, 10)
+			let fighter2 = new fighter('fighter2', 50, 10)
+		</script>
+	</body>
+</html>

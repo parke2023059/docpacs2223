@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BlackJack</title>
+        
+        <div>
+        </div>
+    <style>
+
+        .cardDisplay {
+            width: 150px;
+            height: 200px;
+            border: 4px solid;
+            border-color: black;
+            text-align: center;
+            margin: 50px;
+            padding: 2px;
+            position: absolute; 
+            top: 15px;
+            left: -10px
+        }
+        
+        </style>
+
+    </head>
+
+    <body>
+    
+        <button onclick="document.getElementById('button1').innerHTML = drawCard()"> Draw a Card </button>
+        <button onclick="document.getElementById('button2').innerHTML = location.reload()"> New Game </button>
+        <!-- <button onclick="document.getElementByID('button1').innerHTML = drawCard()"></button> -->
+        <p id='button1'></p>
+        <p id='button2'></p>
+        
+        <!-- <div class="cardDisplay">
+            <p>Cards</p>
+        </div> -->
+        
+        <!-- <div id="displayCards" style="width:150px; height:200px; border:4px solid; border-color:black; text-align:center; 
+        margin:50px; padding:2px; position:absolute; top:15px; left:-10px">
+        <p>Cards</p></div> -->
+
+    </body>
+    
+
+    <script>
+
+        var displayCards = document.createElement('cardDiv');
+        displayCards.style.display = "inline-block";
+
+       // document.getElementById('displayCards').innerHTML = button1;
+
+        // if (document.getElementById('button1').clicked == true) {
+        //     document.getElementById('cardDisplay').innerHTML = drawCard();
+        //     console.log("button1 was pressed");
+        // }
+
+        var cards = []
+        
+        
+        function drawCard() {
+            let card = {}
+            var number = Math.floor(Math.random() * 13) + 1;
+            card.number = number;
+            console.log(number)
+
+            // card suits
+            var suit = Math.floor(Math.random() * 13) + 1;
+            if (suit == 1 || suit == 2 || suit == 3) {
+                card.suit = "Hearts"
+            } 
+            else if (suit == 4 || suit == 5 || suit == 6) {
+                card.suit = "Spades"
+            } 
+            else if (suit == 7|| suit == 8 || suit == 9) {
+                card.suit = "Clubs"
+            } 
+            else  {
+                card.suit = "Diamonds"
+            }
+
+            // card face and value
+            if (card.number == 1) {
+                card.face = "Ace"
+                card.value = 1
+            }
+            else if (card.number == 11) {
+                card.face = "Jack"
+                card.value = number
+            }
+            else if (card.number == 12) {
+                card.face = "Queen"
+                card.value = 11
+            }
+            else if (card.number == 13) {
+                card.face = "King"
+                card.value = 11
+            } else {
+                card.face = number
+                card.value = number
+            }
+            
+           // document.getElementById('cardDisplay').innerHTML = drawCard();
+            cards.push(card)
+            console.log(cards)
+            
+        }
+        // for (card in cards) {
+
+        // }
+        
+        // drawCard()
+        
+    </script>
+</html>

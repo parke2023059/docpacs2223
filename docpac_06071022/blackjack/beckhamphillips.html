@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button onclick="newCard()" id="New Card">
+        Draw card 
+    </button>
+    <div id="table" style="display: flex; flex-direction: column;"></div>
+    <div id="cards">
+    
+    </div>
+    <div id="score"></div>
+    <button onclick="reset()">
+    Reset
+    </button>
+</body>
+
+    <script>
+        var cardHand = []
+        var score = 0
+
+        function drawCard (){
+        var number = Math.floor(Math.random() * 13) + 1;
+        var value = number
+        var face = '';
+        var suit = Math.floor(Math.random() * 4) + 1;
+        var cardDisplayed = false;
+
+       // if (number > 11){
+           // value = 11
+        //}
+        if (number == 1) {
+            face = "Ace 🃁"
+            value = 1;
+        }
+        else if (number == 11) {
+            face = "Jack 🃏"
+            value = 11;
+        }
+        else if (number == 12) {
+            face = "Queen ♕"
+            value = 11;
+        }
+        else if (number == 13) {
+            face = "King ♔"
+            value = 11;
+        }
+        else {
+            face = number
+        }
+        if (suit == 1) {
+            suit = "Clubs ♣"
+        }
+        else if (suit == 2) {
+            suit = "Spades ♠️"
+        }
+        else if (suit == 3) {
+            suit = "Hearts ♥️"
+        }
+        else if (suit == 4) {
+            suit = "Diamonds ♦"
+        }
+        console.log(value + " this is the number")
+
+        cardHand.push({
+            number: number,
+            value: value,
+            face: face,
+            suit:  suit,
+            cardDisplayed: cardDisplayed
+        });
+    };
+
+    drawCard ();
+    drawCard ();
+    console.log(cardHand);
+    console.log(score);
+    function reset(){
+        document.location.reload();
+    }
+
+    function newCard()
+    {
+        cardHand.forEach((card) => {
+        if (card.cardDisplayed == false)
+        {
+            score = score + card.value;
+            let div = document.createElement("div");
+            div.innerHTML = card.face + " of "  + card.suit;
+            div.style.display = "inline-block";
+            div.style.margin = 15 + "px";
+            div.style.width = 125 + 'px';
+            div.style.height = 155 + "px";
+            div.style.border = "thick solid #000000";
+            document.body.appendChild(div);
+            console.log("Runs maybe?");
+            card.cardDisplayed = true;
+        }
+        });
+
+        if (score < 21)
+        {
+            drawCard();
+        }
+
+        if (score > 21)
+        {
+            var button = document.getElementById("New Card")
+            button.innerHTML = "BUST!"
+            button.disabled = true;            
+        }
+
+        if (score == 21)
+        {
+            var button = document.getElementById("New Card")
+            button.innerHTML = "YOU WON!"
+            button.disabled = true;
+        }
+    }
+        
+    </script>
+    <p> </p>
+    <div id="Hand">
+        
+    </div>
+</html>

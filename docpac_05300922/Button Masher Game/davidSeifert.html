@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Masher</title>
+    <script>
+        var timer = 20
+        var direction = 0
+        window.addEventListener('gamepadconnected', (event) => {
+            const update = () => {
+                const output = document.getElementById("axes");
+                output.innerHTML = ''; // clear the output
+
+                for (const gamepad of navigator.getGamepads()) {
+                    if (!gamepad) continue;
+                    for (const [index, axis] of gamepad.axes.entries()) {
+                        output.innerHTML += `
+                            <label>${gamepad.index}, ${index}
+                            <progress value=${axis * 0.5 + 0.5}></progress>
+                            </label>
+                        `
+                    }
+                }
+
+                requestAnimationFrame(update);
+                //Only read the first controller
+        const cont = navigator.getGamepads()[0];
+        console.log(cont);
+        //If the A button was pressed
+        if (cont.buttons[0].pressed) {
+          cont.vibrationActuator.playEffect('dual-rumble', {
+             startDelay: 0,
+             duration: 100,
+             weakMagnitude: 1.0,
+             strongMagnitude: 1.0,
+           });
+        }
+        //Up and down axix
+        if (cont.axes[1] >= 0.8) { //Down
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        } else if (cont.axes[1] <= -0.8) { //Up
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        } else if (cont.axes[0] <= -0.8) { //Right
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        }else if (cont.axes[0] >= 0.8) { //Left
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        }
+
+            };
+
+            update();
+        })
+        function timeFunc(){
+            if (timer > 0){
+                timer -= 1
+                let timerBox = document.getElementById("timer box");
+                timerBox.innerHTML = 'Timer: ' + timer;
+            }
+        }
+        setInterval(timeFunc, 1000)
+        function directFunc(){
+            direction = Math.floor(Math.random() * 4);
+            if (direction == 0){
+                direction = "Up"}
+            else if (direction == 1){
+                direction = "Right"}
+            else if (direction == 2){
+                direction = "Down"}
+            else if (direction == 3){
+                direction = "Left"}
+            document.getElementById("direction box").innerHTML = 'Direction: ' + direction;
+        }
+        setInterval(directFunc, 2000)
+
+    </script>
+</head>
+<body>
+Press button on controller to connect.
+    <div id="axes" style="display: flex; flex-direction: column;"></div>
+    <div id="score box"></div>
+    <div id="timer box"></div>
+    <div id="direction box"></div>
+</body>
+</html>

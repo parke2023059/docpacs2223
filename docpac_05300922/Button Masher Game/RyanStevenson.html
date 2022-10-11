@@ -1,0 +1,77 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script>
+			var score = 0
+			var timer = 20
+			var direction = 0
+			var toggle = true
+			var randomInterval
+
+			window.addEventListener('gamepadconnected', (event) => {
+				setInterval(() => {
+					if (timer > 0) {
+						timer--
+						document.getElementById('timer box').innerHTML = timer
+					} else document.getElementById('timer box').innerHTML = ''
+				}, 1000)
+				setInterval(() => {
+					if (timer > 0) {
+						setTimeout(() => {
+							randomInterval = Math.round((Math.random() * 2 + 1) * 1000)
+							direction = Math.round(Math.random() * 3)
+							if (direction == 0)
+								document.getElementById('direction box').innerHTML =
+									'Up'
+							else if (direction == 1)
+								document.getElementById('direction box').innerHTML =
+									'Right'
+							else if (direction == 2)
+								document.getElementById('direction box').innerHTML =
+									'Down'
+							else if (direction == 3)
+								document.getElementById('direction box').innerHTML =
+									'Left'
+						}, randomInterval)
+					} else document.getElementById('direction box').innerHTML = ''
+				}, 1000)
+				const update = () => {
+					for (const gamepad of navigator.getGamepads()) {
+						if (!gamepad) continue
+						if (gamepad.buttons[0].pressed && timer > 0 && toggle) {
+							//A
+							if (direction == 2 && gamepad.axes[1] >= 0.8) {
+								//Down
+								score++
+							} else if (direction == 0 && gamepad.axes[1] <= -0.8) {
+								//Up
+								score++
+							} else if (direction == 1 && gamepad.axes[0] >= 0.8) {
+								//Right
+								score++
+							} else if (direction == 3 && gamepad.axes[0] <= -0.8) {
+								//Left
+								score++
+							}
+							toggle = false
+						} else if (!gamepad.buttons[0].pressed && !toggle)
+							toggle = true
+						if (gamepad.buttons[9].pressed) location.reload()
+						document.getElementById('score box').innerHTML = score
+					}
+					requestAnimationFrame(update)
+				}
+				update()
+			})
+		</script>
+	</head>
+	<body>
+		Press button on controller to connect
+		<div id="score box"></div>
+		<div id="timer box"></div>
+		<div id="direction box"></div>
+	</body>
+</html>

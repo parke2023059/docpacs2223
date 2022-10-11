@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>JSFighter</title>
+</head>
+<body>
+    <script>
+        class fighter {
+            constructor() {
+                this.name = 'Waltuh';
+                this.hp = 100;
+                this.atk = 20;
+            }
+            attack(target) {
+                this.atk = (Math.floor(Math.random() * 5 + 1)) + this.atk;
+                if (target.hp > 0) {
+                    target.hp = target.hp - this.atk;
+                }
+                if (target.hp < 0) {
+                    target.hp = 0;
+                }
+                player1Div.innerHTML = 'Player1 Hp: ' + player1.hp;
+                player2Div.innerHTML = 'Player2 Hp: ' + player2.hp;
+            }
+        }
+        var player1 = new fighter();
+        var player2 = new fighter();
+
+        //Player 1 Div
+        var player1Div = document.createElement('div');
+        player1Div.innerHTML = 'Player1 Hp: ' + player1.hp;
+        player1Div.style.display = 'inline-block';
+        player1Div.style.marginLeft = 15 + 'px';
+        document.body.appendChild(player1Div);
+
+        //Player2 Div
+        var player2Div = document.createElement('div');
+        player2Div.innerHTML = 'Player2 Hp: ' + player2.hp;
+        player2Div.style.display = 'inline-block';
+        player2Div.style.marginLeft = 35 + 'px';
+        document.body.appendChild(player2Div);
+    </script>
+</body>
+<div>
+    <button onclick='player1.attack(player2)' style='margin: 15px;'>Attack Player 2</button>
+    <button onclick='player2.attack(player1)' style='margin: 15px;'>Attack Player 1</button>
+</div>
+</html>

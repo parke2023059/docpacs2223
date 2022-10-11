@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <button id="drawanothercard" class="button"onclick="drawanother()">
+            Click Here To Draw A Card
+        </button>
+        <button id="standing" class="button"onclick="stand()">
+            Click Here To Stand
+        </button>
+        <button class="button"onclick="restart()">
+            Click Here To Restart
+        </button>
+        <div id="card#1">
+    
+        </div>
+        <div id="results">
+
+        </div>
+
+
+            <style>
+                div {
+                    border-style: solid;
+                    border-width: 1px;
+                }
+                .button {
+                    background-color: #333333;
+                    border: none;
+                    color: white;
+                    padding: 15px 32px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    transition-duration: 0.3s;
+                    border: 1px solid black;
+                    float: left;
+}
+                .button:hover {
+                    background-color: rgb(189, 189, 189);
+                    color: black;
+                }
+            </style>
+
+
+        <script>
+            var totalvalue = 0
+            function cardnumber() {
+                const x = Math.floor(Math.random() * 12) + 1
+                return x
+            }
+            function pickface(y) {
+                if (y == 1) {
+                    y = "an Ace"
+                }
+                else if (y == 11) {
+                    y = "a Jack"
+                }
+                else if (y == 12) {
+                    y = "a Queen"
+                }
+                else if (y == 13) {
+                    y = "a King"
+                }
+                else {
+                    y = y
+                }
+                return y
+            }
+            function pickvalue(x) {
+                if (x > 11) {
+                    x = 11
+                }
+                return x
+            }
+            function picksuit() {
+                let z = Math.floor(Math.random() * 3) + 1
+                if (z == 1) {
+                    z = "spades. "
+                }
+                else if (z == 2) {
+                    z = "clubs. "
+                }
+                else if (z == 3) {
+                    z = "hearts. "
+                }
+                else {
+                    z = "diamonds. "
+                }
+                return z
+            }
+            let cardsdrawn = 0
+            cardpile = []
+
+            // if (button1 is pressed) {run again}
+
+            
+
+            for (cards in cardpile) {
+                document.getElementById("cardpile").innerHTML = cards
+            }
+            function drawanother() {
+                let number = cardnumber()
+                let value = pickvalue(number)
+                totalvalue += value
+                console.log(totalvalue);
+                let face = pickface(number)
+                let suit = picksuit()
+                cardsdrawn += 1
+                const card = {
+                    number: number,
+                    value: value,
+                    face: face,
+                    suit: suit
+            }
+                console.log(card);
+                cardpile.push(card)
+                document.getElementById("card#1").innerHTML += "Your #" + cardsdrawn + " card is a " + card.face + " of " + card.suit + " This card is worth " + card.value + " points.";
+                if (totalvalue >= 21) {
+                    document.getElementById("drawanothercard").disabled = true
+                    document.getElementById("standing").disabled = true
+                }
+                if (totalvalue > 21) {
+                    document.getElementById("results").innerHTML = "You busted, better luck next time. Your final score was " + totalvalue;
+                }
+                if (totalvalue == 21) {
+                    document.getElementById("results").innerHTML = "You've won!"
+                }
+                if (totalvalue < 21) {
+                    document.getElementById("results").innerHTML = "Do you want to stand or draw another? Your score right now is " + totalvalue;
+                }
+            }
+            function restart() {
+                location.reload()
+            }
+            function stand() {
+                document.getElementById("drawanothercard").disabled = true
+                document.getElementById("standing").disabled = true
+                document.getElementById("results").innerHTML = "You are now standing, your score is " + totalvalue;
+            }
+
+        </script>
+
+    </body>
+
+</html>

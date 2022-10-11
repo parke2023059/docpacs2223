@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<div id="axes" style="display: flex; flex-direction: column;"></div>
+<body>
+
+        <div id="timerbox">
+            
+        </div>
+
+        <div id="directionbox">
+            
+        </div>
+
+        <div id="scorebox">
+
+        </div>
+
+</body>
+    <script>
+        window.addEventListener("gamepadconnected", (event) => {
+            const update = () => {
+                const output = document.getElementById("axes");
+                output.innerHTML = "";
+                for (const gamepad of navigator.getGamepads()) {
+                    if (!gamepad) continue;
+                    for (const [index, axis] of gamepad.axes.entries()) {
+                        output.innerHTML += `
+                            <label>${(gamepad.index)}, ${(index)}
+                                <progress value=${(axis * 0.5 + 0.5)}></progress>
+                            </label>
+                        `
+                    }
+                }
+                requestAnimationFrame(update);
+
+        //If the A button was pressed
+        //Only read the first controller
+        const cont = navigator.getGamepads()[0];
+        //console.log(cont);
+        //If the A button was pressed
+        if (cont.buttons[0].pressed) {
+            cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+            });
+        }
+        //Up and down axix
+        if (cont.axes[1] >= 0.8) { //Down
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        } else if (cont.axes[1] <= -0.8) { //Up
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        }
+        else if (cont.axes[0] >= 0.8) { //Right
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        } else if (cont.axes[0] <= -0.8) { //Left
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        }
+           
+        }
+        
+            update();
+        
+    })
+    var score = 0
+    var direction = 0
+    var timer = 20
+ 
+
+
+
+    function countdown() {
+        if (timer > 0) {
+            timer -= 1
+            document.getElementById("timerbox").innerHTML = timer;
+        }
+
+    }
+    function holddirection() {
+        direction = Math.floor(Math.random() * 4)
+        if (direction == 0) {
+            document.getElementById("directionbox").innerHTML = "Left"
+        }
+        if (direction == 1) {
+            document.getElementById("directionbox").innerHTML = "Up"
+        }
+        if (direction == 2) {
+            document.getElementById("directionbox").innerHTML = "Right"
+        }
+        if (direction == 3) {
+            document.getElementById("directionbox").innerHTML = "Down"
+        }
+
+    }
+    setInterval(countdown, 1000);
+    setInterval(holddirection, 2000);
+        window.addEventListener('gamepadconnected', (event) => {
+        // Update Controller
+        const update = () => {
+            //Only read the first controller
+            const cont = navigator.getGamepads()[0];
+            //console.log(cont);
+            //This will loop the update every "animation frame"
+            requestAnimationFrame(update);
+            if (cont.buttons[0].pressed) {
+                if ( timer > 0 && cont.axes == direction) {
+                score += 1
+                document.getElementById("scorebox").innerHTML = score
+        }
+      }
+
+            if (cont.buttons[9].pressed) {location.reload()
+            console.log("Hi")
+            }    
+        }; //End Update Controller
+        //Kick off the loop
+
+        update();
+        
+      })
+
+
+    </script>
+
+</html>

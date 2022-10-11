@@ -1,0 +1,113 @@
+<html lang="en">
+    <body>
+        <div>
+            <p>These are your cards:</p>
+        </div>
+        <div id="totalValue">
+
+        </div>
+        <div id="standQuestion">
+
+        </div>
+    </body>
+    <h1>
+        <button type="button" id="newCard" onclick = "newCard()">New Card</button>
+        <button type="button" id="newGame" onclick = "location.reload();">New Game</button>
+        <button type="button" id="stand" onclick = "stand()">Stand</button>
+    </h1>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        const cardHand = [];
+        var totalValue = 0;
+        
+        function drawCard() {
+            var number = Math.floor(Math.random() * 13) + 1;
+            var value = number;
+            var face = '';
+            var suit = Math.floor(Math.random() * 4) + 1;
+            var cardDisplayed = false;
+            if (value > 11) {
+                value = 11;
+            };
+            if (number == 11) {
+                face = 'Jack';
+            } else if (number == 12) {
+                face = 'Queen';
+            } else if (number == 13) {
+                face = 'King';
+            } else if (number == 1) {
+                face = 'Ace';
+            } else {
+                face = number;
+            };
+            if (suit == 1) {
+                suit = "Spades";
+            }
+            else if (suit == 2) {
+                suit = "Clubs";
+            }
+            else if (suit == 3) {
+                suit = "Hearts";
+            }
+            else if (suit == 4) {
+                suit = "Diamonds";
+            };
+            cardHand.push({
+                number: number,
+                value: value,
+                face: face,
+                suit: suit,
+                cardDisplayer: cardDisplayed
+            });
+            totalValue = totalValue + value;
+            if (totalValue >= 21){
+                document.getElementById("newCard").disabled = true;
+                document.getElementById("stand").disabled = true;
+            };
+            console.log(cardHand);
+            var totalValueDiv = document.getElementById("totalValue");
+            totalValueDiv.innerHTML = "Your total value is: " + totalValue;
+            if (totalValue == 21){
+                totalValueDiv.innerHTML = "You got blackjack! You win!";
+                standDiv.innerHTML = "";
+            }
+            else if (totalValue > 21){
+                totalValueDiv.innerHTML = "You got over 21! Good luck next time!";
+                standDiv.innerHTML = "";
+            };
+        };
+
+        function newCard(){
+            drawCard()
+            cardHand.forEach((card) => {
+                if (card.cardDisplayer == false){
+                    var div = document.createElement("div");
+                    div.style.width = 200 + "px";
+                    div.style.height = 250 + "px";
+                    div.innerHTML = card.face + " of " + card.suit + "<br>" + "Card Value: " + card.value + "<br>" + "Card Suit: " + card.suit;
+                    div.style.border = "solid";
+                    div.style.borderWidth = 1 + "px" + " " + 5 + "px";
+                    div.style.margin = 5 + 'px';
+                    div.style.display = "inline-block";
+                    document.body.appendChild(div);
+                    card.cardDisplayer = true;
+                };
+            });
+        };
+
+        var standDiv = document.getElementById("standQuestion");
+        standDiv.innerHTML = "Do you wish to stand?";
+
+        function stand(){
+            standDiv.innerHTML = "You stood! Wanna try again?"
+            document.getElementById("stand").disabled = true;
+            document.getElementById("newCard").disabled = true;
+        };
+        newCard();
+        newCard();
+    </script>
+</head>
+</html>

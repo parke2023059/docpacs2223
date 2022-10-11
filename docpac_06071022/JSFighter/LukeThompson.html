@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <div id="player1">
+        <p id="player1name">
+
+        </p>
+        <p id="player1hp">
+
+        </p>
+        <p id="player1atk">
+
+        </p>
+        <button id="player2attack"class="button"onclick="player1.attack(player2)">
+            Attack Player 2
+        </button>
+    </div>
+    <div id="player2">
+        <p id="player2name">
+
+        </p>
+        <p id="player2hp">
+
+        </p>
+        <p id="player2atk">
+
+        </p>
+        <button id="player1attack"class="button"onclick="player2.attack(player1)">
+            Attack Player 1
+        </button>
+    </div>
+    <div id="winner">
+
+    </div>
+    <style>
+        div{
+            border-style: solid;
+            border-width: 1px;
+        }
+    </style>
+    <script>
+        class Fighter{
+            constructor(name, hp, atk) {
+                this.name = "Jarold";
+                this.hp = 200;
+                this.atk = 15;
+            }
+            attack(target) {
+                target.hp -= this.atk + Math.round(Math.random() * 4) + 1
+                if (target.hp <= 0) {
+                    target.hp = 0
+                    document.getElementById("player1attack").disabled = true
+                    document.getElementById("player2attack").disabled = true
+                    if (target == player1) {
+                        document.getElementById("winner").innerHTML = "Congratulations, player 2. You win!"
+                    }
+                    else {
+                        document.getElementById("winner").innerHTML = "Congratulations, player 1. You win!"
+                    }
+                }
+                if (target == player1) {
+                  document.getElementById("player1hp").innerHTML = "HP: " + target.hp
+                }
+                else {
+                  document.getElementById("player2hp").innerHTML = "HP: " + target.hp
+                }
+            }
+
+
+
+        }
+        var player1 = new Fighter();
+        var player2 = new Fighter();
+        document.getElementById("player1name").innerHTML = "Name: " + player1.name
+        document.getElementById("player2name").innerHTML = "Name: " + player2.name
+        document.getElementById("player1hp").innerHTML = "HP: " + player1.hp
+        document.getElementById("player2hp").innerHTML = "HP: " + player2.hp
+        document.getElementById("player1atk").innerHTML = "Atk: " + player1.atk
+        document.getElementById("player2atk").innerHTML = "Atk: " + player2.atk
+    </script>
+
+</html>

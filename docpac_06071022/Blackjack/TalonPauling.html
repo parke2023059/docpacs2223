@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<body>
+  <title>Black Jack</title>
+  <div id="display"></div>
+  <div id="value"></div>
+  <button onclick="draw()">Draw</button>
+  <button onclick="location.reload()">New Game</button>
+  <script>
+    var pile = [];
+    function draw() {
+      var value = 0;
+      for (card in pile) {
+        value += pile[card].number;
+      }
+      document.getElementById("value").innerHTML = value;
+      if (value < 21) {
+        var number = Math.round(Math.random() * 12 + 1);
+        var suit = Math.round(Math.random() * 3 + 1);
+        pile.push({ number, suit });
+        let Bab = document.createElement("div");
+        if (suit == 1 || suit == 2) {
+          Bab.className = "black";
+        } else {
+          Bab.className = "red";
+        }
+        let displayNumber = number;
+        if (displayNumber == 1) {
+          displayNumber = "Ace";
+        } else if (displayNumber == 11) {
+          displayNumber = "Jack";
+        } else if (displayNumber == 12) {
+          displayNumber = "Queen";
+        } else if (displayNumber == 13) {
+          displayNumber = "King";
+        }
+        if (suit == 1) {
+          Displausuit = "Spades";
+        } else if (suit == 2) {
+          Displausuit = "Clubs";
+        } else if (suit == 3) {
+          Displausuit = "Hearts";
+        } else if (suit == 4) {
+          Displausuit = "Diamonds";
+        }
+        let newcontent = document.createTextNode(
+          displayNumber + " of " + Displausuit
+        );
+        Bab.appendChild(newcontent);
+        document.getElementById("display").appendChild(Bab);
+      }
+      var value = 0;
+      for (card in pile) {
+        value += pile[card].number;
+      }
+      document.getElementById("value").innerHTML = value;
+    }
+  </script>
+  <style>
+    .red {
+      border-color: red;
+      color: red;
+      border-style: solid;
+      padding-top: 60px;
+      margin-right: 10px;
+      padding-bottom: 60px;
+      border-radius: 5%;
+      width: 100px;
+      text-align: center;
+    }
+    .black {
+      border-color: black;
+      color: black;
+      border-style: solid;
+      padding-top: 60px;
+      margin-right: 10px;
+      padding-bottom: 60px;
+      border-radius: 5%;
+      width: 100px;
+      text-align: center;
+    }
+    #display {
+      display: flex;
+    }
+  </style>
+</body>

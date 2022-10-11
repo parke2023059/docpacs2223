@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackJack</title>
+</head>
+<body>
+    <h1><button onclick="newGame()">New Game</button><button id="drawCard">Draw</button></h1>
+    <script>
+        var totalValue = 0
+const cardHand = [];
+        function drawCard() {
+            var number = Math.floor(Math.random() * 13) + 1; 
+            var value = number;
+            var face = "";
+            var cardSuit = Math.floor(Math.random() * 4) + 1;
+            var displayed = false;
+
+            if (value > 11){
+                value = 11
+            }
+            if (number == 11){
+                face = "Jack"
+            }
+            else if (number == 12){
+                face = "Queen"
+            }
+            else if (number == 13){
+                face = "King"
+            }
+            else if (number == 1){
+                face = 'Ace'
+            }
+            else{
+                face = number;
+            }
+
+            if (cardSuit == 1){
+                cardSuit = "Spades"
+            }
+            else if (cardSuit == 2){
+                cardSuit = "Clubs"
+            }
+            else if (cardSuit == 3){
+                cardSuit = "Diamonds"
+            }
+            else if (cardSuit == 4){
+                cardSuit = "Hearts"
+            }
+            cardHand.push({
+                number: number,
+                value: value,
+                cardSuit: cardSuit,
+                face: face,
+                displayer: displayed
+            })
+
+
+            totalValue = totalValue + value
+            var cardNum = 1;
+
+            cardHand.forEach((currentcard) => {
+                if (currentcard.displayer == false){
+                    var newDiv = document.createElement("div");
+                    newDiv.style.width = 200 + "px";
+                    newDiv.style.height = 250 + "px";
+                    newDiv.style.border = "thick Solid #000000";
+                    newDiv.innerHTML = currentcard.face + " of " + currentcard.cardSuit + "<br><br>" + "Card Value: " + currentcard.value;
+                    newDiv.style.display = "inline-block";
+                    newDiv.style.margin = 15 + "px";
+                    document.body.appendChild(newDiv);
+                    currentcard.displayer = true;
+                }
+            })
+        }
+        window.onload = function(){
+            document.getElementById("drawCard").onclick = function(){
+                if (totalValue < 21){
+                    drawCard();
+                    console.log(cardHand);
+                    console.log(totalValue);
+                }
+                else{
+                    document.getElementById("drawCard").disabled = true;
+                }
+            }
+        }
+        drawCard();
+        drawCard();
+        function newGame(){
+        window.location.reload()
+        }
+        </script>
+</body>
+</html>

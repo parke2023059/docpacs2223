@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<body>
+    <div id = "score box"></div>
+    <div id = "timer box"></script></div>
+    <div id="direction box"></div>
+    Press button on controller to connect.
+    <div id="axes" style="display: flex; flex-direction: column;"></div>
+    <script>
+        var score = 0
+        var timer = 20
+        var direction = 0
+        var toggle = true
+        setInterval(function(){
+            if (timer > 0){
+                timer -= 1
+                document.getElementById("timer box").innerHTML = timer 
+            }
+        }, 1000);
+        setInterval(function() {
+            direction = Math.round(Math.random()*3) 
+            if (direction == 0){
+                document.getElementById("direction box").innerHTML = "up" 
+            }
+            if (direction == 1){
+                document.getElementById("direction box").innerHTML = "right" 
+            }
+            if (direction == 2){
+                document.getElementById("direction box").innerHTML = "down" 
+            }
+            if (direction == 3){
+                document.getElementById("direction box").innerHTML = "left" 
+            }
+        }, Math.round(Math.random()*2+1)*1000)
+
+
+       window.addEventListener('gamepadconnected', (event) => {
+            const update = () => {
+            const output = document.getElementById('axes');
+            output.innerHTML = '';
+            for (const gamepad of navigator.getGamepads()) {
+                if (!gamepad)
+                    continue
+                if(gamepad.buttons[0].pressed && timer > 0 && toggle){
+                    if (direction == 2 && gamepad.axes[1] >= 0.8){
+                    score ++}
+                    else if (direction == 0 && gamepad.axes[1] <= -0.8){
+                    score ++}
+                    else if (direction == 1 && gamepad.axes[0] >= 0.8){
+                    score ++}
+                    else if (direction == 3 && gamepad.axes[0] <= -0.8){
+                    score ++}
+                    toggle = false
+                }
+                else if (!gamepad.buttons[0].pressed && !toggle)
+                toggle = true
+                document.getElementById("score box").innerHTML = score
+                if (gamepad.buttons[9].pressed){
+                    location.reload()
+                }
+            }
+        requestAnimationFrame(update);
+        };
+    update();
+    });
+    
+    </script>
+</body>

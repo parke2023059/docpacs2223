@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+    </body>
+    <script>
+        class Fighter {
+            constructor() 
+            {
+                this.name = "Bob";
+                this.hp = 20;
+                this.atk = 3;
+            }
+            attack(target) {
+                if (target.hp > 0)
+                {
+                    target.hp -= (Math.floor(Math.random() * 5) + 1) + this.atk;
+                    if (target.hp < 0)
+                    {
+                        target.hp = 0;
+                    }
+                }
+                if (target.hp <= 0)
+                {
+                    player1DivButton.disabled = true;
+                    player2DivButton.disabled = true;
+                }
+            }
+        }
+        var player1 = new Fighter();
+        var player2 = new Fighter();
+
+        //Player1's Div Creation
+        var player1Div = document.createElement("div");
+        player1Div.id = "Player1DivBox";
+        player1Div.style.display = "inline-block";
+        player1Div.style.margin = 15 + "px";
+        player1Div.innerHTML = "Player 1:" + "<br>" + player1.name + ": " + player1.hp + " hp" + "<br>";
+        document.body.appendChild(player1Div);
+
+        //Player2's Div Creation
+        var player2Div = document.createElement("div");
+        player2Div.id = "Player2DivBox";
+        player2Div.style.display = "inline-block";
+        player2Div.style.margin = 15 + "px";
+        player2Div.innerHTML = "Player 2:" + "<br>" + player2.name + ": " + player2.hp + " hp" + "<br>";
+        document.body.appendChild(player2Div);
+
+        //Player1's Button Creation
+        var player1DivButton = document.createElement("BUTTON")
+        player1DivButton.innerHTML = "Attack";
+        document.getElementById("Player1DivBox").appendChild(player1DivButton);
+
+        //Player2's Button Creation
+        var player2DivButton = document.createElement("BUTTON")
+        player2DivButton.innerHTML = "Attack";
+        document.getElementById("Player2DivBox").appendChild(player2DivButton);
+
+        //Player1's Attacking Using Button
+        player1Div.addEventListener('click', function handleClick(event) {
+            player1.attack(player2);
+            player2Div.innerHTML = "Player 2:" + "<br>" + player2.name + ": " + player2.hp + " hp" + "<br>";
+            document.getElementById("Player2DivBox").appendChild(player2DivButton);
+        });
+
+        //Player2's Attacking Using Button
+        player2Div.addEventListener('click', function handleClick(event) {
+            player2.attack(player1);
+            player1Div.innerHTML = "Player 1:" + "<br>" + player1.name + ": " + player1.hp + " hp" + "<br>";
+            document.getElementById("Player1DivBox").appendChild(player1DivButton);
+        });
+
+    </script>
+</html>

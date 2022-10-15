@@ -267,7 +267,6 @@
 				})
 				teams = []
 				for (let team = 0; team < numberOfTeams; team++) {
-					console.log(team)
 					teams.push(
 						fighters.filter(
 							fighter => fighter.team == team && fighter.hp > 0
@@ -275,7 +274,6 @@
 					)
 					teams = teams.filter(team => team.length > 0)
 				}
-				console.log(teams)
 				if (teams.length == 1) {
 					for (fighter of fighters) {
 						fighterDiv = document.getElementById('fighter' + fighter.id)
@@ -286,7 +284,6 @@
 					document.getElementById('output').innerHTML =
 						'Team ' + (teams[0][0].team + 1) + ' Won!'
 				}
-				console.log('_______________________________')
 			}
 		</script>
 	</body>

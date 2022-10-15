@@ -5,6 +5,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>JSFighter</title>
 		<style>
+			#round {
+				margin-top: 20px;
+				font-weight: bold;
+				font-size: 25px;
+			}
+			.teamNumber {
+				margin-top: 20px;
+				font-weight: bold;
+				font-size: 20px;
+			}
 			#teams {
 				display: flex;
 			}
@@ -22,7 +32,6 @@
 		</style>
 	</head>
 	<body>
-		<div id="teams"></div>
 		<script>
 			// Data Structure
 			var allFighters = 0
@@ -45,7 +54,7 @@
 					this.id = id
 					this.hp = Math.ceil(Math.random() * 99 + 50)
 					this.hp_max = this.hp
-					this.atk = Math.ceil(Math.random() * 19) * 100
+					this.atk = Math.ceil(Math.random() * 19)
 					this.spd = Math.ceil(Math.random() * 19)
 					this.name = name
 					this.ready = true
@@ -66,10 +75,10 @@
 							let fighterDiv = document.getElementById(
 								'fighter' + fighter.id
 							)
-							if (fighter.team == 0)
+							if (fighter.team % 2 == 0)
 								fighterDiv.getElementsByClassName('fighterGFX')[0].src =
 									'img/crashr_idle.png'
-							else if (fighter.team == 1)
+							else if (fighter.team % 2 == 1)
 								document
 									.getElementById('fighter' + fighter.id)
 									.getElementsByClassName('fighterGFX')[0].src =
@@ -83,34 +92,34 @@
 						counter++
 						target = fighters[Math.floor(Math.random() * fighters.length)]
 						targetDiv = document.getElementById('fighter' + target.id)
-						if (counter > fighters.length || target.hp < 0) {
+						if (counter > fighters.length) {
 							document.getElementById('output').innerHTML =
 								'There are no Targets'
 							target = null
 							break
 						}
-					} while (target.hp > 0 && thisFighter.team == target.team)
+					} while (target.hp <= 0 || thisFighter.team == target.team)
 					if (target) {
 						target.hp -= thisFighter.atk
-						if (thisFighter.team == 0)
+						if (thisFighter.team % 2 == 0)
 							thisDiv.getElementsByClassName('fighterGFX')[0].src =
 								'img/crashr_attack.png'
-						else if (thisFighter.team == 1)
+						else if (thisFighter.team % 2 == 1)
 							thisDiv.getElementsByClassName('fighterGFX')[0].src =
 								'img/saml_attack.png'
-						if (target.team == 0)
+						if (target.team % 2 == 0)
 							targetDiv.getElementsByClassName('fighterGFX')[0].src =
 								'img/crashr_hit.png'
-						else if (target.team == 1)
+						else if (target.team % 2 == 1)
 							targetDiv.getElementsByClassName('fighterGFX')[0].src =
 								'img/saml_hit.png'
 						if (target.hp <= 0) {
 							target.hp = 0
 							targetDiv.classList.add('dead')
-							if (target.team == 0)
+							if (target.team % 2 == 0)
 								targetDiv.getElementsByClassName('fighterGFX')[0].src =
 									'img/crashr_ko.png'
-							else if (target.team == 1)
+							else if (target.team % 2 == 1)
 								targetDiv.getElementsByClassName('fighterGFX')[0].src =
 									'img/saml_ko.png'
 						}
@@ -122,23 +131,22 @@
 							target.hp
 						document.getElementById('output').innerHTML =
 							thisFighter.name + ' Attacked ' + target.name
-						console.log(thisFighter.name + ' Attacked ' + target.name)
 						thisDiv.classList.remove('active')
 						thisFighter.ready = false
-						for (fighter of fighters)
-							document
-								.getElementById('fighter' + fighter.id)
-								.getElementsByClassName('controlsBox')[0]
-								.getElementsByTagName('button')[0].disabled = true
-						turn++
-						gameLoop()
 					}
+					for (fighter of fighters)
+						document
+							.getElementById('fighter' + fighter.id)
+							.getElementsByClassName('controlsBox')[0]
+							.getElementsByTagName('button')[0].disabled = true
+					turn++
+					gameLoop()
 				}
 			}
 
 			// Game Setup
 			var fighters = []
-			var numberOfTeams = 2
+			var numberOfTeams = 4
 			var numberOfFighters = 2
 			if (numberOfTeams > 9) numberOfTeams = 9
 			if (numberOfFighters > 9) numberOfFighters = 9
@@ -158,10 +166,20 @@
 			var turn = 0
 
 			// Page Setup
+			let roundDiv = document.createElement('div')
+			roundDiv.id = 'round'
+			document.body.appendChild(roundDiv)
+			let teamDiv = document.createElement('div')
+			teamDiv.id = 'teams'
+			document.body.appendChild(teamDiv)
 			for (let i = 0; i < numberOfTeams; i++) {
 				let teamDiv = document.createElement('div')
 				teamDiv.id = 'team' + i
-				teamDiv.class = 'teamBox'
+				teamDiv.classList.add('teamBox')
+				let teamNumber = document.createElement('p')
+				teamNumber.classList.add('teamNumber')
+				teamNumber.innerHTML = 'Team: ' + (i + 1)
+				teamDiv.appendChild(teamNumber)
 				document.getElementById('teams').appendChild(teamDiv)
 			}
 			for (fighter of fighters) {
@@ -171,11 +189,11 @@
 				let fighterImg = document.createElement('img')
 				fighterImg.className = 'fighterGFX'
 				fighterDiv.appendChild(fighterImg)
-				if (fighter.team == 0) {
+				if (fighter.team % 2 == 0) {
 					fighterDiv.getElementsByClassName('fighterGFX')[0].src =
 						'img/crashr_idle.png'
 				}
-				if (fighter.team == 1)
+				if (fighter.team % 2 == 1)
 					fighterDiv.getElementsByClassName('fighterGFX')[0].src =
 						'img/saml_idle.png'
 				let statsDiv = document.createElement('div')
@@ -203,6 +221,7 @@
 			let outputDiv = document.createElement('div')
 			outputDiv.id = 'output'
 			document.body.appendChild(outputDiv)
+
 			// Game Loop
 			let sortedFighters = []
 			sortedFighters = fighters.sort((a, b) => {
@@ -217,6 +236,7 @@
 						if (fighter.hp > 0) fighter.ready = true
 					}
 				}
+				document.getElementById('round').innerHTML = 'Round: ' + (round + 1)
 				for (fighter in sortedFighters) {
 					fighterDiv = document.getElementById(
 						'fighter' + sortedFighters[fighter].id
@@ -232,12 +252,41 @@
 							.getElementsByTagName('button')[0].disabled = false
 						document.getElementById('output').innerHTML =
 							"It's " + fighters[fighter].name + "'s Turn"
+						checkWinner()
 						return
 					} else if (fighter == turn && sortedFighters[fighter].hp <= 0) {
 						turn++
+						checkWinner()
 						gameLoop()
 					}
 				}
+			}
+			function checkWinner() {
+				fighters = fighters.sort((a, b) => {
+					return a.id - b.id
+				})
+				teams = []
+				for (let team = 0; team < numberOfTeams; team++) {
+					console.log(team)
+					teams.push(
+						fighters.filter(
+							fighter => fighter.team == team && fighter.hp > 0
+						)
+					)
+					teams = teams.filter(team => team.length > 0)
+				}
+				console.log(teams)
+				if (teams.length == 1) {
+					for (fighter of fighters) {
+						fighterDiv = document.getElementById('fighter' + fighter.id)
+						fighterDiv
+							.getElementsByClassName('controlsBox')[0]
+							.getElementsByTagName('button')[0].disabled = true
+					}
+					document.getElementById('output').innerHTML =
+						'Team ' + (teams[0][0].team + 1) + ' Won!'
+				}
+				console.log('_______________________________')
 			}
 		</script>
 	</body>

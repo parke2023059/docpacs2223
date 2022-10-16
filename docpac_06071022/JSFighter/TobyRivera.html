@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title>JSfighter</title>
+</head>
+<body>
+  <div>
+    <div id="Bob"></div>
+    <button type="button" onclick="Bob.attack(Beb)">Attack</button>
+    <div id="Beb"></div>
+    <button type="button" onclick="Beb.attack(Bob)">Attack</button>
+    <script>
+      class Fighter {
+        constructor(name, hp, atk) {
+          this.name = name;
+          this.hp = hp;
+          this.atk = atk;
+        }
+        attack(target) {
+          target.hp -= this.atk
+          document.getElementById(target.name).innerHTML = 'Player 1 HP:' + target.hp
+        }
+      }
+      const Bob = new Fighter('Bob', 100, 10)
+      const Beb = new Fighter('Beb', 100, 10)
+      document.getElementById("Bob").innerHTML = 'Player 1 HP:' + Bob.hp
+      document.getElementById("Beb").innerHTML = 'Player 2 HP:' + Beb.hp
+    </script>
+</body>

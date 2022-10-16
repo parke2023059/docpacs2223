@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Fighting game that is safe for schools</title>
+</head>
+<div id="player1">
+</div>
+<button id='button1'onclick="player1.attack(player2)">makankosappo for player 1</button>
+<div id="player2">
+</div>
+<button id='button2'onclick="player2.attack(player1)">Destructo disk for player 2</button>
+<body>
+    <style>
+        .player1hp{
+            width: 10px;
+            height: 10px;
+            background-color: burlywood;
+        }
+        .player2hp{
+            width:10px;
+            height: 10px;
+            background-color: aqua;
+        }
+    </style>
+    <script>
+        class fighter {
+            constructor(hp, atk, name){
+                this.hp = 50
+                this.atk = 2
+                this.name = name
+            }
+            attack(target){
+                if (target.hp > 0){
+                    target.hp -= Math.floor(Math.random()*4)+1 + this.atk
+                    document.getElementById("player1").innerHTML = player1.hp;
+                    document.getElementById("player2").innerHTML = player2.hp;
+                }
+                if (target.hp <= 0){
+                    target.hp = 0
+                    document.getElementById("button1").disabled = true;
+                    document.getElementById("button2").disabled = true;
+                }
+
+        }
+
+        }
+        var player1 = new fighter()
+        var player2 = new fighter()
+
+        document.getElementById("player1").innerHTML = player1.hp;
+        document.getElementById("player2").innerHTML = player2.hp;
+
+
+    </script>
+</body>
+</html>

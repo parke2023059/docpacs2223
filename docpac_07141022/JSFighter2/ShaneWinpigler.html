@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        let allFighters = 0
+        let fighterNames = []
+        let teams = 2
+        let fighters = []
+        class Fighter {
+            constructor(id, name, team) {
+                this.id = allFighters;
+                this.hp = 20;
+                this.hp_max = 20;
+                this.atk = 5;
+                this.spd = 3;
+                this.name = name;
+                this.ready = true;
+                this.team = team;
+            }
+            attack(target) {
+                for (fighter in allFighters) {
+                    if (target.hp > 0) {
+                        document.getElementById("attack").src = "idle";
+                    }
+                    var counter = 0
+                    do {
+                        counter = counter + 1
+                    }
+                    while (fighter.hp > 0 && fighter.team) {
+                        if (counter > allFighters.length()){
+                            console.log("There are no targets")
+                            break
+                            return
+                        }
+                    }
+                    fighter.atk = fighter.atk - 1
+                    if (target.hp < 0) {
+                        target.hp = 0;
+                        target.append(dead = true);
+                        document.getElementById("idle").src = "ko";
+                    }
+                    document.getElementById("idle").src = "attack"
+                    document.getElementById("idle").src = "hit"
+                }
+            }
+        }
+        
+        for (i = 0; i < 0; i++) {
+            fighter.name = Math.random(fighterNames);
+            fighter.team = i % teams.length();
+            allFighters = allFighters + 1;
+        }
+        var round = 0;
+        var turn = 0;
+        //Call gameLoop
+        
+        
+        function gameLoop() {
+            if (counter >= fighters.length()) {
+                counter = 0;
+                round = round + 1;
+                for (player in fighters) {
+                    if (Fighter.ready) {
+                        ready = true;
+                    }
+                }
+            }
+        }
+
+        fighters.sort(Fighter.)
+    </script>
+</html>

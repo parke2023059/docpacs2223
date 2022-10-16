@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSFighter2</title>
+</head>
+
+<body>
+    <!-- <div>
+
+        <button onclick="player.attack(fighterList[1])">Attack</button>
+        <button onclick="player.attack(fighterList[0])">Attack</button>
+
+    </div> -->
+</body> 
+
+<script>
+
+    var fighters = ["Max", "Sam", "Derick", "Carlos", "Juan", "Jim"];
+    var allFighters = 0;
+    var fighterList = [];
+    const teamNumber = 2;
+    var gameRound = 0;
+    var gameTurn = 0;
+
+    console.log(fighters)
+    
+    class fighter {
+        constructor (id, name, team) {
+            this.id = allFighters;
+            this.hp = 150;
+            this.hp_max = 200;
+            this.atk = 10;
+            this.spd = 10;
+            this.name = name; 
+            this.ready = true;
+            this.team = team;
+            this.img = new Image ()
+            this.img.src = ""
+        };
+        
+        attack (target) {
+            for (Fighter in fighterList) {
+                if (target.hp > 0) {
+                    if (fighterList.indexOf(Fighter) == 0) {
+                        Fighter.img.src = "img/crashr_idle.png"
+                    }
+                    else if (fighterList.indexOf(Fighter) == 1) {
+                        Fighter.img.src = "img/saml_idle.png"
+                    };
+                };
+            };
+            var counter = 0;
+            do { 
+                counter ++
+                    
+                var randomFighter = Math.floor(Math.random() * fighters)
+                if (counter  > fighterList.length) {
+                    console.log("There are no targets")
+                    break;
+                    return
+                };
+                
+            }
+            while (randomFighter.hp > 0 && randomFighter.team != this.team);
+
+                var atkDamage = Math.floor(Math.random() * 5) + this.atk;
+                target.hp -= atkDamage
+                if (target.hp < 0) {
+                    target.hp = 0
+                };
+                // add dead class to div box
+                
+            // Fighter.img_src = 'img/'
+            // Fighter.target.img_arc = ""
+            // target.hp = 
+            
+            target.ready = false
+            gameTurn += 1
+            
+            // team.innerHTML = "Player Hp:" +  player.hp;
+            // team.innerHTML = "Player Hp:" +  player2.hp;
+        };
+    };
+    
+    function gameLoop () {
+        if (gameTurn >= fighterList.lentgh) {
+            gameTurn = 0;
+            gameRound ++;
+            for (Fighter in fighterList) {
+                if (Fighter.hp > 0) {
+                    Fighter.ready = true;
+                };
+            };
+        };
+
+        fighterList.sort(function(a, b){return b.spd - a.spd});
+
+        for (Fighter in fighterList) {
+            if (fighterList.indexOf(Fighter) == gameTurn && Fighter.ready == true && Fighter.hp > 0) {
+                console.log("Fighter's name is" + Fighter.name)
+                // add "active" class to their box
+                // activate Attack button
+                // tell user fighter's name in output box
+            }
+            else {
+                gameTurn ++
+            };
+        };
+    };
+
+    gameLoop();
+
+    for (let i = 0; i < 2; i ++) {
+        let randName = fighters[(Math.random() * fighters.length) | 0]
+        let fighterTeam = i % teamNumber
+        let player = new fighter(allFighters++, randName, fighterTeam);
+        fighterList.push(player)
+        
+        console.log(fighterList)
+    }
+
+    for (let i = 0; i < teamNumber; i ++) {
+        // create div "team" + i
+        var team = document.createElement('div');
+        team.id = "team" + i;
+        team.className = "teamBox";
+        team.style.display = "inline-block"
+        document.body.appendChild(team);
+
+        console.log("made div")
+
+        //console.log("hi");
+    };
+    
+    for (Fighter of fighterList) {
+        var fighterIndex = fighterList.indexOf(Fighter);
+
+        var fighterDiv = document.createElement('div');
+        fighterDiv.id = "fighter" + Fighter.id;
+        fighterDiv.className = "fighterBox";
+        fighterDiv.style.display = "inline-block"
+        fighterDiv.style.margin = 5 + "px"
+
+        // create img element with class "fighterGFX"
+        var fighterImage = document.createElement('img');
+        fighterImage.className = "fighterGFX"
+
+        fighterDiv.appendChild(fighterImage)
+        
+        if (Fighter.team == 0){
+            Fighter.img.src = "img/crashr_idle.png"
+        }
+        else if (Fighter.team == 1){
+            Fighter.img.src = "img/saml_idle.png";
+        };
+
+        fighterImage.src = Fighter.img.src;
+        
+        var statsBox = document.createElement('div');
+        statsBox.className = "statsBox";
+        fighterDiv.appendChild(statsBox)
+        statsBox.innerHTML = Fighter.name + "'s Attack: " + Fighter.atk + "<br>" + Fighter.name + "'s HP: " + Fighter.hp + "/" + Fighter.hp_max;
+
+        var controlBox = document.createElement('div');
+        controlBox.className = "controlsBox";
+
+        var attackButton = document.createElement('button');
+
+        if (fighterIndex == 0) {
+            attackButton.onclick = Fighter.attack(fighterList[1]);
+            attackButton.innerHTML = "Attack"
+        }
+        else if (fighterIndex == 1) {
+            attackButton.onclick = Fighter.attack(fighterList[0]);
+            attackButton.innerHTML = "Attack"
+        };
+        document.body.appendChild(fighterDiv);
+        
+        document.body.appendChild(attackButton);
+
+    };
+
+    var output = document.createElement('div');
+    output.id = "output";
+    document.body.appendChild(output);
+
+        // get the div layer whose id is teamX where X is Fighter.team
+        // document.getElementById('team')
+
+    //gameLoop()
+
+
+</script>
+
+</html>

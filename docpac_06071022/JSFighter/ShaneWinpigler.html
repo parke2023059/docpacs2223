@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+    </body>
+    <script>
+        class Fighter {
+            constructor() {
+                this.name = "Bob";
+                this.hp = 20
+                this.atk = 5
+            }
+            attack(target) {
+                if (target.hp > 0) {
+                    target.hp -= (Math.floor(Math.random() *5) + 1) + this.atk;
+                    if (target.hp < 0) {
+                        target.hp = 0;
+                    }
+                }
+                if (target.hp <= 0) {
+                    player1Button.disabled = true;
+                    player2Button.disabled = true;
+                }
+            }
+        }
+        var player1 = new Fighter()
+        var player2 = new Fighter()
+
+        var player1Div = document.createElement("div")
+        player1Div.id = "player1DivBox";
+        player1Div.style.display = "inline-block";
+        player1Div.style.margin = 15 + "px";
+        player1Div.innerHTML = "Player1: " + "<br>" + player1.name + ": " + player1.hp + "<br>"
+        document.body.appendChild(player1Div)
+
+        var player2Div = document.createElement("div")
+        player2Div.id = "player2DivBox";
+        player2Div.style.display = "inline-block";
+        player2Div.style.margin = 15 + "px";
+        player2Div.innerHTML = "Player2: " + "<br>" + player2.name + ": " + player2.hp + "<br>"
+        document.body.appendChild(player2Div)
+
+        var player1Button = document.createElement("BUTTON")
+        player1Button.innerHTML = "Attack"
+        document.getElementById("player1DivBox").appendChild(player1Button)
+
+        var player2Button = document.createElement("BUTTON")
+        player2Button.innerHTML = "Attack"
+        document.getElementById("player2DivBox").appendChild(player2Button)
+
+        player1Div.addEventListener('click', function handleClick(event) {
+            player1.attack(player2);
+            player2Div.innerHTML = "Player2: " + "<br>" + player2.name + ": " + player2.hp + "<br>";
+            document.getElementById("Player2DivBox").appendChild(player2Button);
+        })
+
+        player2Div.addEventListener('click', function handleClick(event) {
+            player2.attack(player1);
+            player1Div.innerHTML = "Player1: " + "<br>" + player1.name + ": " + player1.hp + "<br>";
+            document.getElementById("Player1DivBox").appendChild(player1Button);
+        })
+    </script>
+</html>

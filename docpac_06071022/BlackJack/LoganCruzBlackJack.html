@@ -1,0 +1,165 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackJack</title>
+</head>
+<body>
+    <h1>
+        <button id='Button' onclick="cardDraw()">Click to draw a card!</button>
+        <button id="'button1" onclick="window.location.reload();">New game</button>
+    </h1>
+    <h2><div id = 'totalValue'>
+
+    </div>
+    </h2>
+    <style>
+        .Button{
+            border: black;
+            color: grey;
+            padding: 19px 32px;
+            text-align: center;
+            margin-right: '100px';
+        }
+        .button1{
+            border: green;
+            color: red;
+            padding: 19px 32px;
+            text-align: center;
+
+        }
+    </style>
+   <script>
+    var cardHand =[]
+    var totalValue = 0
+    function cardDraw(){
+        var cardNumber = Math.floor(Math.random()* 13) + 1
+        var cardValue = 0
+        var cardFace = ''
+        var cardSuit = Math.floor(Math.random() *4) + 1
+        var cardSuitWord = ''
+        var displayed = false
+        if (cardNumber == 1){
+            cardFace = 'Ace'
+            if (cardSuit == 1){
+                cardSuitWord = 'Clubs'
+            }
+            else if (cardSuit == 2){
+                cardSuitWord = 'Spades'
+            }
+            else if (cardSuit == 3){
+                cardSuitWord = 'Hearts'
+         
+            }
+            else if (cardSuit == 4){
+                cardSuitWord = 'Diamonds'
+            }
+        }
+        else if (cardNumber == 11){
+            cardFace = 'Jack'
+            if (cardSuit == 1){
+                cardSuitWord = 'Clubs'
+            }
+            else if (cardSuit == 2){
+                cardSuitWord = 'Spades'
+            }
+            else if (cardSuit == 3){
+                cardSuitWord = 'Hearts'
+         
+            }
+            else if (cardSuit == 4){
+                cardSuitWord = 'Diamonds'
+            }
+        }
+        else if (cardNumber == 12){
+            cardFace = 'Queen'
+            if (cardSuit == 1){
+                cardSuitWord = 'Clubs'
+            }
+            else if (cardSuit == 2){
+                cardSuitWord = 'Spades'
+            }
+            else if (cardSuit == 3){
+                cardSuitWord = 'Hearts'
+         
+            }
+            else if (cardSuit == 4){
+                cardSuitWord = 'Diamonds'
+            }
+        }
+        else if (cardNumber == 13){
+            cardFace = 'King'
+            if (cardSuit == 1){
+                cardSuitWord = 'Clubs'
+            }
+            else if (cardSuit == 2){
+                cardSuitWord = 'Spades'
+            }
+            else if (cardSuit == 3){
+                cardSuitWord = 'Hearts'
+         
+            }
+            else if (cardSuit == 4){
+                cardSuitWord = 'Diamonds'
+            }
+        }
+        else {
+            cardFace = cardNumber
+            if (cardSuit == 1){
+                cardSuitWord = 'Clubs'
+            }
+            else if (cardSuit == 2){
+                cardSuitWord = 'Spades'
+            }
+            else if (cardSuit == 3){
+                cardSuitWord = 'Hearts'
+         
+            }
+            else if (cardSuit == 4){
+                cardSuitWord = 'Diamonds'
+            }
+        }
+        cardValue = cardNumber
+        if (cardValue >= 11){
+            cardValue = 11
+        }
+        totalValue= totalValue + cardValue
+        cardHand.push({
+        cardNumber: cardNumber,
+        cardSuitWord: cardSuitWord,
+        cardFace: cardFace,
+        cardValue: cardValue,
+        totalValue: totalValue,
+        cardDisplayed: displayed
+        })
+        cardHand.forEach((currentCard) => {
+            if (displayed == false){
+                let newDiv = document.createElement('Div');
+                newDiv.innerHTML = cardFace + ' of ' + cardSuitWord + '. '
+                newDiv.style.display = 'inline - block';
+                newDiv.style.width = 300 + 'px';
+                newDiv.style.height = 100 + 'px';
+                document.body.appendChild(newDiv)
+                displayed = true
+            }
+        })
+        
+        document.getElementById('totalValue').innerHTML = 'The total value of your cards is ' + totalValue
+        if (totalValue >= 21){
+            document.getElementById('Button').disabled = true;
+            console.log('I am the omega')
+        }
+    }
+    
+    
+    cardDraw()
+    cardDraw()
+   </script> 
+
+   
+
+
+    
+</body>
+</html>

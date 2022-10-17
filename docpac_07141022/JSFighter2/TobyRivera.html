@@ -1,0 +1,243 @@
+<!Doctype html>
+
+<html>
+<head>
+  <title>JSfighter</title>
+
+  <style>
+div {
+  width: 120px;
+  height: 120px;
+  border: 1px dashed;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 8px;
+
+}
+
+
+div#team1 {
+position: fixed;
+right: 95px;
+top: 8px;
+
+}
+
+div#fighter1 {
+position: fixed;
+right: 95px;
+top:148px;
+}
+
+
+div#simg {
+position: fixed;
+right: 95px;
+top: 285px;
+}
+
+div#field_names {
+position: fixed;
+right: 95px;
+top: 425px;
+}
+
+
+div.controlsBox1 {
+ position: fixed;
+ right: 95px;
+ top: 565px;
+}
+
+div#turn {
+  position: fixed;
+  left: 860px;
+  top: 10px;
+}
+
+
+
+  </style>
+
+</head>
+
+<body>
+<div>
+  <div>
+    <div id="team0" class="teamBox">Team 0</div>
+    <br>
+    <div id="fighter0 class="fighterBox">Crashr(Fighter0)</div>
+    <br>
+    <div id="cimg"> <img class = "fighterGFX"> <img src="JSFighter2/img/crashr_idle"></img> </div>
+    <br>
+    <div id="field_namec">Active Hp:100 Atk:10</div>
+    <br>
+    <div class="controlsBox0">
+      <br>
+      <br>
+      <br>
+    <button id="button0" type="button" onclick="crashr.attack(saml)">Attack</button>
+  </div>
+  <br>
+  <div id="turn">Turns: 0</div>
+  <br>
+    <div id="team1" class="teamBox">Team 1</div>
+    <br>
+    <br>
+    <br>
+    <div id="fighter1" class="fighterBox">Saml(Fighter1)</div>
+    <br>
+    <br>
+    <br>
+    <div id="simg">  <img class = "fighterGFX"> <img src="JSFighter2/img/saml_idle"> </img> </div>
+    <br>
+    <br>
+    <br>
+    <div id="field_names">Active Hp:100 Atk:10</div>
+    <br>
+    <br>
+    <br>
+    <div class="controlsBox1">
+     <br>
+     <br>
+     <br>
+    <button id="button1" type="button" onclick="saml.attack(crashr)">Attack</button>
+    </div>
+</div>
+    <script>
+      class Fighter {
+        constructor(id,name,team) {
+          this.id = id;
+          this.hp = hp;
+          this.hp_max = hp_max;
+          this.atk = atk;
+          this.spd = spd;
+          this.name = name;
+          this.ready = true;
+          this.team = team;
+          this.spd = spd;
+          this.turn = turn;
+        }
+        attack(target) {
+          target.hp -= this.atk
+          document.getElementById(target.name).innerHTML = 'Player 1 HP:' + target.hp }
+      document.querySelectorAll(#cimg, #simg)
+		    if (!(attack(target))) {
+    (document.getElementById("cimg").src=".JSFighter2/img/crashr_attack")
+    (document.getElementById("cimg").src="JSFighter2/img/crashr_idle")
+  }
+  if(!(this.atk -= target.hp)) {
+    (document.getElementById("cimg").src="JSFighter2/img/crashr_hit")
+    (document.getElementById("cimg").src="JSFighter2/img/crashr_idle")
+  }
+
+  if (!(attack(target))) {
+    (document.getElementById("simg").src="JSFighter2/img/saml_attack")
+    (document.getElementById("simg").src="JSFighter2/img/saml_idle")
+
+  }
+
+
+  if(!(this.atk -= target.hp)) {
+    (document.getElementById("simg").src="JSFighter2/img/saml_hit")
+    (document.getElementById("simg").src="JSFighter2/img/saml_idle")
+  }
+
+		     if (!(hp < 0)) {
+			 hp = 0
+       document.querySelectorAll(#cimg, #simg)
+            (document.getElementById("cimg").src="JSFighter2/img/crashr_ko";)
+          }
+            (document.getElementById("simg").src="JSFighter2/img/saml_ko";)
+            return.false
+          }
+          
+  
+      const crashr = new Fighter('crashr', 100, 10)
+      const saml = new Fighter('saml', 100, 10)
+      const teams = 2
+      document.getElementById("crashr").innerHTML = 'Player 1 HP:' + crashr.hp
+      document.getElementById("saml").innerHTML = 'Player 2 HP:' + saml.hp
+
+      // Counter Variable
+  let result = '';
+  let i = 0
+
+  do {
+    i = i + 1;
+  } while (i > 0)
+  if (!(i > 2)) {
+    console.log("There are no Targets! You win!");
+    endloop;
+    return;
+  }
+  
+
+
+
+
+  let counter = 0;
+  let i = 0
+
+  do {
+    i + 1;
+    while (i > 0){
+      /fieldnameElement
+    }
+  }
+
+   
+
+
+      /** So my numbers here would be just be 1 & 2 Player
+       (my fighters this time are just crashr and saml) **/
+
+
+
+div(text) {
+  if (!(hp < 0))
+  (fieldNameElement.innerHTML = "Dead Hp: 0 Atk: 10";)
+         else {
+  (fieldNameElement.innerHTML = "Active Hp: (this.hp) Atk: 10";)
+         }
+
+  if (!(attack(target)))
+    document.querySelectorAll(#cimg, #simg)
+    
+(fieldNameElement.innerHTML = "Crashr Attacked Saml!")
+
+(fieldNameElement.innerHTML = "Saml Attacked Crashr!")
+}
+
+
+
+function(turn) {
+    if (!(this.turn >= 2)) {
+      turn = 0
+      turn + 1
+    }
+    if (!(hp > 0)) ready = true
+    this.spd = this.spd
+    If 2 = this.turn {
+      hp = 100
+      ready = true
+    div(text)
+return.true
+    }
+  }
+
+
+
+if (!(turn > 0))
+ 
+(fieldNameElement.innerHTML = "Turn: (this.turn) Your Turn!")
+   
+this.ready = false
+var onclick= this.ready = true
+
+    </script>
+
+  </body>
+
+</html>
+

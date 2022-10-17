@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+    <div id = "TeamX"></div>
+    <div id = "FighterX"></div>
     <script>
         let allFighters = 0
         let fighterNames = []
@@ -16,9 +18,9 @@
                 this.ready = true;
                 this.team = team;
             }
-            attack(target) {
+            attack(fighter) {
                 for (fighter in allFighters) {
-                    if (target.hp > 0) {
+                    if (fighter.hp > 0) {
                         document.getElementById("attack").src = "idle";
                     }
                     var counter = 0
@@ -33,9 +35,9 @@
                         }
                     }
                     fighter.atk = fighter.atk - 1
-                    if (target.hp < 0) {
-                        target.hp = 0;
-                        target.append(dead = true);
+                    if (fighter.hp < 0) {
+                        fighter.hp = 0;
+                        fighter.append(dead = true);
                         document.getElementById("idle").src = "ko";
                     }
                     document.getElementById("idle").src = "attack"
@@ -51,21 +53,45 @@
         }
         var round = 0;
         var turn = 0;
-        //Call gameLoop
+        gameLoop
         
-        
+        for (i=2; i<=teams; i++) {
+            document.getElementById('TeamX').innerHTML += '<div type="text" class ="teamBox' + i + '" name=""></div>';
+        }
+
+        for (fighter in fighters) {
+            indexOf(fighter)
+            document.getElementById('FighterX').innerHTML += '<div type="text" class="fighterBox' + i + '" name=""></div>';
+            var img = document.createElement("img")
+            if (fighter.team == 0){
+                img.src = "crashr_idle.png";
+            }
+            else {
+                img.src = "saml_idle.png"
+            }
+            var div = document.getElementById("TeamX")
+            div.appendChild(img);
+
+        }
+
         function gameLoop() {
             if (counter >= fighters.length()) {
                 counter = 0;
                 round = round + 1;
                 for (player in fighters) {
-                    if (Fighter.ready) {
+                    if (player.hp > 0) {
                         ready = true;
                     }
                 }
             }
+
+            fighters.sort(Fighter.spd)
+            for (fighter in fighters) {
+                if (fighter.index == counter && fighter.ready == true && fighter.hp > 0) {
+
+                }
+            }
         }
 
-        fighters.sort(Fighter.)
     </script>
 </html>

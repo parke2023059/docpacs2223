@@ -55,10 +55,10 @@
 			class Fighter {
 				constructor(id, name, team) {
 					this.id = id
-					this.hp = Math.ceil(Math.random() * 99 + 50)
+					this.hp = Math.floor(Math.random() * 75 + 75)
 					this.hp_max = this.hp
-					this.atk = Math.ceil(Math.random() * 19)
-					this.spd = Math.ceil(Math.random() * 19)
+					this.atk = Math.ceil(Math.random() * 20)
+					this.spd = Math.ceil(Math.random() * 20)
 					this.name = name
 					this.ready = true
 					this.team = team
@@ -81,9 +81,7 @@
 								fighterDiv.getElementsByClassName('fighterGFX')[0].src =
 									'img/crashr_idle.png'
 							else if (fighter.team % 2 == 1)
-								document
-									.getElementById('fighter' + fighter.id)
-									.getElementsByClassName('fighterGFX')[0].src =
+								fighterDiv.getElementsByClassName('fighterGFX')[0].src =
 									'img/saml_idle.png'
 						}
 					}
@@ -191,6 +189,7 @@
 				teamDiv.appendChild(teamNumber)
 				document.getElementById('teams').appendChild(teamDiv)
 			}
+			console.log(fighters)
 			for (fighter of fighters) {
 				let fighterDiv = document.createElement('div')
 				fighterDiv.id = 'fighter' + fighter.id
@@ -220,7 +219,8 @@
 				let attackButton = document.createElement('button')
 				attackButton.disabled = true
 				attackButton.innerHTML = 'Attack'
-				attackButton.addEventListener('click', fighter.attack)
+				attackButton.onclick = fighter.attack
+				// attackButton.addEventListener('click', fighter.attack)
 				controlsDiv.appendChild(attackButton)
 				fighterDiv.appendChild(controlsDiv)
 				document
@@ -286,6 +286,12 @@
 				if (teams.length == 1) {
 					for (fighter of fighters) {
 						fighterDiv = document.getElementById('fighter' + fighter.id)
+						if (fighter.team % 2 == 0)
+							fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+								'img/crashr_idle.png'
+						else if (fighter.team % 2 == 1)
+							fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+								'img/saml_idle.png'
 						fighterDiv
 							.getElementsByClassName('controlsBox')[0]
 							.getElementsByTagName('button')[0].disabled = true

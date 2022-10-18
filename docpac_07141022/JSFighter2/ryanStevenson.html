@@ -147,25 +147,18 @@
 			// Game Setup
 			var fighters = []
 			var numberOfTeams = 2
-			var numberOfFighters = 1
+			var numberOfFighters = 2
+			if (numberOfTeams > 9) numberOfTeams = 9
+			if (numberOfFighters > 9) numberOfFighters = 9
 			for (let i = 0; i < numberOfTeams * numberOfFighters; i++) {
 				fighterName = Math.floor(Math.random() * fighterNames.length)
-				if (fighterNames[fighterName]) {
-					fighters.push(
-						new Fighter(
-							allFighters,
-							fighterNames[fighterName],
-							i % numberOfTeams
-						)
+				fighters.push(
+					new Fighter(
+						allFighters,
+						fighterNames[fighterName],
+						i % numberOfTeams
 					)
-				} else
-					fighters.push(
-						new Fighter(
-							allFighters,
-							'fighter' + allFighters,
-							i % numberOfTeams
-						)
-					)
+				)
 				fighterNames.splice(fighterName, 1)
 				allFighters++
 			}

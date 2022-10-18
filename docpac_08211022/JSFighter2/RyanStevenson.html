@@ -68,9 +68,8 @@
 					for (fighter of fighters) {
 						if (
 							this.parentElement.parentElement.id.slice(-1) == fighter.id
-						) {
+						)
 							thisFighter = fighters[fighters.indexOf(fighter)]
-						}
 					}
 					let thisDiv = document.getElementById('fighter' + thisFighter.id)
 					for (fighter of fighters) {
@@ -149,8 +148,8 @@
 
 			// Game Setup
 			var fighters = []
-			var numberOfTeams = 2
-			var numberOfFighters = 1
+			var numberOfTeams = 100
+			var numberOfFighters = 100
 			for (let i = 0; i < numberOfTeams * numberOfFighters; i++) {
 				fighterName = Math.floor(Math.random() * fighterNames.length)
 				if (fighterNames[fighterName]) {

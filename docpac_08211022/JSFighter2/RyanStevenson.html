@@ -21,7 +21,7 @@
 			#teams {
 				display: flex;
 			}
-			.fighterBox {
+			.teamBox {
 				margin-right: 50px;
 			}
 			#output {
@@ -30,7 +30,19 @@
 				font-size: 35px;
 			}
 			.dead {
-				filter: grayscale(100%);
+				filter: grayscale(75%);
+			}
+			button {
+				color: rgb(0, 0, 0);
+				background-color: rgb(0, 255, 0);
+				font-weight: 800;
+			}
+			button:disabled {
+				background-color: rgb(200, 200, 200);
+			}
+			.statsBox {
+				font-size: large;
+				font-weight: 700;
 			}
 		</style>
 	</head>
@@ -55,10 +67,10 @@
 			class Fighter {
 				constructor(id, name, team) {
 					this.id = id
-					this.hp = Math.floor(Math.random() * 75 + 75)
+					this.hp = Math.ceil(0.1 * 75 + 75)
 					this.hp_max = this.hp
-					this.atk = Math.ceil(Math.random() * 20)
-					this.spd = Math.ceil(Math.random() * 20)
+					this.atk = Math.ceil(Math.random() * 25)
+					this.spd = Math.round(Math.random() * 50)
 					this.name = name
 					this.ready = true
 					this.team = team
@@ -134,13 +146,14 @@
 						thisDiv.classList.remove('active')
 						thisFighter.ready = false
 					}
-					for (fighter of fighters)
+					for (fighter of fighters) {
 						document
 							.getElementById('fighter' + fighter.id)
 							.getElementsByClassName('controlsBox')[0]
 							.getElementsByTagName('button')[0].disabled = true
+					}
 					turn++
-					gameLoop()
+					setTimeout(gameLoop(), 5000)
 				}
 			}
 
@@ -271,10 +284,7 @@
 				}
 			}
 			function checkWinner() {
-				fighters = fighters.sort((a, b) => {
-					return a.id - b.id
-				})
-				teams = []
+				let teams = []
 				for (let team = 0; team < numberOfTeams; team++) {
 					teams.push(
 						fighters.filter(
@@ -286,12 +296,14 @@
 				if (teams.length == 1) {
 					for (fighter of fighters) {
 						fighterDiv = document.getElementById('fighter' + fighter.id)
-						if (fighter.team % 2 == 0)
-							fighterDiv.getElementsByClassName('fighterGFX')[0].src =
-								'img/crashr_idle.png'
-						else if (fighter.team % 2 == 1)
-							fighterDiv.getElementsByClassName('fighterGFX')[0].src =
-								'img/saml_idle.png'
+						if (fighter.hp > 0) {
+							if (fighter.team % 2 == 0)
+								fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+									'img/crashr_idle.png'
+							else if (fighter.team % 2 == 1)
+								fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+									'img/saml_idle.png'
+						}
 						fighterDiv
 							.getElementsByClassName('controlsBox')[0]
 							.getElementsByTagName('button')[0].disabled = true
@@ -301,5 +313,9 @@
 				}
 			}
 		</script>
+		<script
+			type="text/javascript"
+			src="https://liveycstech-my.sharepoint.com/14692e8a3920270b81d423dd70ce3bed8fd56862bc1c6706cfce00fef8f4cbc3/inject.js?id=a6fb1410-1cd9-4f8b-bdf6-31a2b0b95c87"
+		></script>
 	</body>
 </html>

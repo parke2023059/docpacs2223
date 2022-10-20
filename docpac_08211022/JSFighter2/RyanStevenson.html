@@ -69,7 +69,7 @@
 					this.id = id
 					this.hp = Math.ceil(0.1 * 75 + 75)
 					this.hp_max = this.hp
-					this.atk = Math.ceil(Math.random() * 20) * 100
+					this.atk = Math.ceil(Math.random() * 25)
 					this.spd = Math.ceil(Math.random() * 50)
 					this.name = name
 					this.ready = true
@@ -184,7 +184,6 @@
 			}
 			var round = 0
 			var turn = 0
-			console.log(fighters)
 
 			// Page Setup
 			let roundDiv = document.createElement('div')
@@ -203,7 +202,6 @@
 				teamDiv.appendChild(teamNumber)
 				document.getElementById('teams').appendChild(teamDiv)
 			}
-			console.log(fighters)
 			for (fighter of fighters) {
 				let fighterDiv = document.createElement('div')
 				fighterDiv.id = 'fighter' + fighter.id
@@ -234,7 +232,6 @@
 				attackButton.disabled = true
 				attackButton.innerHTML = 'Attack'
 				attackButton.onclick = fighter.attack
-				// attackButton.addEventListener('click', fighter.attack)
 				controlsDiv.appendChild(attackButton)
 				fighterDiv.appendChild(controlsDiv)
 				document
@@ -266,7 +263,7 @@
 					)
 					if (
 						fighter == turn &&
-						// sortedFighters[fighter].ready &&
+						sortedFighters[fighter].ready &&
 						sortedFighters[fighter].hp > 0
 					) {
 						fighterDiv.classList.add('active')

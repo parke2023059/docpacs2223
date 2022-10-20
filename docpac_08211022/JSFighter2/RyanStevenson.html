@@ -57,7 +57,7 @@
 				'Creeper',
 				'Aww Man',
 				'Butter Dog',
-				'Get To school 2: Electric Boogaloo',
+				'Get To school 2:<br>Electric Boogaloo',
 				'Black Knight',
 				'Ork',
 				'Ryan',
@@ -69,8 +69,8 @@
 					this.id = id
 					this.hp = Math.ceil(0.1 * 75 + 75)
 					this.hp_max = this.hp
-					this.atk = Math.ceil(Math.random() * 25)
-					this.spd = Math.round(Math.random() * 50)
+					this.atk = Math.ceil(Math.random() * 20) * 100
+					this.spd = Math.ceil(Math.random() * 50)
 					this.name = name
 					this.ready = true
 					this.team = team
@@ -184,6 +184,7 @@
 			}
 			var round = 0
 			var turn = 0
+			console.log(fighters)
 
 			// Page Setup
 			let roundDiv = document.createElement('div')
@@ -313,9 +314,5 @@
 				}
 			}
 		</script>
-		<script
-			type="text/javascript"
-			src="https://liveycstech-my.sharepoint.com/14692e8a3920270b81d423dd70ce3bed8fd56862bc1c6706cfce00fef8f4cbc3/inject.js?id=a6fb1410-1cd9-4f8b-bdf6-31a2b0b95c87"
-		></script>
 	</body>
 </html>

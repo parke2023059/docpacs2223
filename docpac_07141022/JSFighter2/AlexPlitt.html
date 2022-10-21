@@ -9,79 +9,79 @@
 
 </body>
 <script>
-    var allFighters = 0;
-    var fighterNames = ["Mordecai", "Rigby", "Muscle Man", "Skips", "Pops", "Benson"];
-    var fighterList = [];
-    const numberOfTeams = 2;
-    var gameRound = 0;
-    var gameTurn = 0;
+    var allFighters = 0
+    var fighterNames = ["Luke", "Alex", "Logan D", "Logan C", "David", "Beckham", "Mac", "Wesley", "Gavin", "Riley"]
+    var fighterList = []
+    const numberOfTeams = 2
+    var gameRound = 0
+    var gameTurn = 0
 
     class Fighter {
         constructor(id, name, team){
-            this.id = allFighters;
-            this.hp = 20;
-            this.hp_max = 20;
-            this.atk = 2;
-            this.spd = 3;
-            this.name = name;
-            this.ready = true;
-            this.team = team;
-            this.img = document.createElement('img');
-            this.img.src = "";
-        };
+            this.id = allFighters
+            this.hp = 20
+            this.hp_max = 20
+            this.atk = 2
+            this.spd = 3
+            this.name = name
+            this.ready = true
+            this.team = team
+            this.img = document.createElement('img')
+            this.img.src = ""
+        }
         attack(target){
             fighterList.forEach((fighters) => {
                 if (fighters.hp > 0){
                     if (fighterList.indexOf(fighters) == 0){
-                        fighters.img.src = "img/crashr_idle.png";
+                        fighters.img.src = "img/crashr_idle.png"
                     }
                     else if (fighterList.indexOf(fighters) == 1){
-                        fighters.img.src = "img/saml_idle.png";
-                    };
-                };
-            });
-            let counter = 0;
+                        fighters.img.src = "img/saml_idle.png"
+                    }
+                }
+            })
+            let counter = 0
             do {
-                counter++;
-                var randomFighter = fighterList[Math.floor(Math.random() * 1)];
+                counter++
+                var randomFighter = fighterList[Math.floor(Math.random() * 1)]
                 if (counter > fighterList.length){
                     if (document.getElementById("output") != null){
-                        document.getElementById("output").innerHTML = "There is no target.";
-                    };
-                    break;
-                    return;
-                };
+                        document.getElementById("output").innerHTML = "There is no target."
+                    }
+                    break
+                    return
+                }
             }
-            while (randomFighter.hp > 0 && randomFighter.team != this.team);
-            target.hp = target.hp - (this.atk * (Math.floor(Math.random() * 3) + 1));
+            while (randomFighter.hp > 0 && randomFighter.team != this.team)
+            target.hp = target.hp - (this.atk * (Math.floor(Math.random() * 3) + 1))
             if (target.hp < 0){
-                target.hp = 0;
-                document.getElementById("Fighter " + target.id).className = "dead";
+                target.hp = 0
+                document.getElementById("Fighter " + target.id).className = "dead"
                 if (target.id == 0){
-                    target.img.src = "img/crashr_ko.png";
+                    target.img.src = "img/crashr_ko.png"
                 }
                 else if (target.id == 1){
-                    target.img.src = "img/saml_ko.png";
-                };
-            };
+                    target.img.src = "img/saml_ko.png"
+                }
+            }
             if (this.id == 0){
-                this.img.src = "img/crashr_attack.png";
+                this.img.src = "img/crashr_attack.png"
             }
             else if (this.id == 1){
-                this.img.src = "img/saml_attack.png";
-            };
+                this.img.src = "img/saml_attack.png"
+            }
             if (target.id == 0){
-                target.img.src = "img/crashr_hit.png";
+                target.img.src = "img/crashr_hit.png"
             }
             else if (target.id == 1){
-                target.img.src = "img/saml_hit.png";
-            };
-            document.getElementsByClassName("statsBox").innerHTML = target.name + "'s ATK: " + target.atk + "<br>" + target.name + "'s HP: " + target.hp;
-            document.getElementById("output").innerHTML = this.name + " just attacked " + target.name + "!";
-            document.getElementById("Fighter " + this.id).className = "";
-            this.ready = false;
-            gameTurn = gameTurn + 1;
-            gameLoop();
+                target.img.src = "img/saml_hit.png"
+            }
+            document.getElementsByClassName("statsBox").innerHTML = target.name + "'s ATK: " + target.atk + "<br>" + target.name + "'s HP: " + target.hp
+            document.getElementById("output").innerHTML = this.name + " just attacked " + target.name + "!"
+            document.getElementById("Fighter " + this.id).className = ""
+            this.ready = false
+            gameTurn = gameTurn + 1
+            gameLoop()
         };
     };
 

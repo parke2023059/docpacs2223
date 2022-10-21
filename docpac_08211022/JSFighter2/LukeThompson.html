@@ -1,0 +1,276 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSFighter2</title>
+</head>
+<body>
+
+<script>
+    var allFighters = 0;
+    var fighterNames1 = ["Luke", "Alex", "Beckham", "David", "Riley"]
+    var fighterNames2 = ["Logan D", "Logan C", "Mac", "Wesley", "Gaven"]
+    var fighterNames = ["Luke", "Alex", "Logan D", "Logan C", "David", "Beckham", "Mac", "Wesley", "Gaven", "Riley"];
+    var fighterList = [];
+    const numberOfTeams = 2;
+    var gameRound = 0;
+    var gameTurn = 0;
+
+    class Fighter {
+        constructor(id, name, team){
+            var x = (Math.round(Math.random() * 5) + 20) * 10
+            this.id = allFighters;
+            this.hp = x;
+            this.hp_max = x;
+            this.atk = Math.round(Math.random() * 15) + 10;
+            this.spd = 10;
+            this.name = name;
+            this.ready = true;
+            this.team = team;
+            this.img = document.createElement('img');
+            this.img.src = "";
+        };
+        attack(target){
+            var thisChildren = document.getElementById("Fighter " + this.id).children;
+            var targetChildren = document.getElementById("Fighter " + target.id).children;
+            var currentTargetChild = "";
+            var currentThisChild = "";
+            //console.log(target.hp);
+            fighterList.forEach((fighters) => {
+                if (fighters.hp > 0){
+                    if (fighterList.indexOf(fighters) == 0){
+                        fighters.img.src = "img/crashr_idle.png";
+                    }
+                    else if (fighterList.indexOf(fighters) == 1){
+                        fighters.img.src = "img/saml_idle.png";
+                    };
+                };
+            });
+            let counter = 0;
+            do {
+                counter++;
+                var randomFighter = fighterList[Math.round(Math.random() * 1)];
+                if (counter > fighterList.length){
+                    if (document.getElementById("output") != null){
+                        document.getElementById("output").innerHTML = "There is no target.";
+                    };
+                    break;
+                    return;
+                };
+            }
+            while (randomFighter.hp > 0 && randomFighter.team != this.team);
+            var damageTaken = (this.atk + (Math.round(Math.random() * 8)) - 3);
+            target.hp -= damageTaken;
+            if (this.id == 0){
+                for (let i = 0; i < thisChildren.length; i++){
+                    currentThisChild = thisChildren[i];
+                    if (currentThisChild.id == "fighterGFX"){
+                        currentThisChild.src = "img/crashr_attack.png";
+                        this.img.src = "img/crashr_attack.png";
+                    };
+                };
+            }
+            else if (this.id == 1){
+                for (let i = 0; i < thisChildren.length; i++){
+                    currentThisChild = thisChildren[i];
+                    if (currentThisChild.id == "fighterGFX"){
+                        currentThisChild.src = "img/saml_attack.png";
+                        this.img.src = "img/saml_attack.png";
+                    };
+                };
+            };
+            if (target.id == 0){
+                for (let i = 0; i < targetChildren.length; i++){
+                    currentTargetChild = targetChildren[i];
+                    if (currentTargetChild.id == "fighterGFX"){
+                        currentTargetChild.src = "img/crashr_hit.png";
+                        target.img.src = "img/crashr_hit.png";
+                    };
+                };
+            }
+            else if (target.id == 1){
+                for (let i = 0; i < targetChildren.length; i++){
+                    currentTargetChild = targetChildren[i];
+                    if (currentTargetChild.id == "fighterGFX"){
+                        currentTargetChild.src = "img/saml_hit.png";
+                        target.img.src = "img/saml_hit.png";
+                    };
+                };
+            };
+            
+            for (let i = 0; i < targetChildren.length; i++){
+                currentTargetChild = targetChildren[i];
+                if (currentTargetChild.id == "statsBox"){
+                    currentTargetChild.innerHTML = target.name + "'s ATK: " + target.atk + "<br>" + target.name + "'s HP: " + target.hp + "/" + target.hp_max;
+                };
+            };
+            document.getElementById("output").innerHTML = this.name + " just attacked " + target.name + "! They dealt " + damageTaken + " damage!";
+            document.getElementById("Fighter " + this.id).className = "";
+            this.ready = false;
+            gameTurn++;
+            //console.log(this.id);
+            //console.log(target.id);
+            for (let i = 0; i < thisChildren.length; i++){
+                currentThisChild = thisChildren[i];
+                if (currentThisChild.id == "controlsBox"){
+                    currentThisChild.firstChild.disabled = true;
+                    currentTargetChild = targetChildren[i];
+                    if (currentTargetChild.id == "controlsBox"){
+                        currentTargetChild.firstChild.disabled = false;
+                    };
+                };
+            };
+
+            if (target.hp <= 0){
+                target.hp = 0;
+                document.getElementById("Fighter " + target.id).className = "dead";
+                for (let i = 0; i < thisChildren.length; i++){
+                    currentThisChild = thisChildren[i];
+                    if (currentThisChild.id == "controlsBox"){
+                        currentThisChild.firstChild.disabled = true;
+                    };
+                };
+                for (let i = 0; i < targetChildren.length; i++){
+                    currentTargetChild = targetChildren[i];
+                    if (currentTargetChild.id == "controlsBox"){
+                        currentTargetChild.firstChild.disabled = true;
+                    };
+                };
+                if (target.id == 0){
+                    for (let i = 0; i < targetChildren.length; i++){
+                        currentTargetChild = targetChildren[i];
+                        if (currentTargetChild.id == "fighterGFX"){
+                            currentTargetChild.src = "img/crashr_ko.png";
+                            target.img.src = "img/crashr_ko.png";
+                        };
+                    };
+                }
+                else if (target.id == 1){
+                    for (let i = 0; i < targetChildren.length; i++){
+                        currentTargetChild = targetChildren[i];
+                        if (currentTargetChild.id == "fighterGFX"){
+                            currentTargetChild.src = "img/saml_ko.png";
+                            target.img.src = "img/saml_ko.png";
+                        };
+                    };
+                };
+                for (let i = 0; i < targetChildren.length; i++){
+                    currentTargetChild = targetChildren[i];
+                    if (currentTargetChild.id == "statsBox"){
+                        currentTargetChild.innerHTML = target.name + "'s ATK: " + target.atk + "<br>" + target.name + "'s HP: " + target.hp + "/" + target.hp_max;
+                    };
+                };
+            };
+
+            gameLoop();
+        };
+    };
+
+    for (i = 0; i < 2; i++){
+        var fighter = new Fighter();
+        if (i % 2 == 0) {
+            fighter.name = fighterNames1[Math.round(Math.random() * 4)];
+        }
+        if (i % 2 == 1) {
+            fighter.name = fighterNames2[Math.round(Math.random() * 4)];
+        }
+        fighter.team = i % numberOfTeams;
+        allFighters++;
+        fighterList.push(fighter);
+    };
+
+    for (i = 0; i < numberOfTeams; i++){
+        var teamDiv = document.createElement("div");
+        teamDiv.id = "team " + i;
+        teamDiv.className = "teamBox";
+        teamDiv.style.display = "inline-block";
+        document.body.appendChild(teamDiv);
+    };
+
+    for (fighters of fighterList){
+        var fighterIndex = fighterList.indexOf(fighters);
+        var fighterDiv = document.createElement("div");
+        fighterDiv.id = "Fighter " + fighters.id;
+        fighterDiv.className = "fighterBox";
+        fighterDiv.style.display = "inline-block";
+        fighterDiv.style.margin = 5 + "px"
+        var fighterImg = document.createElement("img");
+        fighterImg.className = "fighterGFX";
+        fighterImg.id = "fighterGFX";
+        fighterDiv.appendChild(fighterImg);
+        if (fighters.team == 0){
+            fighters.img.src = "img/crashr_idle.png";
+        }
+        else if (fighters.team == 1){
+            fighters.img.src = "img/saml_idle.png";
+        };
+        fighterImg.src = fighters.img.src;
+        var fighterStats = document.createElement("div");
+        fighterStats.id = "statsBox";
+        fighterStats.className = "statsBox";
+        fighterDiv.appendChild(fighterStats);
+        fighterStats.innerHTML = fighters.name + "'s ATK: " + fighters.atk + "<br>" + fighters.name + "'s HP: " + fighters.hp + "/" + fighters.hp_max;
+        var fighterControls = document.createElement("div");
+        fighterControls.className = "controlsBox";
+        fighterControls.id = "controlsBox";
+        fighterDiv.appendChild(fighterControls);
+        var attackButton = document.createElement("button");
+        attackButton.disabled = true;
+        attackButton.id = "Attack";
+        attackButton.innerHTML = "Attack";
+        if (fighterIndex == 0){
+            attackButton.onclick = function(){
+                fighterList[0].attack(fighterList[1]);
+            };
+        }
+        else if (fighterIndex == 1){
+            attackButton.onclick = function(){
+                fighterList[1].attack(fighterList[0])
+            };
+        };
+        fighterControls.appendChild(attackButton);
+        document.body.appendChild(fighterDiv);
+    };
+
+    var outputDiv = document.createElement("div");
+    outputDiv.id = "output";
+    document.body.appendChild(outputDiv);
+
+    function gameLoop(){
+        if (gameTurn >= fighterList.length){
+            gameTurn = 0;
+            gameRound++;
+            for (fighters in fighterList){
+                if (fighters.hp > 0){
+                    fighters.ready = true;
+                    console.log(fighters.ready);
+                };
+            };
+        };
+        fighterList.sort(function(a, b){return b.spd - a.spd});
+        fighterList.forEach((fighters) => {
+            if (fighterList.indexOf(fighters) == gameTurn && fighters.ready == true && fighters.hp > 0){
+                document.getElementById("Fighter " + fighters.id).className = "active";
+                var fighterChildren = document.getElementById("Fighter " + fighters.id).children;
+                var currentFighterChild = "";
+                for (let i = 0; i < fighterChildren.length; i++){
+                    currentFighterChild = fighterChildren[i];
+                    if (currentFighterChild.id == "controlsBox"){
+                        currentFighterChild.firstChild.disabled = false;
+                    };
+                };
+                document.getElementById("output").innerHTML = "It's " + fighters.name + "'s turn!";
+            }
+            else{
+                //console.log(gameTurn + "1");
+                gameTurn++;
+                //console.log(gameTurn + "2");
+                //gameLoop();
+            };
+        });
+    };
+
+    gameLoop();
+</script>
+</html>

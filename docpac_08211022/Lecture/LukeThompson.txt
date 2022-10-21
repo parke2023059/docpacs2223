@@ -1,0 +1,2 @@
+I am still not that good at creating div layers in the script part of an HTML file
+I do not really understand what "child", "children", and "appendchild" exactly do, I just know where to use them

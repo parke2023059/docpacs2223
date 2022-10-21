@@ -50,8 +50,8 @@
                     }
                 } 
                 while (randomFighter.hp > 0 && randomFighter.team != this.team);
-                target.hp = target.hp - (this.atk * Math.floor(Math.random() *3) +1);
-                if (target.hp < 0) {
+                target.hp -= (this.atk * Math.floor(Math.random() *3) +1);
+                if (target.hp <= 0) {
                     target.hp = 0;
                     document.getElementById("Fighter " + target.id).className = "dead";
                     if (target.id == 0) {
@@ -76,7 +76,16 @@
                 for (let i = 0; i < targetChildren.length; i++) {
                     currentTargetChild = targetChildren[i];
                     if (currentTargetChild.id == "statsBox") {
-                        currentTargetChild.innerHTML = target.name + "atk: " + target.atk + "<br>" + target.name + "hp: " + target.hp
+                        currentTargetChild.firstChild.disabled = true; 
+                    }
+                }
+                for (let i = 0; i < targetChildren.length; i++) {
+                    currentTargetChild = targetChildren[i];
+                    if (currentTargetChild.id != "FighterButton") {
+                        currentTargetChild.innerHTML = target.name + "'s ATK: " + target.atk + "<br>" + target.name + "'s HP: " + target.hp
+                    }
+                    if (currentTargetChild.id == "statsBox") {
+                        currentTargetChild.firstChild.disabled = false;
                     }
                 }
                 document.getElementsByClassName("statsBox").innerHTML = target.name + "'s ATK: " + target.atk + "<br>" + target.name + "'s HP: " + target.hp;
@@ -131,21 +140,20 @@
             attackButton.disabled = true
             attackButton.id = "Attack"
             attackButton.innerHTML = "Attack"
-            if (attackButton.id == fighterIndex && fighterIndex == turn) {
+            attackButton.className = fighter.id
+            if (attackButton.className == fighter.id && fighterIndex == turn) {
                 attackButton.disabled = false
                 if (fighterIndex == 0) {
                     attackButton.onclick = function() {
                         fighters[0].attack(fighters[1])
                     }
                 }
-               else if (fighterIndex == 1) {
+                else if (fighterIndex == 1) {
                     attackButton.onclick = function() {
                         fighters[1].attack(fighter[0])
                     }
                 }
             }
-            
-            
             fighterButton.appendChild(attackButton)
             fighterBox.appendChild(fighterButton)
             document.body.appendChild(fighterBox)

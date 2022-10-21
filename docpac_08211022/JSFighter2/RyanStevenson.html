@@ -159,8 +159,8 @@
 
 			// Game Setup
 			var fighters = []
-			var numberOfTeams = 2
-			var numberOfFighters = 1
+			var numberOfTeams = 4
+			var numberOfFighters = 4
 			let tempFighterNames = []
 			for (let i = 0; i < numberOfTeams * numberOfFighters; i++) {
 				if (tempFighterNames.length <= 0) {
@@ -250,7 +250,6 @@
 			sortedFighters.sort((a, b) => {
 				return b.spd - a.spd
 			})
-			console.log(fighters)
 			gameLoop()
 			function gameLoop() {
 				if (turn >= fighters.length) {

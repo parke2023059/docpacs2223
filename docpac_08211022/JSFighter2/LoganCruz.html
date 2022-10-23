@@ -1,0 +1,210 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Fighter 2, The Point Dexter</title>
+</head>
+<body>
+  </body>
+  <script>
+    var fighterNumber = 0
+    var fighterName = ['???', '???', 'Noctis', 'Micheal', 'DoomSlayer', 'Brother of DoomSlayer', 'Father of DoomSlayer','Mother of DoomSlayer', 'The Omni Chad']
+    var fighters = []
+    var m = 0
+    var gameRound = 0
+    var counter= 0
+    var turnRound = 0
+    function gameLoop(turnRound){
+        if (turnRound <= fighters.length){
+            turnRound = turnRound + 1
+            console.log(turnRound + 'game turn')
+            gameRound++
+                if (fighter.hp > 0){
+                    fighter.ready = true
+                }
+            }
+        fighters = fighters.sort(function(x,y){
+            return x.spd - y.spd
+        })
+        for (fighter in fighters){
+            if (turnRound>1){
+                    document.getElementById('Fighter 0').className = 'active'
+                    document.getElementById('attack0').disabled = false
+                    //document.getElementById('outputDiv').innerHTML = 'it is ' + fighter + ' turn'
+                     
+                    document.getElementById('Fighter 1').className='active'
+                    document.getElementById('attack1').disabled = false
+                    //document.getElementById('outputDiv').innerHTML = 'it is ' + fighter + ' tur
+            }
+                }
+            }
+        
+    
+    function randomFighter(fighters){
+
+        return fighters[Math.floor(Math.random()*fighters.length)]
+    }
+    class Fighter {
+        constructor(name, id, team){
+            this.id = fighterNumber
+            this.hp_max = Math.floor(Math.random()*100)+75
+            this.hp = this.hp_max
+            this.atk = Math.floor(Math.random()*10)+5
+            this.spd = Math.floor(Math.random()*5)+1
+            this.ready = true
+            this.name = name
+            this.team = team
+            this.img = document.createElement('image')
+            this.img.src = 'img/saml_spell'
+        }
+        attack(){
+            console.log('Hello')
+                if (turnRound == 0){
+                    console.log('hello')
+
+                    if (fighter.hp > 0){
+                     let counter1 = 0
+                    do{
+                        counter1 = counter1 + 1
+                    }
+                    while (counter1 < fighters.length){
+                        let attacker = fighters[0]
+                        let target = fighters[1]
+                        if (counter1 > fighters.length){
+                            gameLoop()
+                        }
+                        if (attacker.hp > 0){
+                            let damage = attacker.atk *(attacker.atk/target.spd)
+
+                            target.hp = target.hp - damage
+                            //document.getElementById('outputDiv').innerHTML = fighters[0].name +'did' + damage + 'to ' + fighters[1].name
+                           
+                            document.getElementById('f1').innerHTML = target.name + "'s ATK: " + target.atk + "<br>" + fight.name + "'s HP: " + target.hp
+                            document.getElementById('FighterGFX0').src = 'img/crashr_attack.png'
+                            document.getElementById('FighterGFX1').src = 'img/saml_hit.png'
+                            attacker.ready = false
+                            document.getElementById('attack0').disabled = true
+                            console.log(target.hp)
+                            setTimeout(5000)
+                            console.log(fighters[1])
+                            gameLoop(2)
+                        }
+
+
+                    }
+                }
+            } if (turnRound == 1){
+                console.log('hi')
+                     let counter2 = 0
+                    do{
+                        counter2 = counter2 + 1
+                    }
+                    while (counter2 < fighters.length){
+                        let attacker = fighters[1]
+                        let target = fighters[0]
+
+                        if (counter2 > fighters.length){
+
+                            return
+                        }
+                        if (attacker.hp > 0){
+                            let damage = attacker.atk *(attacker.atk/target.spd)
+
+                            target.hp = target.hp - damage
+                            //document.getElementById('outputDiv').innerHTML = fighters[0].name +'did' + damage + 'to ' + fighters[1].name
+                            
+                            document.getElementById('f0').innerHTML = target.name + "'s ATK: " + target.atk + "<br>" + fight.name + "'s HP: " + target.hp
+                            document.getElementById('FighterGFX1').src = 'img/saml_attack.png'
+                            document.getElementById('FighterGFX0').src = 'img/crashr_hit.png'
+                            attacker.ready = false
+                            document.getElementById('attack1').disabled = true
+                            console.log(target.hp)
+                            setTimeout(5000)
+                            console.log(fighters[1])
+                            gameLoop(0);
+                        }
+
+
+                    }
+                }
+            }
+            
+        
+                }
+    
+    const holdNumber = 2
+    for (i = 0; i<2; i++){
+        var fighter = new Fighter()
+        fighter.name = randomFighter(fighterName)
+        fighter.team = i%holdNumber
+        fighterNumber = fighterNumber + 1
+        fighters.push(fighter)
+    }
+    for (let i = 0; i < holdNumber; i++ ){
+        var div = document.createElement('team')
+        div.id = 'team ' + i
+        div.className = 'teamBox'
+        div.style.display = 'table-column'
+        div.style.margin = 25 + 'px'
+        div.style.border = 15 + 'px'
+        div.style.padding = 25+ 'px'
+        div.style.borderColor = 'red'
+        div.style.marginBottom = 10 + 'px'
+    }
+
+        document.body.appendChild(div)
+    for (fight of fighters){
+        
+            let fIndex = fighters.indexOf(fight)
+            var fdiv = document.createElement('div')
+            fdiv.id = 'Fighter ' + fIndex
+            fdiv.className = 'fighterBox'
+            fdiv.style.display = 'inline-block'
+            fdiv.style.margin = 5 + "px"
+            var imgHolder = document.createElement("img")
+            imgHolder.id = "FighterGFX" + m
+            fdiv.appendChild(imgHolder)
+            if (fight.team == 0) {
+                fight.img.src = "img/crashr_idle.png"
+            }
+            else if (fight.team == 1) {
+                fight.img.src = "img/saml_idle.png"
+            }
+            imgHolder.src = fight.img.src
+            var fstats = document.createElement("div")
+            fstats.id ='f' + m
+            
+            fstats.innerHTML = fight.name + "'s ATK: " + fight.atk + "<br>" + fight.name + "'s HP: " + fight.hp
+            fdiv.appendChild(fstats)
+            var btm = document.createElement("button")
+            btm.id = "attack" + m
+            btm.className = fight.id
+            m = m + 1
+            btm.innerHTML = "attack"
+            if (btm.className == fight.id && fIndex == turnRound) {
+                btm.disabled = false
+                if (fIndex == 0) {
+                    btm.onclick = function() {
+                        fighters[0].attack()
+                    }
+                }
+                else if (fIndex == 1) {
+                    btm.onclick = function() {
+                        fighters[1].attack()
+                    }
+                }
+            }
+            fdiv.appendChild(btm)
+            document.body.appendChild(fdiv)
+
+    }
+        
+    //div.innerHTML = div.appendChild(fighterDiv)
+
+    outputDiv = document.createElement('div')
+    outputDiv.id = 'output'
+    outputDiv.innerHTML=''
+    fdiv.appendChild(outputDiv)
+</script>
+</html>

@@ -1,0 +1,3 @@
+How to get images to update with the button onclick function
+How to get div layers inside other div layers to function as one and update on the webpage when the button is clicked. 
+(I could only get one to show the updates)

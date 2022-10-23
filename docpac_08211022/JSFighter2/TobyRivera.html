@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+  <head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+  <title>JSfighter</title>
+
+  <style>
+
+div#team1 {
+position: fixed;
+right: 95px;
+top: 8px;
+width: 120px;
+height: 120px;
+border: 1px dashed;
+box-sizing: border-box;
+text-align: center;
+border-radius: 8px;
+
+}
+
+div#fighter1 {
+position: fixed;
+right: 95px;
+top:148px;
+width: 120px;
+height: 120px;
+border: 1px dashed;
+box-sizing: border-box;
+text-align: center;
+border-radius: 8px;
+}
+
+
+div#simg {
+position: fixed;
+right: 95px;
+top: 285px;
+width: 120px;
+height: 120px;
+border: 1px dashed;
+box-sizing: border-box;
+text-align: center;
+border-radius: 8px;
+}
+
+div#field_names {
+position: fixed;
+right: 95px;
+top: 425px;
+width: 120px;
+height: 120px;
+border: 1px dashed;
+box-sizing: border-box;
+text-align: center;
+border-radius: 8px;
+}
+
+
+div.controlsBox1 {
+ position: fixed;
+ right: 95px;
+ top: 565px;
+ width: 120px;
+  height: 120px;
+  border: 1px dashed;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 8px;
+}
+
+div#turn {
+  position: fixed;
+  left: 860px;
+  top: 10px;
+  width: 120px;
+  height: 120px;
+  border: 1px dashed;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 8px;
+}
+
+div#team0 {
+ position: fixed;
+ left: 95px;
+ top: 8px;
+ width: 120px;
+ height: 120px;
+border: 1px dashed;
+ box-sizing: border-box;
+ text-align: center;
+ border-radius: 8px;
+}
+
+div#cimg {
+ position: fixed;
+ left: 95px;
+ top: 288px;
+ width: 120px;
+height: 120px;
+border: 1px dashed;
+box-sizing: border-box;
+text-align: center;
+border-radius: 8px;
+}
+
+div#field_namec {
+  position: fixed;
+  left: 95px;
+  top: 425px;
+  width: 120px;
+  height: 120px;
+  border: 1px dashed;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 8px;
+}
+
+div.controlsBox0 {
+  position: fixed;
+  left: 95px;
+  top: 565px;
+  width: 120px;
+  height: 120px;
+  border: 1px dashed;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 8px;
+}
+
+div#fighter0 {
+  position: fixed;
+  left: 95px;
+  top: 148px;
+  width: 120px;
+  height: 120px;
+  border: 1px dashed;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 8px;
+}
+
+div#border {
+ padding: 15px;
+ width: 120px;
+height: 120px;
+border: 1px dashed;
+box-sizing: border-box;
+text-align: center;
+border-radius: 8px;
+}
+
+  </style>
+
+</head>
+
+<body>
+
+<script>
+      class Fighter {
+        constructor(id,name,team,attack,hp,target) {
+          this.id = id;
+          this.hp = hp;
+          this.hp_max = hp_max;
+          this.atk = atk;
+          this.spd = spd;
+          this.name = name;
+          this.ready = true;
+          this.team = team;
+          this.spd = spd;
+          this.turn = turn;
+        }
+      }
+
+// Okay I supposedly didn't define crashr or saml according to google so I'm going to write a different attack formula bellow.//
+
+// attack(target)
+        attack(target) 
+          target.hp -= this.atk
+          document.getElementById(target.name).innerHTML = 'Player 1 HP:' + target.hp 
+        
+		    if (attack(target)) {
+    (document.getElementById("cimg").src=".JSFighter2/img/crashr_attack.png")
+    (document.getElementById("cimg").src="JSFighter2/img/crashr_idle.png")
+  }
+  if(!(this.atk -= target.hp)) {
+    (document.getElementById("cimg").src="JSFighter2/img/crashr_hit.png")
+    (document.getElementById("cimg").src="JSFighter2/img/crashr_idle.png")
+  }
+
+  if (!(attack(target))) {
+    (document.getElementById("simg").src="JSFighter2/img/saml_attack.png")
+    (document.getElementById("simg").src="JSFighter2/img/saml_idle.png")
+
+  }
+
+
+  if(!(this.atk -= target.hp)) {
+    (document.getElementById("simg").src="JSFighter2/img/saml_hit.png")
+    (document.getElementById("simg").src="JSFighter2/img/saml_idle.png")
+  }
+
+		     if (!(hp < 0)) {
+			 hp = 0
+       document.querySelectorAll(#cimg, #simg)
+            (document.getElementById("cimg").src="JSFighter2/img/crashr_ko.png")
+          }
+            (document.getElementById("simg").src="JSFighter2/img/saml_ko.png")
+            throw new Error();
+          
+          
+  
+      const crashr = new Fighter('crashr', 100, 10) 
+      const saml = new Fighter('saml', 100, 10)
+      const teams = 2
+      document.getElementById("crashr").innerHTML = 'Player 1 HP:' + crashr.hp
+      document.getElementById("saml").innerHTML = 'Player 2 HP:' + saml.hp
+
+
+
+
+
+
+
+// Seperate Backup Functions for SRC
+
+let attack = attack(any);
+
+attack(animc); 
+(document.getElementById("cimg").src=".JSFighter2/img/crashr_attack.png")
+(document.getElementById("cimg").src="JSFighter2/img/crashr_idle.png")
+
+
+
+attack(anims);
+(document.getElementById("simg").src="JSFighter2/img/saml_attack.png")
+(document.getElementById("simg").src="JSFighter2/img/saml_idle.png")
+
+
+
+
+      // Counter Variable
+  let result = '';
+  let i = 0
+
+  do {
+    i = i + 1;
+  } while (i > 0)
+  if (!(i > 2)) {
+    console.log("There are no Targets! You win!");
+    endloop;
+    return;
+  }
+  
+
+
+
+
+  let counter = 0;
+  do {
+    i + 1;
+    while (i > 0){
+      getfieldname.Element
+    }
+  }
+
+   
+
+
+      /** So my numbers here would be just be 1 & 2 Player
+       (my fighters this time are just crashr and saml) **/
+
+
+
+while (div(text)) { 
+  if (!(hp < 0)) 
+  (fieldNameElement.innerHTML = "Dead Hp: 0 Atk: 10")
+         else {
+  (fieldNameElement.innerHTML = "Active Hp: (this.hp) Atk: 10")
+         }
+
+  if (!(attack(target)))
+    document.querySelectorAll(#cimg, #simg)
+    
+(fieldNameElement.innerHTML = "Crashr Attacked Saml!")
+
+(fieldNameElement.innerHTML = "Saml Attacked Crashr!")
+ }
+
+
+
+function(turn) {                                             
+    if (!(this.turn >= 2))
+      turn = 0
+      turn + 1
+    
+    if (!(hp > 0)) ready = true
+    this.spd = this.spd
+    if (2) for (let index = 0; index < array.length; index++) {
+	const element = array[index];
+} (this.turn); {
+      hp = 10;
+      ready = true
+    div(text)
+returnany;
+    }
+  } 
+
+
+
+if (!(turn > 0))
+ 
+(fieldNameElement.innerHTML = "Turn: (this.turn) Your Turn!")
+   
+this.ready = false
+var onclick= this.ready = true
+
+</script>
+
+<div>
+    <div id="team0" class="teamBox">Team 0</div>
+    <br>
+    <div id="fighter0" class="fighterbox">Crashr(Fighter0)</div>
+    <br>
+    <div id="cimg"> <img class="fighterGFX"> <br> <br> <img src="file:///C:/Users/trivera/Documents/GitHub/docpacs2223/docpac_08211022/JSFighter2/img/crashr_idle.png"> </div>
+    <br>
+    <div id="field_namec">Active Hp:100 Atk:10</div>
+    <br>
+    <div class="controlsBox0">
+      <br>
+      <br>
+      <br>
+    <button id="button0" type="button" onclick="crashr.attack(saml)" onclick="attack(animc)">Attack</button>
+  </div>
+  <br>
+  <div id="turn">Turns: 0</div>
+  <br>
+    <div id="team1" class="teamBox">Team 1</div>
+    <br>
+    <br>
+    <br>
+    <div id="fighter1" class="fighterBox">Saml(Fighter1)</div>
+    <br>
+    <br>
+    <br>
+    <div id="simg">  <img class="fighterGFX"> <br> <br> <img src="file:///C:/Users/trivera/Documents/GitHub/docpacs2223/docpac_08211022/JSFighter2/img/saml_idle.png">  </div>
+    <br>
+    <br>
+    <br>
+    <div id="field_names">Active Hp:100 Atk:10</div>
+    <br>
+    <br>
+    <br>
+    <div class="controlsBox1">
+     <br>
+     <br>
+     <br>
+    <button id="button1" type="button" onclick="saml.attack(crashr)" onclick="attack(anims)">Attack</button>
+    </div>
+</div>
+ 
+</div>
+</body>
+</html>

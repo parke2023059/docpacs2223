@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSFighter2</title>
+</head>
+<body>
+    <script>
+        //Data Structure
+        var allFighters = 0;
+        var fighterNames = ['Waltuh', 'Gus', 'Jesse', 'Heisenburg', 'Hank', 'Skylar'];
+        const fighterNamesLength = fighterNames.length;
+        var fightersList = [];
+        const numberOfTeams = 2;
+        var gameRound = 0;
+        var gameTurn = 0;
+
+        class Fighter {
+            constructor(id, name, team) {
+                this.id = allFighters;
+                this.hp = 80;
+                this.hpMax = 100;
+                this.atk = 15;
+                this.spd = 100;
+                this.name = name;
+                this.ready = true;
+                this.team = team;
+                this.img = document.createElement('img');
+                this.img.src = '';
+            }
+
+            attack(target) {
+                let thisFighter
+
+                for (let fighter of fightersList)
+                {
+                    if (this.parentElement.parentElement.id.slice(-1) == fighter.id)
+                    {
+                        thisFighter = fightersList[fightersList.indexOf(fighter)]
+                    }
+                }
+                fightersList.forEach((fighters) => {
+                });
+
+                let counter = 0;
+                do {
+                    counter++;
+                    var randomFighter = fightersList[Math.floor(Math.random() * fightersList.length)];
+                    if (counter > fightersList.length) 
+                    {
+                        if (document.getElementById('output') != null) {
+                            document.getElementById('output').innerHTML = 'You missed or your target is already dead.';
+                            randomFighter = null;
+                        }
+                        break;
+                        return;
+                    }
+                } while (randomFighter.hp <= 0 || thisFighter.team == randomFighter.team);
+                var targetsChild = document.getElementById("Fighter " + randomFighter.id).children;
+                var mineChild = document.getElementById("Fighter " + thisFighter.id).children;
+                for (let i = 0; i < targetsChild.length; i++)
+                {
+                    var currentTarget = targetsChild[i];
+                    if (currentTarget.id == "Attack")
+                    {
+                        currentTarget.disabled = false;
+                    }
+                }
+                for (let i = 0; i < mineChild.length; i++)
+                {
+                    var currentTarget = mineChild[i];
+                    if (currentTarget.id == "Attack")
+                    {
+                        currentTarget.disabled = true;
+                    }
+                }
+
+                var myEnemy = "";
+                for (let i = 0; i < targetsChild.length; i++)
+                {
+                    var currentTargetChild = targetsChild[i];
+                    if (currentTargetChild.className == "fighterGFX")
+                    {
+                        myEnemy = currentTargetChild;
+                    }
+                }
+                var mySelf = "";
+                for (let i = 0; i < mineChild.length; i++)
+                {
+                    var currentTargetChild = mineChild[i];
+                    if (currentTargetChild.className == "fighterGFX")
+                    {
+                        mySelf = currentTargetChild;
+                    }
+                }
+                if (thisFighter.team == 0){
+                    mySelf.src = "img/crashr_attack.png";
+                }
+                if (thisFighter.team == 1){
+                    mySelf.src = "img/saml_attack.png";
+                }
+                if (randomFighter.team == 0){
+                    myEnemy.src = "img/crashr_hit.png";
+                }
+                if (randomFighter.team == 1){
+                    myEnemy.src = "img/saml_hit.png";
+                }
+                document.getElementById("output").innerHTML = thisFighter.name + " just attacked " + randomFighter.name + "!";
+                document.getElementById("Fighter " + thisFighter.id).className = "";
+
+                for (let o = 0; o < mineChild.length; o++)
+                    {
+                        var currentTargetBtn = mineChild[o];
+                        if (currentTargetBtn.className == "controlsBox")
+                        {
+                            currentTargetBtn.firstChild.disabled = true;
+                        }
+                    }
+
+                randomFighter.hp = randomFighter.hp - (thisFighter.atk * (Math.floor(Math.random() * 3) + 1));
+                if (randomFighter.hp <= 0){
+                    randomFighter.hp = 0;
+                    document.getElementById("Fighter " + randomFighter.id).className = "dead"
+                    if (randomFighter.team == 0) {
+                        myEnemy.src = "img/crashr_ko.png";
+                    }
+                    if (randomFighter.team == 1) {
+                        myEnemy.src = "img/saml_ko.png";
+                    }
+                    document.getElementById('output').innerHTML = thisFighter.name + ' just killed ' + target.name + '!';
+                }
+                
+                for (let i = 0; i < targetsChild.length; i++)
+                {
+                    var currentTarget1 = targetsChild[i];
+                    if (currentTarget1.className == "statsBox")
+                    {
+                        currentTarget1.innerHTML = randomFighter.name + "'s ATK: " + randomFighter.atk + "<br>" + randomFighter.name + "'s HP: " + randomFighter.hp;
+                    }
+                }
+                this.ready = false;
+                gameTurn += 1;
+                gameLoop();
+            }
+        }
+
+        //Game Setup
+        for (let i = 0; i < fighterNamesLength; i++) {
+            var namePick = Math.floor(Math.random() * fighterNames.length);
+            fightersList.push(new Fighter(allFighters, fighterNames[namePick], i % numberOfTeams));
+            fighterNames.splice(namePick, 1);
+            allFighters++;
+        }
+
+        //Page Setup
+        for (i = 0; i < numberOfTeams; i++) {
+            var teamDiv = document.createElement('div');
+            teamDiv.id = 'team' + i;
+            teamDiv.className = 'teamBox';
+            teamDiv.style.display = 'inline-block';
+            document.body.appendChild(teamDiv);
+        }
+        
+        for (fighters of fightersList) {
+            var fighterIndex = fightersList.indexOf(fighters);
+            var fighterDiv = document.createElement('div');
+            fighterDiv.id = 'Fighter ' + fighters.id;
+            fighterDiv.className = 'fighterBox';
+            fighterDiv.style.display = 'inline-block';
+            fighterDiv.style.border = 'solid';
+            fighterDiv.style.borderRadius = 5 + 'px';
+            fighterDiv.style.borderSpacing = 5 + 'px';
+            fighterDiv.style.padding = 5 + 'px';
+            fighterDiv.style.margin = 5 + 'px';
+
+            if (fighters.team == 0) {
+                fighters.img.src = 'img/crashr_idle.png';
+            }
+            if (fighters.team == 1) {
+                fighters.img.src = 'img/saml_idle.png';
+            }
+            
+            var fighterImage = document.createElement('img');
+            fighterImage.src = fighters.img.src;
+            fighterImage.className = 'fighterGFX';
+            fighterDiv.appendChild(fighterImage);
+
+            var statsDiv = document.createElement('div');
+            statsDiv.className = 'statsBox';
+            fighterDiv.appendChild(statsDiv);
+            statsDiv.innerHTML = fighters.name + "'s Atk: " + fighters.atk + '<br>' + fighters.name + "'s Hp: " + fighters.hp;
+            
+            var controls = document.createElement('div');
+            controls.className = 'controlsBox';
+
+            var attackButton = document.createElement('button');
+            if (fighters != fightersList[0])
+            {
+                attackButton.disabled = true;
+            }
+            attackButton.id = 'Attack';
+            attackButton.innerHTML = 'Attack';
+            attackButton.onclick = fighters.attack;
+            controls.appendChild(attackButton)
+            if (fighters.team == 0) {
+                document.getElementById('team0').appendChild(fighterDiv);
+            }
+            if (fighters.team == 1) {
+                document.getElementById('team1').appendChild(fighterDiv);
+            }
+            fighterDiv.appendChild(controls);
+        }
+
+        var outputDiv = document.createElement('div');
+        outputDiv.id = 'output';
+        document.body.appendChild(outputDiv);
+
+        //Game Loop
+        gameLoop();
+        function gameLoop() {
+            if (gameTurn >= fightersList.length) {
+                gameTurn = 0;
+                gameRound ++;
+                for (fighters in fightersList) {
+                    if (fighters.hp > 0) {
+                        fighters.ready = true;
+                    }
+                }
+            }
+
+            fightersList.sort(function(a, b){return b.spd - a.spd});
+            for (fighters in fightersList) {
+                if (fighters == gameTurn && fightersList[fighters].hp > 0) {
+                    document.getElementById('Fighter ' + fightersList[fighters].id).className = 'active';
+                    document.getElementById("output").innerHTML = fightersList[fighters].name + "'s turn!!";
+                    document.getElementById('Fighter ' + fightersList[fighters].id).getElementsByClassName('controlsBox')[0].getElementsByTagName('Button')[0].disabled = false;
+                }
+                else if (fighters == gameTurn && fightersList[fighters].hp <= 0) {
+                    gameTurn++;
+                    gameLoop();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -15,10 +15,6 @@
     const numberOfTeams = 2;
     var gameRound = 0;
     var gameTurn = 0;
-    var team1Defeated = 0;
-    var team2Defeated = 0;
-    var team1Total = 0;
-    var team2Total = 0;
 
     class Fighter {
         constructor(id, name, team){
@@ -37,14 +33,14 @@
             var randomFighter = fighterList[Math.floor(Math.random() * fighterList.length)];
             do {
                 //counter++;
-                randomFighter = fighterList[Math.floor(Math.random() * fighterList.length)];
+                randomFighter = fighterList[Math.floor(Math.random() * fighterList.length)]
                 /*if (counter > fighterList.length){
                     document.getElementById("output").innerHTML = "There is no target.";
                     break;
                     return;
                 };*/
             }
-            while (randomFighter.hp > 0 && randomFighter.team == this.team || randomFighter.hp <= 0);
+            while (randomFighter.hp > 0 && randomFighter.team == this.team);
             var thisChildren = document.getElementById("Fighter " + this.id).children;
             var targetChildren = document.getElementById("Fighter " + randomFighter.id).children;
             var currentTargetChild = "";
@@ -169,7 +165,6 @@
                             currentTargetChildGrayscale.style.filter = "grayscale(1)";
                         };
                     };
-                    team1Defeated++;
                 }
                 else if (randomFighter.team == 1){
                     for (let i = 0; i < targetChildren.length; i++){
@@ -180,7 +175,6 @@
                             currentTargetChildGrayscale.style.filter = "grayscale(1)";
                         };
                     };
-                    team2Defeated++;
                 };
                 for (let i = 0; i < targetChildren.length; i++){
                     currentTargetChild = targetChildren[i];
@@ -199,12 +193,6 @@
         var fighter = new Fighter();
         fighter.name = fighterNames[Math.floor(Math.random() * 9)];
         fighter.team = i % numberOfTeams;
-        if (fighter.team == 0){
-            team1Total++;
-        }
-        else if (fighter.team == 1){
-            team2Total++;
-        };
         allFighters++;
         fighterList.push(fighter);
     };
@@ -217,16 +205,7 @@
         teamDiv.id = "team " + i;
         teamDiv.className = "teamBox";
         teamDiv.style.display = "inline-block";
-        teamDiv.style.margin = 5 + "px";
-        teamDiv.style.border = 1 + "px solid black";
-        teamDiv.style.padding = 5 + "px";
-        var teamHead = document.createElement("p");
-        teamHead.innerHTML = "Team " + (i + 1);
-        teamHead.style.textAlign = "center";
-        teamHead.style.margin = 5 + "px";
-        teamHead.style.padding = 5 + "px";
         document.body.appendChild(teamDiv);
-        teamDiv.appendChild(teamHead);
     };
 
     for (fighters of fighterList){
@@ -235,18 +214,10 @@
         fighterDiv.id = "Fighter " + fighters.id;
         fighterDiv.className = "fighterBox";
         fighterDiv.style.display = "inline-block";
-        fighterDiv.style.margin = 5 + "px";
-        fighterDiv.style.border = 1 + "px solid black";
-        fighterDiv.style.padding = 5 + "px";
+        fighterDiv.style.margin = 5 + "px"
         var fighterImg = document.createElement("img");
         fighterImg.className = "fighterGFX";
         fighterImg.id = "fighterGFX";
-        fighterImg.style.display = "block";
-        fighterImg.style.marginLeft = "auto";
-        fighterImg.style.marginRight = "auto";
-        fighterImg.style.border = 1 + "px solid black";
-        fighterImg.style.padding = 5 + "px";
-        fighterImg.style.alignSelf = "center";
         fighterDiv.appendChild(fighterImg);
         if (fighters.team == 0){
             fighters.img.src = "img/crashr_idle.png";
@@ -258,17 +229,11 @@
         var fighterStats = document.createElement("div");
         fighterStats.id = "statsBox";
         fighterStats.className = "statsBox";
-        fighterStats.style.margin = 5 + "px";
-        fighterStats.style.border = 1 + "px solid black";
-        fighterStats.style.padding = 5 + "px";
         fighterDiv.appendChild(fighterStats);
         fighterStats.innerHTML = fighters.name + "'s ATK: " + fighters.atk + "<br>" + fighters.name + "'s HP: " + fighters.hp;
         var fighterControls = document.createElement("div");
         fighterControls.className = "controlsBox";
         fighterControls.id = "controlsBox";
-        fighterControls.style.margin = 5 + "px";
-        fighterControls.style.border = 1 + "px solid black";
-        fighterControls.style.padding = 5 + "px";
         fighterDiv.appendChild(fighterControls);
         var attackButton = document.createElement("button");
         attackButton.disabled = true;
@@ -296,14 +261,11 @@
             }
         };
         fighterControls.appendChild(attackButton);
-        document.getElementById("team " + fighters.team).appendChild(fighterDiv);
+        document.getElementById("team " + fighters.id).appendChild(fighterDiv);
     };
 
     var outputDiv = document.createElement("div");
     outputDiv.id = "output";
-    outputDiv.style.margin = 5 + "px";
-    outputDiv.style.border = 1 + "px solid black";
-    outputDiv.style.padding = 5 + "px";
     document.body.appendChild(outputDiv);
 
     function gameLoop(){
@@ -326,33 +288,13 @@
                 document.getElementById("Fighter " + fighters.id).className = "active";
                 var fighterChildren = document.getElementById("Fighter " + fighters.id).children;
                 var currentFighterChild = "";
-                if (fighters.team == 0 && team2Defeated == team2Total){
-                    for (let i = 0; i < fighterChildren.length; i++){
-                        currentFighterChild = fighterChildren[i];
-                        if (currentFighterChild.id == "controlsBox"){
-                            currentFighterChild.firstChild.disabled = true;
-                        };
-                        document.getElementById("output").innerHTML = "Team " + (fighters.team + 1) + " wins!";
+                for (let i = 0; i < fighterChildren.length; i++){
+                    currentFighterChild = fighterChildren[i];
+                    if (currentFighterChild.id == "controlsBox"){
+                        currentFighterChild.firstChild.disabled = false;
                     };
-                }
-                else if (fighters.team == 1 && team1Defeated == team1Total){
-                    for (let i = 0; i < fighterChildren.length; i++){
-                        currentFighterChild = fighterChildren[i];
-                        if (currentFighterChild.id == "controlsBox"){
-                            currentFighterChild.firstChild.disabled = true;
-                        };
-                        document.getElementById("output").innerHTML = "Team " + (fighters.team + 1) + " wins!";
-                    };
-                }
-                else {
-                    for (let i = 0; i < fighterChildren.length; i++){
-                        currentFighterChild = fighterChildren[i];
-                        if (currentFighterChild.id == "controlsBox"){
-                            currentFighterChild.firstChild.disabled = false;
-                        };
-                    };
-                    document.getElementById("output").innerHTML = "It's " + fighters.name + "'s turn!";
                 };
+                document.getElementById("output").innerHTML = "It's " + fighters.name + "'s turn!";
             };
             if (fighterList.indexOf(fighters) == gameTurn && fighters.hp <= 0){
                 console.log("dead");

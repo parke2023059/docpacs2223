@@ -5,6 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>JSFighter</title>
 		<style>
+			body {
+				zoom: 1.25;
+			}
 			#round {
 				margin-top: 20px;
 				font-weight: bold;
@@ -18,7 +21,7 @@
 			#teams {
 				display: flex;
 			}
-			.fighterBox {
+			.teamBox {
 				margin-right: 50px;
 			}
 			#output {
@@ -27,7 +30,19 @@
 				font-size: 35px;
 			}
 			.dead {
-				filter: grayscale(100%);
+				filter: grayscale(75%);
+			}
+			button {
+				color: rgb(0, 0, 0);
+				background-color: rgb(0, 255, 0);
+				font-weight: 800;
+			}
+			button:disabled {
+				background-color: rgb(200, 200, 200);
+			}
+			.statsBox {
+				font-size: large;
+				font-weight: 700;
 			}
 		</style>
 	</head>
@@ -42,7 +57,7 @@
 				'Creeper',
 				'Aww Man',
 				'Butter Dog',
-				'Get To school 2: Electric Boogaloo',
+				'Get To school 2:<br>Electric Boogaloo',
 				'Black Knight',
 				'Ork',
 				'Ryan',
@@ -52,10 +67,10 @@
 			class Fighter {
 				constructor(id, name, team) {
 					this.id = id
-					this.hp = Math.ceil(Math.random() * 99 + 50)
+					this.hp = Math.ceil(0.1 * 75 + 75)
 					this.hp_max = this.hp
-					this.atk = Math.ceil(Math.random() * 19)
-					this.spd = Math.ceil(Math.random() * 19)
+					this.atk = Math.ceil(Math.random() * 25)
+					this.spd = Math.ceil(Math.random() * 50)
 					this.name = name
 					this.ready = true
 					this.team = team
@@ -65,9 +80,8 @@
 					for (fighter of fighters) {
 						if (
 							this.parentElement.parentElement.id.slice(-1) == fighter.id
-						) {
+						)
 							thisFighter = fighters[fighters.indexOf(fighter)]
-						}
 					}
 					let thisDiv = document.getElementById('fighter' + thisFighter.id)
 					for (fighter of fighters) {
@@ -79,9 +93,7 @@
 								fighterDiv.getElementsByClassName('fighterGFX')[0].src =
 									'img/crashr_idle.png'
 							else if (fighter.team % 2 == 1)
-								document
-									.getElementById('fighter' + fighter.id)
-									.getElementsByClassName('fighterGFX')[0].src =
+								fighterDiv.getElementsByClassName('fighterGFX')[0].src =
 									'img/saml_idle.png'
 						}
 					}
@@ -134,11 +146,12 @@
 						thisDiv.classList.remove('active')
 						thisFighter.ready = false
 					}
-					for (fighter of fighters)
+					for (fighter of fighters) {
 						document
 							.getElementById('fighter' + fighter.id)
 							.getElementsByClassName('controlsBox')[0]
 							.getElementsByTagName('button')[0].disabled = true
+					}
 					turn++
 					gameLoop()
 				}
@@ -147,19 +160,26 @@
 			// Game Setup
 			var fighters = []
 			var numberOfTeams = 2
-			var numberOfFighters = 2
-			if (numberOfTeams > 9) numberOfTeams = 9
-			if (numberOfFighters > 9) numberOfFighters = 9
+			var numberOfFighters = 1
+			let tempFighterNames = []
 			for (let i = 0; i < numberOfTeams * numberOfFighters; i++) {
-				fighterName = Math.floor(Math.random() * fighterNames.length)
+				if (tempFighterNames.length <= 0) {
+					for (name of fighterNames) {
+						tempFighterNames.push(name)
+					}
+				}
+				let fighterName = Math.floor(
+					Math.random() * tempFighterNames.length
+				)
 				fighters.push(
 					new Fighter(
 						allFighters,
-						fighterNames[fighterName],
+						tempFighterNames[fighterName],
 						i % numberOfTeams
 					)
 				)
-				fighterNames.splice(fighterName, 1)
+
+				tempFighterNames.splice(fighterName, 1)
 				allFighters++
 			}
 			var round = 0
@@ -211,7 +231,7 @@
 				let attackButton = document.createElement('button')
 				attackButton.disabled = true
 				attackButton.innerHTML = 'Attack'
-				attackButton.addEventListener('click', fighter.attack)
+				attackButton.onclick = fighter.attack
 				controlsDiv.appendChild(attackButton)
 				fighterDiv.appendChild(controlsDiv)
 				document
@@ -224,7 +244,10 @@
 
 			// Game Loop
 			let sortedFighters = []
-			sortedFighters = fighters.sort((a, b) => {
+			for (fighter of fighters) {
+				sortedFighters.push(fighter)
+			}
+			sortedFighters.sort((a, b) => {
 				return b.spd - a.spd
 			})
 			gameLoop()
@@ -243,7 +266,7 @@
 					)
 					if (
 						fighter == turn &&
-						// sortedFighters[fighter].ready &&
+						sortedFighters[fighter].ready &&
 						sortedFighters[fighter].hp > 0
 					) {
 						fighterDiv.classList.add('active')
@@ -262,10 +285,7 @@
 				}
 			}
 			function checkWinner() {
-				fighters = fighters.sort((a, b) => {
-					return a.id - b.id
-				})
-				teams = []
+				let teams = []
 				for (let team = 0; team < numberOfTeams; team++) {
 					teams.push(
 						fighters.filter(
@@ -277,6 +297,14 @@
 				if (teams.length == 1) {
 					for (fighter of fighters) {
 						fighterDiv = document.getElementById('fighter' + fighter.id)
+						if (fighter.hp > 0) {
+							if (fighter.team % 2 == 0)
+								fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+									'img/crashr_idle.png'
+							else if (fighter.team % 2 == 1)
+								fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+									'img/saml_idle.png'
+						}
 						fighterDiv
 							.getElementsByClassName('controlsBox')[0]
 							.getElementsByTagName('button')[0].disabled = true

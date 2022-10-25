@@ -1,0 +1,6 @@
+Is this stuff actual lore like cannon or did you just connect them together?
+
+When you define a get element and you have more than one do you have to use
+document.querySelectorAll?
+
+Why are different identifiers expected sometimes than the ones you should use?

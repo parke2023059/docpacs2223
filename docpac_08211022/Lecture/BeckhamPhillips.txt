@@ -1,0 +1,3 @@
+Where did you find the sprites for the fighters
+Do you have a working version of JsFighter that you made
+How does the dodge feature work 

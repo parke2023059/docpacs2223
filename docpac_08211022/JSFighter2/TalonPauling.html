@@ -289,8 +289,8 @@
   // Vital
 
   //team maker
-  var numberOfTeams = 13;
-  var numberOfFighters = 125000;
+  var numberOfTeams = 2;
+  var numberOfFighters = 1;
   console.log(fighterNameList);
   //Fiddle with these^^^^
   let tempFighterNameList = [];
@@ -391,7 +391,7 @@
           .getElementsByClassName("controlsBox")[0]
           .getElementsByTagName("button")[0].disabled = false;
         document.getElementById("output").innerHTML =
-          "Tis " + speedList[fighter].name + "'s Turn, BBbboooiiiiissssss";
+          "Tis " + speedList[fighter].name + "'s Turn";
       } else if (fighter == turn && speedList[fighter].hp <= 0) {
         turn += 1;
         gameLoop();

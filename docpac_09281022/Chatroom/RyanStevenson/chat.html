@@ -48,7 +48,6 @@
 			let params = new URLSearchParams(window.location.search);
 			loggedInUser = params.get('user')
 			socket.emit('login', loggedInUser)
-			console.log(loggedInUser);
 			setTimeout(() => {
 				if (!loggedInUser) window.location.href = '/login';
 			}, 500);

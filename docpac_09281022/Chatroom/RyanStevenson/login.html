@@ -21,7 +21,6 @@
 		var username = document.getElementById('username');
 
 		form.addEventListener('submit', (element) => {
-			console.log(window.location);
 			element.preventDefault();
 			if (username.value) {
 				window.location.href = '/chat?user=' + username.value

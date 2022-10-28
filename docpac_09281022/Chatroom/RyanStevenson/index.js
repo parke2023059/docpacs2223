@@ -12,7 +12,6 @@ app.get('/', (request, response) => {
 })
 
 app.get('/chat', (request, response) => {
-	console.log(request.query);
 	response.sendFile(__dirname + '/chat.html');
 })
 
@@ -21,8 +20,6 @@ app.get('/login', (request, response) => {
 })
 
 io.on('connection', (socket) => {
-	console.log('connect', socket.id, socket.username);
-
 	socket.on('login', (username) => {
 		if (!users.includes(username)) {
 			socket.username = username;

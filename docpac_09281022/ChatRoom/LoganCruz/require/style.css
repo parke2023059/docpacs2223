@@ -15,7 +15,7 @@
 body {
 	font-family: 'Roboto', comic;
 	font-size: 16px;
-	background: var(--dark-color);
+	background: var(--light-color);
 	margin: 20px;
 }
 
@@ -63,7 +63,7 @@ a {
 
 .chat-sidebar {
 	background: var(--dark-color-b);
-	color: #f5f;
+	color: #fff;
 	padding: 20px 20px 60px;
 	overflow-y: scroll;
 }

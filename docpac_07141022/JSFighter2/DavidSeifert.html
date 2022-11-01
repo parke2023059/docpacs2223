@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Fighter 2</title>
+</head>
+<body>
+    <script>
+        var fighterNumber = 0
+        var fighterNames = ["Jackson", "Bob", "Tom", "Jerry", "Rick", "Morty"]
+        var fighters = []
+        const teamNum = 2
+        var  gameTurn = 0
+        var gameRound = 0
+        class Fighter{
+            constructor(id, name, team){
+                this.name = name,
+                this.hp = 200,
+                this.hp_max = 200,
+                this.atk = 25,
+                this.spd = 15,
+                this.ready = true,
+                this.team = team,
+                this.id = id
+                this.img = new Image()
+                this.img.src = ""
+            }
+            attack(target){
+                fighter.forEach(fighterName => {
+                    if (fighterName.hp > 0){
+                        if (fighters.indexOf(fighterName) == 0){
+                            fighterName.img.src = "img/crashr_idle.png"
+                        }
+                        else if (fighters.indexOf(fighterName) == 0){
+                            fighterName.img.src = "img/saml_idle.png"
+                    };
+                };
+            });
+                let counter = 0;
+            do {
+                counter++;
+                var randomFighter = fighterlist[Math.round(Math.random() * 1)]
+                if (counter > fighterlist.length){
+                    console.log("There are no targets.")
+                    break
+                    return
+                }
+            }
+            while (randomFighter.hp > 0 && randomFighter.team != this.team)
+            target.hp = target.hp - ((this.atk + Math.round(Math.random() * 10)) - 3)
+        };
+            }
+
+            
+            
+        for (let i=0; i < 2; i++){
+                var fighter = new Fighter();
+                fighter.name = fighterNames[Math.round(Math.random()*5)]
+                console.log(fighter.name)
+                Fighter.team = i % teamNum
+                fighterNumber += 1
+                fighters.push(new Fighter())
+        }
+
+        function gameLoop(){
+            if (gameTurn >= fighters.length){
+                gameTurn = 0
+                gameRound++
+                for (fighter in fighters){
+                    if (fighter.hp > 0)
+                    fighter.ready = true
+                }
+            }
+        };
+
+    </script>
+</body>
+</html>

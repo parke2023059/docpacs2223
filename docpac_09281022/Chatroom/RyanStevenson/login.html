@@ -1,0 +1,44 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Chat Room</title>
+	<style>
+		#username {
+			margin-bottom: 1rem;
+		}
+	</style>
+</head>
+
+<body>
+	<script type="module">
+		import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+		const socket = io();
+
+		var form = document.getElementById('form');
+		var username = document.getElementById('username');
+
+		form.addEventListener('submit', (element) => {
+			element.preventDefault();
+			if (username.value) {
+				window.location.href = '/chat?user=' + username.value
+				username.value = '';
+			}
+		})
+
+		socket.on('redirect', (destination) => {
+			window.location.href = destination;
+		})
+	</script>
+	<h1>Login</h1>
+	<form id='form' action='' autocomplete='off'>
+		<label for="username">Username</label>
+		<input type="text" id='username'>
+		<br>
+		<input type="submit">
+	</form>
+</body>
+
+</html>

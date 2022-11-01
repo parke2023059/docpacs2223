@@ -1,0 +1,19 @@
+{
+  "name": "docpac_09281022",
+  "version": "1.0.0",
+  "description": "Realtime Chatroom",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "author": "Logan Cruz",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.5.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

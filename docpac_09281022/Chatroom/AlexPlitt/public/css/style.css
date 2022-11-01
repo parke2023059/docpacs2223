@@ -52,11 +52,15 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-style: solid;
+    border-color: #000000;
 }
 
 .chat-main {
     display: grid;
     grid-template-columns: 1fr 3fr;
+    border-style: solid;
+    border-color: #000000;
 }
 
 .chat-sidebar {
@@ -92,6 +96,8 @@ a {
     margin-bottom: 15px;
     background-color: #ebebeb;
     border-radius: 5px;
+    border-style: solid;
+    border-color: #000000;
 }
 
 .chat-messages .message .meta {
@@ -109,6 +115,8 @@ a {
 .chat-form-container {
     padding: 20px 30px;
     background-color: var(--dark-color-a);
+    border-style: solid;
+    border-color: #000000;
 }
 
 .chat-form-container form {
@@ -134,11 +142,15 @@ a {
     background: var(--dark-color-a);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    border-style: solid;
+    border-color: #000000;
 }
 
 .join-main {
     padding: 30px 40px;
     background: var(--dark-color-b);
+    border-style: solid;
+    border-color: #000000;
 }
 
 .join-main p {

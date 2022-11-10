@@ -97,7 +97,7 @@
             }
         }
         
-        for (i = 0; i < 2; i++) {
+        for (i = 0; i < 4; i++) {
             var fighter = new Fighter();
             fighter.name = fighterNames[Math.floor(Math.random() *5)];
             fighter.team = i % teams;
@@ -184,7 +184,7 @@
                         currentFighterChildren = fighterchildren[i]
                         if (currentFighterChildren.id == "FighterButton") {
                             currentFighterChildren.firstChild.disabled = false;
-                        }
+                        } 
                     }
                     document.getElementById("Attack").disabled = false
                     document.getElementById("output").innerHTML = "It's " + fighter.name + " turn!"

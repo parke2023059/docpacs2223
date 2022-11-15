@@ -3,7 +3,7 @@ const app = express();
 const ejs = require("ejs");
 const fs = require("fs");
 const bodyParser = require('body-parser');
-const port = 9000;
+const port = 4000;
 app.use(express.urlencoded({extended: true}));
 app.set('view engine', 'ejs')
 app.get('/', (req, res) =>{
@@ -40,4 +40,3 @@ id += feedback.users.length
 app.listen(port, () =>{
     console.log(`Listening on port ${port}`);
 })
-Footer

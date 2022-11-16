@@ -1,0 +1,5 @@
+- In the Summary it says that when a fighter dies, to make it so they can't attack or be attacked. 
+How do you make it so another fighter doesn't try to attack the dead fighter?
+
+- In the Summary, it says when it is a fighters turn to highlight their controls.
+Are there supposed to be multiple control options or is that just optional.

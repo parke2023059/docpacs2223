@@ -1,0 +1,330 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>JSFighter</title>
+	<style>
+		body {
+			zoom: 1.25;
+		}
+
+		#round {
+			margin-top: 20px;
+			font-weight: bold;
+			font-size: 25px;
+		}
+
+		.teamNumber {
+			margin-top: 20px;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		#teams {
+			display: flex;
+		}
+
+		.teamBox {
+			margin-right: 50px;
+		}
+
+		#output {
+			margin-top: 50px;
+			font-weight: bold;
+			font-size: 35px;
+		}
+
+		.dead {
+			filter: grayscale(75%);
+		}
+
+		button {
+			color: rgb(0, 0, 0);
+			background-color: rgb(0, 255, 0);
+			font-weight: 800;
+		}
+
+		button:disabled {
+			background-color: rgb(200, 200, 200);
+		}
+
+		.statsBox {
+			font-size: large;
+			font-weight: 700;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		// Data Structure
+		var allFighters = 0
+		var fighterNames = [
+			'Storm Trooper',
+			'Red Shirt',
+			'Number Four',
+			'Creeper',
+			'Aww Man',
+			'Butter Dog',
+			'Get To school 2:<br>Electric Boogaloo',
+			'Black Knight',
+			'Ork',
+			'Ryan',
+			'Atlas',
+			'Ice Pirate'
+		]
+		class Fighter {
+			constructor(id, name, team) {
+				this.id = id
+				this.hp = Math.ceil(0.1 * 75 + 75)
+				this.hp_max = this.hp
+				this.atk = Math.ceil(Math.random() * 25)
+				this.spd = Math.ceil(Math.random() * 50)
+				this.name = name
+				this.ready = true
+				this.team = team
+			}
+			attack() {
+				let thisFighter
+				for (fighter of fighters) {
+					if (
+						this.parentElement.parentElement.id.slice(-1) == fighter.id
+					)
+						thisFighter = fighters[fighters.indexOf(fighter)]
+				}
+				let thisDiv = document.getElementById('fighter' + thisFighter.id)
+				for (fighter of fighters) {
+					if (fighter.hp > 0) {
+						let fighterDiv = document.getElementById(
+							'fighter' + fighter.id
+						)
+						if (fighter.team % 2 == 0)
+							fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+								'img/crashr_idle.png'
+						else if (fighter.team % 2 == 1)
+							fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+								'img/saml_idle.png'
+					}
+				}
+				let counter = 0
+				let target
+				let targetDiv
+				do {
+					counter++
+					target = fighters[Math.floor(Math.random() * fighters.length)]
+					targetDiv = document.getElementById('fighter' + target.id)
+					if (counter > fighters.length) {
+						document.getElementById('output').innerHTML =
+							'There are no Targets'
+						target = null
+						break
+					}
+				} while (target.hp <= 0 || thisFighter.team == target.team)
+				if (target) {
+					target.hp -= thisFighter.atk
+					if (thisFighter.team % 2 == 0)
+						thisDiv.getElementsByClassName('fighterGFX')[0].src =
+							'img/crashr_attack.png'
+					else if (thisFighter.team % 2 == 1)
+						thisDiv.getElementsByClassName('fighterGFX')[0].src =
+							'img/saml_attack.png'
+					if (target.team % 2 == 0)
+						targetDiv.getElementsByClassName('fighterGFX')[0].src =
+							'img/crashr_hit.png'
+					else if (target.team % 2 == 1)
+						targetDiv.getElementsByClassName('fighterGFX')[0].src =
+							'img/saml_hit.png'
+					if (target.hp <= 0) {
+						target.hp = 0
+						targetDiv.classList.add('dead')
+						if (target.team % 2 == 0)
+							targetDiv.getElementsByClassName('fighterGFX')[0].src =
+								'img/crashr_ko.png'
+						else if (target.team % 2 == 1)
+							targetDiv.getElementsByClassName('fighterGFX')[0].src =
+								'img/saml_ko.png'
+					}
+					targetDiv.getElementsByClassName('statsBox')[0].innerHTML =
+						target.name +
+						'<br>Attack: ' +
+						target.atk +
+						'<br>Health: ' +
+						target.hp
+					document.getElementById('output').innerHTML =
+						thisFighter.name + ' Attacked ' + target.name
+					thisDiv.classList.remove('active')
+					thisFighter.ready = false
+				}
+				for (fighter of fighters) {
+					document
+						.getElementById('fighter' + fighter.id)
+						.getElementsByClassName('controlsBox')[0]
+						.getElementsByTagName('button')[0].disabled = true
+				}
+				turn++
+				gameLoop()
+			}
+		}
+
+		// Game Setup
+		var fighters = []
+		var numberOfTeams = 2
+		var numberOfFighters = 1
+		let tempFighterNames = []
+		for (let i = 0; i < numberOfTeams * numberOfFighters; i++) {
+			if (tempFighterNames.length <= 0) {
+				for (name of fighterNames) {
+					tempFighterNames.push(name)
+				}
+			}
+			let fighterName = Math.floor(
+				Math.random() * tempFighterNames.length
+			)
+			fighters.push(
+				new Fighter(
+					allFighters,
+					tempFighterNames[fighterName],
+					i % numberOfTeams
+				)
+			)
+
+			tempFighterNames.splice(fighterName, 1)
+			allFighters++
+		}
+		var round = 0
+		var turn = 0
+
+		// Page Setup
+		let roundDiv = document.createElement('div')
+		roundDiv.id = 'round'
+		document.body.appendChild(roundDiv)
+		let teamDiv = document.createElement('div')
+		teamDiv.id = 'teams'
+		document.body.appendChild(teamDiv)
+		for (let i = 0; i < numberOfTeams; i++) {
+			let teamDiv = document.createElement('div')
+			teamDiv.id = 'team' + i
+			teamDiv.classList.add('teamBox')
+			let teamNumber = document.createElement('p')
+			teamNumber.classList.add('teamNumber')
+			teamNumber.innerHTML = 'Team: ' + (i + 1)
+			teamDiv.appendChild(teamNumber)
+			document.getElementById('teams').appendChild(teamDiv)
+		}
+		for (fighter of fighters) {
+			let fighterDiv = document.createElement('div')
+			fighterDiv.id = 'fighter' + fighter.id
+			fighterDiv.className = 'fighterBox'
+			let fighterImg = document.createElement('img')
+			fighterImg.className = 'fighterGFX'
+			fighterDiv.appendChild(fighterImg)
+			if (fighter.team % 2 == 0) {
+				fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+					'img/crashr_idle.png'
+			}
+			if (fighter.team % 2 == 1)
+				fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+					'img/saml_idle.png'
+			let statsDiv = document.createElement('div')
+			statsDiv.className = 'statsBox'
+			fighterDiv.appendChild(statsDiv)
+			fighterDiv.getElementsByClassName('statsBox')[0].innerHTML =
+				fighter.name +
+				'<br>Attack: ' +
+				fighter.atk +
+				'<br>Health: ' +
+				fighter.hp
+			let controlsDiv = document.createElement('div')
+			controlsDiv.className = 'controlsBox'
+			fighterDiv.appendChild(controlsDiv)
+			let attackButton = document.createElement('button')
+			attackButton.disabled = true
+			attackButton.innerHTML = 'Attack'
+			attackButton.onclick = fighter.attack
+			controlsDiv.appendChild(attackButton)
+			fighterDiv.appendChild(controlsDiv)
+			document
+				.getElementById('team' + fighter.team)
+				.appendChild(fighterDiv)
+		}
+		let outputDiv = document.createElement('div')
+		outputDiv.id = 'output'
+		document.body.appendChild(outputDiv)
+
+		// Game Loop
+		let sortedFighters = []
+		for (fighter of fighters) {
+			sortedFighters.push(fighter)
+		}
+		sortedFighters.sort((a, b) => {
+			return b.spd - a.spd
+		})
+		gameLoop()
+		function gameLoop() {
+			if (turn >= fighters.length) {
+				turn = 0
+				round++
+				for (fighter of fighters) {
+					if (fighter.hp > 0) fighter.ready = true
+				}
+			}
+			document.getElementById('round').innerHTML = 'Round: ' + (round + 1)
+			for (fighter in sortedFighters) {
+				fighterDiv = document.getElementById(
+					'fighter' + sortedFighters[fighter].id
+				)
+				if (
+					fighter == turn &&
+					sortedFighters[fighter].ready &&
+					sortedFighters[fighter].hp > 0
+				) {
+					fighterDiv.classList.add('active')
+					fighterDiv
+						.getElementsByClassName('controlsBox')[0]
+						.getElementsByTagName('button')[0].disabled = false
+					document.getElementById('output').innerHTML =
+						"It's " + fighters[fighter].name + "'s Turn"
+					checkWinner()
+					return
+				} else if (fighter == turn && sortedFighters[fighter].hp <= 0) {
+					turn++
+					checkWinner()
+					gameLoop()
+				}
+			}
+		}
+		function checkWinner() {
+			let teams = []
+			for (let team = 0; team < numberOfTeams; team++) {
+				teams.push(
+					fighters.filter(
+						fighter => fighter.team == team && fighter.hp > 0
+					)
+				)
+				teams = teams.filter(team => team.length > 0)
+			}
+			if (teams.length == 1) {
+				for (fighter of fighters) {
+					fighterDiv = document.getElementById('fighter' + fighter.id)
+					if (fighter.hp > 0) {
+						if (fighter.team % 2 == 0)
+							fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+								'img/crashr_idle.png'
+						else if (fighter.team % 2 == 1)
+							fighterDiv.getElementsByClassName('fighterGFX')[0].src =
+								'img/saml_idle.png'
+					}
+					fighterDiv
+						.getElementsByClassName('controlsBox')[0]
+						.getElementsByTagName('button')[0].disabled = true
+				}
+				document.getElementById('output').innerHTML =
+					'Team ' + (teams[0][0].team + 1) + ' Won!'
+			}
+		}
+	</script>
+</body>
+
+</html>

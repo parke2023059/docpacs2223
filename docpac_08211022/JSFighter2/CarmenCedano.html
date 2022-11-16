@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSFighter2</title>
+</head>
+
+<body>
+    <!-- <div>
+
+        <button onclick="player.attack(fighterList[1])">Attack</button>
+        <button onclick="player.attack(fighterList[0])">Attack</button>
+
+    </div> -->
+</body> 
+
+<script>
+
+   // output box
+   var output = document.createElement('div');
+    output.id = "output";
+    output.style.margin = 8 + "px"
+
+    // Data Structure
+    var fighters = ["Max", "Sam", "Derick", "Carlos", "Juan", "Jim", "Jeremy", "Luis"];
+    var allFighters = 0;
+    var fighterList = [];
+    const teamNumber = 2;
+    var gameRound = 0;
+    var gameTurn = 0;
+    //var currentFighter = if()
+
+    console.log(fighters)
+    
+    class fighter {
+        constructor (id, name, team) {
+            this.id = allFighters;
+            this.hp = 150;
+            this.hp_max = 150;
+            this.atk = 10;
+            this.spd = 10;
+            this.name = name; 
+            this.ready = true;
+            this.team = team;
+            this.img = new Image ()
+            this.img.src = ""
+        };
+        
+        attack (target) {
+            // for (Fighter in fighterList) {
+            //     if (Fighter.hp > 0) {
+            //         if (fighterList.indexOf(Fighter) == 0) {
+            //             Fighter.img.src = "img/crashr_idle.png"
+            //         }
+            //         else if (fighterList.indexOf(Fighter) == 1) {
+            //             Fighter.img.src = "img/saml_idle.png"
+            //         };
+            //     };
+            // };
+            var counter = 0;
+            do { 
+                counter ++
+                var randomFighter = Math.floor(Math.random() * fighters)
+                if (counter  >= fighterList.length) {
+                    console.log("There are no targets")
+                    break;
+                    return
+                };
+            }
+            while (target.hp > 0 && target.team != this.team);
+
+            var atkDamage = Math.floor(Math.random() * 5) + this.atk;
+            target.hp -= atkDamage
+            if (target.hp < 0) {
+                target.hp = 0
+
+                // add "dead" class to this fighter's div
+                // var deadClass = document.getElementById( "fighter" + Fighter.id )
+                // fighterDiv.className.add('dead')
+                //fighterDiv.add("dead")
+                
+                target.img.src = "img/crashr_ko.png"
+            };
+            
+            // Fighter.img.src = 'img/crashr_attack.png'
+
+            if (fighterList.indexOf(Fighter) == 0) {
+                Fighter.img.src = 'img/crashr_attack.png'
+            }
+            else if (fighterList.indexOf(Fighter) == 1) {
+                Fighter.img.src = 'img/saml_attack.png'
+            };
+                
+            // Fighter.target.img_arc = ""
+
+            // change hp as displayed in the stats box
+
+            for (Fighter of fighterList) {
+                if (fighterList.indexOf(Fighter) == 0) {
+                    statsBox.innerHTML = fighterList[0].name + "'s Attack: " + Fighter.atk + "<br>" + fighterList[0].name + "'s Hp: " + Fighter.hp + " / " + Fighter.hp_max;
+                } 
+                else if (fighterList.indexOf(Fighter) == 1) {
+                    statsBox.innerHTML = fighterList[1].name + "'s Attack: " + Fighter.atk + "<br>" + fighterList[1].name + "'s Hp: " + Fighter.hp + " / " + Fighter.hp_max;
+                };
+            };
+
+            //append updates about the attack to the output div
+            if (fighterList[0].hp > 0 && fighterList[1].hp > 0) {
+                if (fighterList.indexOf(Fighter) == 0) {
+                    output.innerHTML = "The current fighter is " + Fighter.name + "<br>" + fighterList[0].name + " " + " hit " + fighterList[1].name + " by " + atkDamage + " damage";
+                };
+                if (fighterList.indexOf(Fighter) == 1) {
+                    output.innerHTML = "The current fighter is " + Fighter.name + "<br>" + fighterList[1].name + " " + " hit " + fighterList[0].name + " by " + atkDamage + " damage";
+                };
+            } else if (fighterList[0].hp == 0 || fighterList[1].hp == 0) {
+                if (fighterList.indexOf(Fighter) == 0) {
+                    output.innerHTML = fighterList[0].name + " " + " defeated " + fighterList[1].name;
+                    //Fighter.img.src = "img/crashr_ko.png"
+                };
+                if (fighterList.indexOf(Fighter) == 1) {
+                    output.innerHTML = fighterList[1].name + " " + " defeated " + fighterList[0].name;
+                    //Fighter.img.src = "img/saml_ko.png"
+                };
+            };
+            // output.innerHTML = "Game Round" + gameRound + "<br>" + "Game Turn" + gameTurn
+
+            // remove "active" class from fighterDiv
+           
+            target.ready = false
+            gameTurn ++
+
+            // call gameLoop function
+            gameLoop()
+        };
+    };
+    
+    // Game Setup
+    for (let i = 0; i < 2; i ++) {
+        let randName = fighters[(Math.random() * fighters.length) | 0]
+        let fighterTeam = i % teamNumber
+        let player = new fighter(allFighters++, randName, fighterTeam);
+        fighterList.push(player)
+        
+        console.log(fighterList)
+    };
+
+    // Game Loop
+    function gameLoop () {
+        if (gameTurn >= fighterList.length) {
+            gameTurn = 0;
+            gameRound ++;
+            for (Fighter in fighterList) {
+                if (Fighter.hp > 0) {
+                    Fighter.ready = true;
+                };
+            };
+        };
+        
+        fighterList.sort(function(a, b) {return b.spd - a.spd} );
+        
+        for (Fighter in fighterList) {
+            if (fighterList.indexOf(Fighter) == gameTurn && Fighter.ready == true && Fighter.hp > 0) {
+                console.log("The fighter is" + Fighter.name)
+
+                // add "active" class to their box
+                var activeClass = document.getElementById( "fighter" + Fighter.id )
+                fighterDiv.className.add('active')
+
+                attackButton.disabled = false;
+
+                // tell user fighter's name in output box
+                output.innerHTML = "The current fighter is " + Fighter.name
+            }
+            else {
+                gameTurn ++
+                //gameLoop();
+            };
+        };
+    };
+    
+    // Page Setup
+    for (let i = 0; i < teamNumber; i ++) {
+        // teamDiv
+        var teamDiv = document.createElement('div');
+        teamDiv.id = "team" + i;
+        teamDiv.className = "teamBox";
+        teamDiv.style.display = "block";
+        //teamDiv.style.margin = 5 + "px";
+        //teamDiv.innerHTML = "Team " + "<br>" + i 
+        document.body.appendChild(teamDiv);
+        
+        console.log("The round has begun");
+    };
+
+    // Page Setup
+    for (Fighter of fighterList) {
+        // variable for the index of the fighter(s) in fighterList
+        var fighterIndex = fighterList.indexOf(Fighter);
+
+        // fighterDiv
+        var fighterDiv = document.createElement('div');
+        fighterDiv.id = "fighter" + Fighter.id;
+        fighterDiv.className = "fighterBox";
+        fighterDiv.style.display = "inline-block";
+        fighterDiv.style.margin = 10 + "px";
+        //fighterDiv.style.border = 5 + "px";
+        fighterDiv.style.border = "solid";
+
+        // fighterImage
+        // create img element with class "fighterGFX"
+        var fighterImage = document.createElement('img');
+        fighterImage.className = "fighterGFX"
+        fighterImage.style.margin = 6 + "px";
+        
+        if (Fighter.team == 0) {
+            Fighter.img.src = "img/crashr_idle.png";
+        }
+        else if (Fighter.team == 1) {
+            Fighter.img.src = "img/saml_idle.png";
+        };
+        
+        fighterImage.src = Fighter.img.src;
+        fighterDiv.appendChild(fighterImage)
+
+        // statsBox with HP and attack properties
+        var statsBox = document.createElement('div');
+        statsBox.className = "statsBox";
+        statsBox.style.margin = 6 + "px";
+        statsBox.innerHTML = Fighter.name + "'s Attack: " + Fighter.atk + "<br>" + Fighter.name + "'s Hp: " + Fighter.hp + " / " + Fighter.hp_max;
+        fighterDiv.appendChild(statsBox);
+
+        // controls box
+        var controlBox = document.createElement('div');
+        controlBox.className = "controlsBox";
+
+        // attack button
+        var attackButton = document.createElement('button');
+        attackButton.style.margin = 6 + "px";
+        attackButton.innerHTML = "Attack";
+
+        // attackButton.disabled = true;
+
+        if (fighterIndex == 0) {
+            //attackButton.disabled = false;
+            attackButton.onclick = function() { 
+                fighterList[0].attack(fighterList[1]); 
+                if (Fighter.team == 0) {
+                    fighterList[0].img.src = "img/crashr_attack.png" };
+                console.log(fighterList[0].name + ' attacked ' + fighterList[1].name);
+                console.log(fighterList[1].name + "'s Hp is now " + fighterList[1].hp);
+            };
+        };
+
+        if (fighterIndex == 1) {
+            //attackButton.disabled = true;
+            attackButton.onclick = function() { 
+                fighterList[1].attack(fighterList[0]); 
+                if (Fighter.team == 1) {
+                    fighterList[1].img.src = "img/saml_attack.png" };
+                console.log(fighterList[1].name + ' attaked ' + fighterList[0].name); 
+                console.log(fighterList[0].name + "'s Hp is now " + fighterList[0].hp)
+            };
+        };
+
+        // adding elements to page
+        controlBox.appendChild(attackButton);
+        fighterDiv.appendChild(controlBox);
+        document.body.appendChild(fighterDiv);
+    };
+
+    //gameLoop()
+    //output.innerHTML = attackButton.onclick()
+    // for (Fighter in fighterList) {
+    //     if (fighterList.indexOf(Fighter) == gameTurn) {
+    //         output.innerHTML = "The fighter is " + Fighter
+    //     };
+    // };
+
+    output.innerHTML = "The fighters names are " + fighterList[0].name + " and " + fighterList[1].name + "<br>" + "Check console to see the code actually work somewhat"
+    document.body.appendChild(output);
+
+</script>
+
+</html>

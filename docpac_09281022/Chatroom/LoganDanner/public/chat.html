@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JavaScript Chatroom</title>
+</head>
+
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <a id="leave-btn" href="index.html" class="btn" style="display: block; margin-bottom: 501; margin: 5px">Leave Room</a>
+        </header>
+        <main class="chat-main">
+            <div class="chat-sidebar" style="border: solid black;  width: 230px; display: inline-block;  text-align: center; padding: 5px;">
+
+                <h3>Users</h3>
+                <ul id="users" ></ul>
+            </div>
+            <div class="chat-messages">
+
+            </div>
+        </main>
+        <div class="chat-form-container">
+            <form id="chat-form" style="padding: 5px;">
+                <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" />
+                <button class="btn"></i> Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.11.0/qs.min.js"
+        integrity="sha512-/l6vieC+YxaZywUhmqs++8uF9DeMvJE61ua5g+UK0TuHZ4TkTgB1Gm1n0NiA86uEOM9JJ6JUwyR0hboKO0fCng=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+    const chatForm = document.getElementById('chat-form');
+	const chatMessages = document.querySelector('.chat-messages');
+
+	var userList = document.getElementById('users');
+
+	// Get username from URL
+	const { username } = Qs.parse(location.search, {
+		ignoreQueryPrefix: true
+	});
+
+	const socket = io();
+
+	// Join ChatBoard
+	socket.emit('joinRoom', { username });
+
+
+	// Get users
+	socket.on('roomUsers', ({ users }) => {
+		outputUsers(users);
+	});
+
+	// Message from server
+	socket.on('message', message => {
+		console.log(message);
+		outputMessage(message);
+
+		// Scroll down to messages
+		chatMessages.scrollTop = chatMessages.scrollHeight;
+	});
+
+	// Message submit
+	chatForm.addEventListener('submit', e => {
+		e.preventDefault();
+
+		//Get message text
+		const msg = e.target.elements.msg.value;
+
+		//Emitting a message to server
+		socket.emit('chatMessage', msg);
+
+		// Clear input
+		e.target.elements.msg.value = '';
+		e.target.elements.msg.focus();
+	});
+
+	//Output message to DOM
+
+	function outputMessage(message) {
+		const div = document.createElement('div');
+		div.classList.add('messaged');
+		div.style.border = "solid black";
+		div.style.margin = 3 + "px";
+		
+		div.style.padding = 5 + "px";
+		div.style.display = "block";
+		div.innerHTML = `<p class="meta">${message.username}</span></p>
+		<p class="text">
+			${message.text}
+		</p>`;
+		document.querySelector('.chat-messages').appendChild(div);
+	}
+
+	// Add users to ChatBoard
+	function outputUsers(users) {
+		if (users[0].username == null) {
+			location.href = "index.html";
+		}
+		userList.innerHTML = `
+		${users.map(user => `<li>${user.username}</li>`).join()}
+	`;
+
+	}
+
+    </script>
+</body>
+
+</html>

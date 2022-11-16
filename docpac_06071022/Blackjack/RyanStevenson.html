@@ -1,0 +1,104 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Black Jack</title>
+		<style>
+			#cards {
+				display: flex;
+			}
+			.black {
+				border-style: solid;
+				border-radius: 20%;
+				border-color: orange;
+				width: 100px;
+				margin-right: 15px;
+				padding-top: 75px;
+				padding-bottom: 75px;
+				text-align: center;
+				background-color: black;
+				color: orange;
+			}
+			.orange {
+				border-style: solid;
+				border-radius: 20%;
+				border-color: black;
+				width: 100px;
+				margin-right: 15px;
+				padding-top: 75px;
+				padding-bottom: 75px;
+				text-align: center;
+				background-color: orange;
+				color: black;
+			}
+		</style>
+		<script>
+			var cards = []
+			function drawCard() {
+				var value = 0
+				for (card in cards) {
+					value += cards[card].number
+				}
+				document.getElementById('value').innerHTML = value
+				if (value < 21) {
+					number = Math.round(Math.random() * 12 + 1)
+					suit = Math.round(Math.random() * 3)
+					cards.push({number, suit})
+					let newDiv = document.createElement('div')
+					if (suit == 0 || suit == 1) {
+						newDiv.className += 'black'
+					} else if (suit == 2 || suit == 3) {
+						newDiv.className += 'orange'
+					}
+					let displayNumber = number
+					switch (displayNumber) {
+						case 1:
+							displayNumber = 'Ace'
+							break
+						case 11:
+							displayNumber = 'Jack'
+							break
+						case 12:
+							displayNumber = 'Queen'
+							break
+						case 13:
+							displayNumber = 'King'
+							break
+					}
+					let displaySuit = suit
+					switch (displaySuit) {
+						case 0:
+							displaySuit = 'Spades'
+							break
+						case 1:
+							displaySuit = 'Clubs'
+							break
+						case 2:
+							displaySuit = 'Hearts'
+							break
+						case 3:
+							displaySuit = 'Diamonds'
+							break
+					}
+					let newContent = document.createTextNode(
+						displayNumber + ' of ' + displaySuit
+					)
+					newDiv.appendChild(newContent)
+					document.getElementById('cards').appendChild(newDiv)
+				}
+				var value = 0
+				for (card in cards) {
+					value += cards[card].number
+				}
+				document.getElementById('value').innerHTML = value
+			}
+		</script>
+	</head>
+	<body>
+		<div id="cards"></div>
+		<div id="value"></div>
+		<button onclick="drawCard()">Draw Card</button>
+		<button onclick="location.reload()">New Game</button>
+	</body>
+</html>

@@ -1,0 +1,191 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      overflow: hidden;
+      color: #ffffff;
+      /* background-image: url('grassbg.jpg'); */
+      background-size: 300px;
+      background-color: #999966;
+      /* background-color: #6e5200; */
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .thing {
+      transition: 0.20;
+    }
+  </style>
+  <script>
+    //FIX:	There are a lot of comments that describe something I was doing on the
+    //		line below that aren't accurate, because I changed what the code did later.
+    //		I should update these, and maybe even add more where it's confusing.
+
+
+    //FIX:	There are a bunch of places where I made random chance rates.
+    //		I didn't have the foresight to make a "constant" at the beginning
+    //		of my code to adjust these random chance multipliers (basically anytime
+    //		your see "Math.random" multiplied by a number), so now I have to track
+    //		them down in my code every time I want to change them.
+    //		I should have made them constants like the three lines below.
+    const FRAMESPEED = 25; //How fast the frames redraw
+    const DIRECTVARI = 3; //How wide the variance in direction changes are
+    const CLEARTIME = 5000; //How long a dead thing stays on the screen
+    //FIX:	I used three different arrays to track the leaves (snowflakes), jetbikes,
+    //		and attackbikes. Looking back, I only needed one list for all of them.
+    var thingList = [];
+    var thing = [];
+    var tickles = 0;
+    var tickleLock = false;
+
+    function tickle() {
+      tickles += 15;
+      if (tickles > 100 && !tickleLock) {
+        document.body.style.backgroundImage = "url('grassbg.jpg')";
+        document.getElementsByTagName('h1')[0].innerHTML += "<br>Now With GTI 3080Ti Raytracing Enabled"
+        tickleLock = true;
+      }
+    }
+
+    function dirCalc() {
+      return Math.round(Math.random() * 3) - (DIRECTVARI / 2);
+    }
+
+
+
+
+    //FIX:  I have three very similar functions that each create a new img element
+    //		push it into a list of similar elements. Because they are all so similar,
+    //		I should have just created a class whose contructor create this element
+    //		as a property of that class. For example:
+    //		this.bike = document.createElement('img'); 
+    //		this.bike.classList.add('thing');
+    //		etc.
+    //		The constructor method of the class should take arguments that set if
+    //		you want to make a jetbike, attackbike, or snowflake.
+
+    class Thing {
+      constructor(graphic, direction) {
+        this.thingElement = document.createElement('img');
+        this.thingElement.classList.add('thing');
+        this.thingElement.style.position = 'absolute';
+        if (graphic == 'leaf') {
+          this.thingElement.src = "leaf.png";
+          this.thingElement.style.width = '8px';
+          this.thingElement.style.top = '-5';
+          this.thingElement.style.left = Math.round(Math.random() * window.innerWidth);
+          this.thingElement.setAttribute('data-facing', 'down');
+          //this.thingElement.getAttribute('data-landed');
+        } else if (graphic == 'jetbike') {
+          this.thingElement.src = "jetbike.png";
+          this.thingElement.style.top = Math.round(Math.random() * window.innerHeight);
+          this.thingElement.style.left = '-16';
+          this.thingElement.setAttribute('data-drift', dirCalc() / 2);
+          this.thingElement.setAttribute('data-facing', 'right');
+        } else if (graphic == 'attackbike') {
+          this.thingElement.src = "jetbike.png";
+          this.thingElement.style.transform = 'scaleX(-1)';
+          this.thingElement.style.filter = 'hue-rotate(180deg)';
+          this.thingElement.style.top = Math.round(Math.random() * window.innerHeight);
+          this.thingElement.setAttribute('data-drift', dirCalc() / 2);
+          this.thingElement.setAttribute('data-facing', 'left');
+          this.thingElement.style.left = window.innerWidth +32;
+        }
+        this.thingElement.setAttribute('data-speed', 4);
+        this.thingElement.setAttribute('data-drift', dirCalc());
+        document.body.appendChild(this.thingElement);
+      }
+    }
+    //function newattackbike() {
+    // Create img
+    //let bike = document.createElement('img');
+    //bike.classList.add('thing');
+    //bike.src = "jetbike.png";
+    // bike.style.width = '64px';
+    // Set position to absolute
+    //bike.style.position = 'absolute';
+    // random left between 0 and screen width
+    //bike.style.top = Math.round(Math.random() * window.innerHeight);
+    // Set top to 0
+    //bike.style.left = window.innerWidth + 32;
+    //bike.style.transform = 'scaleX(-1)';
+    //bike.style.filter = 'hue-rotate(180deg)';
+    // pick a direction (-3 to 3)
+    //bike.setAttribute('data-drift', dirCalc() / 2);
+    //bike.setAttribute('data-facing', 'left');
+    //bike.setAttribute('data-speed', 3);
+    //document.body.appendChild(bike);
+    //attackbikes.push(bike);
+    //}
+
+
+
+    function moveList(list) {
+      for (unit of list) {
+        let landed = unit.thingElement.getAttribute('data-landed');
+        let facing = unit.thingElement.getAttribute('data-facing')
+        let leftPX = Number(unit.thingElement.style.left.replaceAll('px', ''))
+        let topPX = Number(unit.thingElement.style.top.replaceAll('px', ''))
+
+        // Crazy Dave Mode
+        // let hue = Math.round(Math.random()*360)
+        // unit.thingElement.style.filter = `hue-rotate(${hue}deg)`;
+
+        if (landed) {
+          if (Number(landed) > CLEARTIME) {
+            list.splice(list.indexOf(unit), 1);
+            unit.thingElement.remove()
+          } else {
+            unit.thingElement.setAttribute('data-landed', Number(landed) + 1);
+          }
+        } else if ((leftPX > window.innerWidth && facing == 'right') || (leftPX < 0 - unit.thingElement.width && facing == 'left') || (topPX > window.innerHeight && facing == 'down') || (topPX < 0 && facing == 'up')) {
+          list.splice(list.indexOf(unit), 1);
+          unit.thingElement.remove()
+        } else {
+          if (unit.thingElement.classList.contains('leaf') && Math.floor(Math.random() * 1000) == 0) {
+            unit.thingElement.setAttribute('data-landed', 1);
+            if (Math.floor(Math.random() * 2)) unit.thingElement.src = "leaf1.png";
+            else unit.thingElement.src = "leaf2.png";
+          } else {
+            let faceValue = 1;
+            let corner = ['left', 'top'];
+            if (facing == 'left') faceValue = Math.floor(Math.random() * (Number(unit.thingElement.getAttribute('data-speed')) * -1));
+            else faceValue = Math.ceil(Math.random() * (Number(unit.thingElement.getAttribute('data-speed'))));
+            if (facing == 'down') corner = ['top', 'left'];
+            unit.thingElement.style[corner[0]] = Number(unit.thingElement.style[corner[0]].replaceAll('px', '')) + faceValue;
+            // Add direction to left
+            unit.thingElement.style[corner[1]] = Number(unit.thingElement.style[corner[1]].replaceAll('px', '')) + Number(unit.thingElement.getAttribute('data-drift'));
+            if (Math.floor(Math.random() * 50) == 0) {
+              unit.thingElement.setAttribute('data-drift', dirCalc() / 2);
+            }
+          }
+        }
+      }
+    }
+
+    setInterval(() => {
+      // moveFlake();
+      moveList(thingList);
+      //FIX:	As mentioned in the comment on line 109, I don't need these to be functions.
+      //		After I make a new class I can just push a new object into the list of objects to track.
+      if (Math.floor(Math.random() * 10) == 0) thingList.push(new Thing('leaf'));
+      if (Math.floor(Math.random() * 100) == 0) thingList.push(new Thing('jetbike'));
+      if (Math.floor(Math.random() * 100) == 0) thingList.push(new Thing('attackbike'));
+      if (!tickleLock) tickles--;
+      if (tickles <= 0) tickles = 0;
+    }, FRAMESPEED);
+  </script>
+</head>
+
+<body onclick="tickle()">
+  <h1>ジェットバイクに乗った宇宙妖精</h1>
+</body>
+
+</html>

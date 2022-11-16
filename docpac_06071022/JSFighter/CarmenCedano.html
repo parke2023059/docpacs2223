@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSFighter</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+
+
+  // player 1
+    var player1Div = document.createElement('div1');
+   // player1Div.innerHTML = "Player 1 Hp:" + player1.hp;
+    player1Div.style.display = "inline-block";
+    player1Div.style.margin = 10 + "px";
+    player1Div.style.position = "absolute";
+   // player1Div.innerHTML = 
+    document.body.appendChild(player1Div);
+
+    // player 2
+    var player2Div = document.createElement('div2');
+  //  player2Div.innerHTML = "Player 2 Hp:" + player2.hp;
+    player1Div.style.display = "inline-block";
+    player1Div.style.margin.left = 40 + "px";
+    player1Div.style.position = "relative";
+   // player2Div.innerHTML = 
+    document.body.appendChild(player2Div);
+
+
+    class fighter {
+        constructor() { 
+            this.name = "Bob"
+            this.hp = 100
+            this.atk = 15
+        }
+
+        attack(target) {
+            let atk = Math.floor(Math.random() * 5) + this.atk; 
+            target.hp = target.hp - atk;
+            if (target.hp < 0) {
+                target.hp = 0
+            } 
+            if (target.hp <= 0) {
+                target.hp -= 0
+
+            } 
+            player1Div.innerHTML = "Player 1 Hp:" + player1.hp;
+            player2Div.innerHTML = "Player 2 Hp:" + player2.hp;
+        } 
+    }
+
+    var player1 = new fighter();
+    var player2 = new fighter();
+
+    player1Div.innerHTML = "Player 1 Hp:" + player1.hp;
+    player2Div.innerHTML = "Player 2 Hp:" + player2.hp;
+
+</script>
+
+    <div>
+
+        <button onclick="player1.attack(player2)">Player 1 Attack</button>
+        <button onclick="player2.attack(player1)">Player 2 Attack</button>
+
+    </div>
+
+</html>

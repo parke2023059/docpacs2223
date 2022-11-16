@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+                window.addEventListener('gamepadconnected', (event) => {
+            const update = () => {
+                const output = document.getElementById('axes');
+                output.innerHTML = ''; //clear output
+                
+                for (const gamepad of navigator.getGamepads()) {
+                    if (!gamepad) continue;
+                    for (const [index, axis] of gamepad.axes.entries()) {
+                        output.innerHTML += `
+                        <label>${gamepad.index}, ${index}
+                        <progress value=${axis * 0.5 + 0.5}></progress>
+                        </label>
+                        `
+
+
+                        window.addEventListener('gamepadconnected', (event) => {
+        // Update Controller
+        const update = () => {
+          //Only read the first controller
+          const cont = navigator.getGamepads()[0];
+          console.log(cont);
+          //This will loop the update every "animation frame"
+          requestAnimationFrame(update);
+
+        //If the A button was pressed
+        if (cont.buttons[0].pressed) {
+         cont.vibrationActuator.playEffect('dual-rumble', {
+             startDelay: 0,
+             duration: 100,
+             weakMagnitude: 1.0,
+             strongMagnitude: 1.0,
+           });
+        }
+                //Up and down axis
+                if (cont.axes[1] >= 0.8) { //Down
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        } else if (cont.axes[1] <= -0.8) { //Up
+          cont.vibrationActuator.playEffect('dual-rumble', {
+            startDelay: 0,
+            duration: 100,
+            weakMagnitude: 1.0,
+            strongMagnitude: 1.0,
+          });
+        }
+
+        }; //End Update Controller
+        //Kick off the loop
+        update();
+      });
+
+
+
+                          //If A button was pressed
+        if (cont.buttons[0].pressed) {
+            if (timer > 0 && contDirection == direction){
+                console.log("Score increased");
+                document.getElementById('score box').innerHTML = "score: " + score
+                score = score + 1
+            };
+        };
+        document.getElementById("scoreBox").innerHTML = score;
+        if (cont.buttons[9].pressed) {
+            location.reload();
+        };
+
+                    }
+                }
+                requestAnimationFrame(update);  
+            };
+            update();
+        });
+        var score = 0
+        var timer = 20
+        var direction = 0
+
+
+        function myTimer(){
+            if(timer > 0){
+                timer = timer - 1
+            }
+            document.getElementById('timer box').innerHTML = "timer: " + timer
+        }
+        setInterval(myTimer, 1000)
+
+        function ranDirection (){
+            if(timer > 0){
+                direction = Math.floor(Math.random() * 4)
+                if (direction == 0)
+                {
+                    direction = "Up"
+                    document.getElementById('direction box').innerHTML = "direction: " + direction
+                } 
+                if (direction == 1)
+                {
+                    direction = "Right"
+                    document.getElementById('direction box').innerHTML = "direction: " + direction
+                }
+                if (direction == 2)
+                {
+                    direction = "Down"
+                    document.getElementById('direction box').innerHTML = "direction: " + direction
+                }
+                if (direction == 3)
+                {
+                    direction = "Left"
+                    document.getElementById('direction box').innerHTML = "direction: " + direction
+                }
+            }
+        }
+        setInterval(ranDirection , 2000)
+
+        const cont = navigator.getGamepads()[0]
+        if (cont.axes[0] >= 0.8){
+            contDirection = "Right";
+        }
+        else if (cont.axes[0] >= -0.8){
+            contDirection = "Left";
+        }
+        else if (cont.axes[1] >= 0.8){
+            contDirection = "Down";
+        }
+        else if (cont.axes[1] >= -0.8){
+            contDirection = "Up";
+        }
+        console.log(cont);
+      
+
+        
+    </script>
+</head>
+<body>
+    Press Button on Controller to Connect
+    <div id="axes" style="display: flex; flex-direction: column;"></div>
+    <div id="score box">
+
+    </div>
+
+    <div id="timer box">
+        
+    </div>
+
+    <div id="direction box">
+
+    </div>
+
+
+
+
+</body>
+<html>

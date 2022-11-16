@@ -1,0 +1,164 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Fighter 2, The Point Dexter</title>
+</head>
+<body>
+
+    <script>
+        var fighterNumber = 0
+        var fighterName = ['Brandon', 'Ken', 'Ricter', 'Micheal', 'DoomSlayer', 'Brother of DoomSlayer', 'Father of DoomSlayer','Mother of DoomSlayer', 'The Omni Chad']
+        var fighters = []
+        gameRound = 0
+        turnRound = 0
+        function gameLoop(){
+            if (turnRound <= fighters){
+                turnRound = 0
+                gameRound = gameRound + 1
+                for (fighter in fighters){
+                    if (fighter.hp > 0){
+                        fighter.ready = true
+                    }
+                }
+            }
+            fighters = fighters.sort(function(x,y){
+                return x.spd - y.spd
+            })
+            for (fighter in fighters){
+
+            }
+        }
+        function randomFighter(fighters){
+
+            return fighters[Math.floor(Math.random()*fighters.length)]
+        }
+        class Fighter {
+            constructor(name, id, team){
+                this.id = fighterNumber
+                this.hp_max = 50
+                this.hp = this.hp_max
+                this.atk = 11
+                this.spd = Math.floor(Math.random()*9)+1
+                this.ready = true
+                this.name = name
+                this.team = team
+                this.img = new Image()
+                this.img.src = 'img/logo.png'
+            }
+            attack(target){
+                for (attacker in fighters){
+                    if (Fighter.team == 0){
+                        if (attacker.hp > 0){
+                        let counter = 0
+                        do{
+                            counter = counter + 1
+                        }
+                        while (counter < fighters.length){
+                            let attacker = randomFighter(fighters)
+                            if (counter > fighters.length){
+                                break
+                                return
+                            }
+                            if (attacker.hp > 0){
+                                damage = attacker.atk *(attacker.atk/target.spd)
+                                target.hp = target.hp - damage
+                                attacker.img.src = 'img/crashr_attack.png'
+                                target.img.src = 'img/saml_hit.png'
+                                attacker.ready = false
+
+
+                            }
+
+
+                        }
+                    }
+                } else if (Fighter.team == 1){
+                    if (attacker.hp > 0){
+                        let counter = 0
+                        do{
+                            counter = counter + 1
+                        }
+                        while (counter < fighters.length){
+                            let attacker = randomFighter(fighters)
+                            if (counter > fighters.length){
+                                break
+                                return
+                            }
+                            if (attacker.hp > 0){
+                                damage = attacker.atk *(attacker.atk/target.spd)
+                                target.hp = target.hp - damage
+                                attacker.img.scr = 'img/saml_attack.png'
+                                target.img.src = 'img/crashr_hit.png'
+                                attacker.ready = false
+
+
+                            }
+
+
+                        }
+                    }
+                }
+            }
+                
+            
+                    }
+        }
+        const holderNumber = 2
+        for (i = 0; i<2; i++){
+            var fighter = new Fighter()
+            fighter.name = randomFighter(fighterName)
+            fighter.team = i%holderNumber
+            fighterNumber = fighterNumber + 1
+            fighters.push(fighter)
+        }
+        for (let i = 0; i < holderNumber; i++ ){
+            let div = document.createElement('team')
+            div.id = 'team ' + i
+            div.className = 'teamBox'
+            div.style.display = 'table-column'
+            div.style.margin = 10 + 'px'
+            
+            if (Fighter.team == 0){
+              let imgDiv = document.createElement('ImgDiv')
+              imgDiv.className = 'FighterGFX'
+              Fighter.img.scr = 'img/crashr_idle.png'
+              img = Fighter.Img.scr
+              imgDiv.innerHTML = img
+              div.innerHTML = fighters[0]
+              div.append(ImgDiv)
+            } else if (Fighter.team == 1){
+              let imgDiv = document.createElement('ImgDiv')
+              imgDiv.className = 'FighterGFX'
+              Fighter.img.scr = 'img/saml_idle.png'
+              img = Fighter.Img.scr
+              imgDiv.innerHTML = img
+              div.innerHTML = fighters[1]
+              div.append(ImgDiv)
+            }
+
+            document.body.appendChild(div)
+        }
+        for (fighter of fighters){
+                let fIndex = fighters.indexOf(fighter)
+                let div = document.createElement('fighter')
+                div.id = 'Fighter ' + fIndex
+                div.className = 'fighterBox'
+                div.style.display = 'table column'
+                document.body.appendChild(div)
+        }
+        var controlDiv = document.createElement('ControlBox')
+        controlDiv.style.margin = 10 + 'px'
+        controlDiv.className = 'ControlBox'
+        var btm = document.createElement('Button')
+        btm.type = "button"
+        btm.name= "attack"
+        btm.onclick = function(){
+          if (Fighterteam){}
+        }
+        statsDiv = document.createElement('StatsBox')
+        outputDiv = document.createElement('outputDiv')
+    </script>
+  </body>
+</html>

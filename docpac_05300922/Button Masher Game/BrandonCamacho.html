@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Masher Game</title>
+</head>
+
+<div id="axes" style="display: flex; flex-direction: column;"></div>
+
+<body>
+    <div id="Score Box" style='font-size: 24px;'> Score: </div>
+    <div id="Timer Box" style='font-size: 24px;'> Timer: </div>
+    <div id="Direction Box" style='font-size: 24px;'></div>
+
+    <script>
+        var score = 0
+        var timer = 20
+        var direction = 0
+        var antiHolding = true
+        var directcorrect = false
+        var axisheld = 'Something'
+        var timerhtml = document.getElementById('Timer Box');
+        var directionhtml = document.getElementById('Direction Box')
+        var scorehtml = document.getElementById('Score Box')
+        console.log(timer);
+
+        setInterval(timerSet, 1000);
+        function timerSet() {
+            console.log(timer);
+            if (timer > 0) {
+                timer = timer - 1;
+                timerhtml.innerHTML = 'Timer: ' + timer.toString();
+            }
+        }
+
+        setInterval(directionSet, 2000);
+        function directionSet() {
+          if (timer > 0) {
+            direction = Math.floor(Math.random() * 4)
+            if (direction == 0) {
+                directionhtml.innerHTML = 'Direction: Up'
+            }
+            if (direction == 1) {
+                directionhtml.innerHTML = 'Direction: Right'
+            }
+            if (direction == 2) {
+                directionhtml.innerHTML = 'Direction: Down'
+            }
+            if (direction == 3) {
+                directionhtml.innerHTML = 'Direction: Left'
+            }
+          }
+        }
+
+        window.addEventListener('gamepadconnected', (event) => {
+            const update = () => {
+                const output = document.getElementById('axes');
+                output.innerHTML = ''; //Clear output
+
+                for (const gamepad of navigator.getGamepads()) {
+                    if (!gamepad) continue;
+                    for (const [index, axis] of gamepad.axes.entries()) {
+                        output.innerHTML += `
+                            <label>${gamepad.index}, ${index}
+                            <progress value=${axis * 0.5 + 0.5}></progress>
+                            </label>
+                        `
+                    }
+                }
+                requestAnimationFrame(update);
+            };
+            update();
+        });
+
+        window.addEventListener('gamepadconnected', (event) => {
+        // Update Controller
+        const update = () => {
+          //Only read the first controller
+          const cont = navigator.getGamepads()[0];
+          //console.log(cont);
+          //If the A button was pressed
+          if (cont.buttons[0].pressed) {
+                  if (timer > 0) {
+                      if (antiHold == true && directcorrect == true) {
+                          score++;
+                          scorehtml.innerHTML = "Score: " + score;
+                          cont.vibrationActuator.playEffect('dual-rumble',
+                          {
+                              startDelay: 0,
+                              duration: 20,
+                              weakMagnitude: 0.1,
+                              strongMagnitude: 0.1,
+                          });
+                          antiHold = false;
+                      }
+                  }
+              }
+              if (cont.buttons[0].pressed == false) {
+                  antiHold = true;
+              }
+              if (cont.axes[1] >= 0.8) { //Down
+                         axisheld = "2"
+                         if (direction == axisheld)
+                         {
+                             directcorrect = true;
+                         }
+                         else
+                         {
+                             directcorrect = false;
+                         }
+                         cont.vibrationActuator.playEffect('dual-rumble', {
+                             startDelay: 0,
+                             duration: 100,
+                             weakMagnitude: 1.0,
+                             strongMagnitude: 1.0,
+                         });
+                 }
+                 else if (cont.axes[1] <= -0.8) { //Up
+                         axisheld = "0"
+                         if (direction == axisheld)
+                         {
+                             directcorrect = true;
+                         }
+                         else
+                         {
+                             directcorrect = false;
+                         }
+                         cont.vibrationActuator.playEffect('dual-rumble', {
+                             startDelay: 0,
+                             duration: 100,
+                             weakMagnitude: 1.0,
+                             strongMagnitude: 1.0,
+                         });
+                 }
+                 if (cont.axes[0] >= 0.8) { //Right
+                         axisheld = "1"
+                         if (direction == axisheld)
+                         {
+                             directcorrect = true;
+                         }
+                         else
+                         {
+                             directcorrect = false;
+                         }
+                         cont.vibrationActuator.playEffect('dual-rumble', {
+                             startDelay: 0,
+                             duration: 100,
+                             weakMagnitude: 1.0,
+                             strongMagnitude: 1.0,
+                         });
+                 }
+                 else if (cont.axes[0] <= -0.8) { //Left
+                         axisheld = "3"
+                         if (direction == axisheld)
+                         {
+                             directcorrect = true;
+                         }
+                         else
+                         {
+                             directcorrect = false;
+                         }
+                         cont.vibrationActuator.playEffect('dual-rumble', {
+                             startDelay: 0,
+                             duration: 100,
+                             weakMagnitude: 1.0,
+                             strongMagnitude: 1.0,
+                         });
+                 }
+        //Checks if start button is pressed and refreshes
+        if (cont.buttons[9].pressed) {
+            location.reload();
+        }
+          //This will loop the update every "animation frame"
+          requestAnimationFrame(update);
+        }; //End Update Controller
+        //Kick off the loop
+        update();
+      });
+    </script>
+</body>
+</html>

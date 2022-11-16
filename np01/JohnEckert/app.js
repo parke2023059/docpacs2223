@@ -4,7 +4,9 @@ const ejs = require('ejs')
 const express = require('express')
 const app = express()
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({
+    extended: true
+}));
 
 var data = JSON.parse(fs.readFileSync('userlist,json'));
 
@@ -16,3 +18,5 @@ app.get('/', (req, res) => {
     ejs.render('home.ejs')
 
 });
+
+// Post endpoint, 

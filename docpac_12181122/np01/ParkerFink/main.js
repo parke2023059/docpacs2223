@@ -13,15 +13,11 @@ app.get('/', function(req,res){
     res.render('index.ejs')
     fs.readFileSync('names.json')
 })
-
-
 app.get('/update', function(req,res){
     res.render('update.ejs',{
         mssg: ""
     })
 })
-
-
 
 let students = []
 app.post('/update', function(req,res){
@@ -31,8 +27,6 @@ app.post('/update', function(req,res){
         name : req.body.name,
         id : studLen
     }
-
-
     if (student.name === ""){
         res.render('update.ejs', {
             mssg: "Must Fill Out Every Form"
@@ -43,13 +37,7 @@ app.post('/update', function(req,res){
         let stringStudent = JSON.stringify(students)
         fs.writeFileSync('names.json', stringStudent)
     }
-
-
-
 })
-
-
-
 
 
 app.listen(7000, "127.0.0.1", function(){

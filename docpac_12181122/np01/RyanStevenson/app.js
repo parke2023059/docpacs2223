@@ -1,7 +1,9 @@
 const fs = require('fs');
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'ejs');
 
 var parsedData = '';
@@ -15,10 +17,10 @@ app.get('/', (request, response) => {
 	response.render('users', { users: parsedData.users })
 })
 
-app.get('/update', (request, response) => {
-	if (request.query.name) {
-		console.log({ name: request.query.name, id: parsedData.users.length - 1 });
-		parsedData.users.push({ name: request.query.name, id: parsedData.users.length })
+app.post('/update', (request, response) => {
+	if (request.body.name) {
+		console.log({ name: request.body.name, id: parsedData.users.length - 1 });
+		parsedData.users.push({ name: request.body.name, id: parsedData.users.length })
 		let json = JSON.stringify(parsedData)
 		fs.writeFileSync('users.json', json)
 		response.redirect('/')

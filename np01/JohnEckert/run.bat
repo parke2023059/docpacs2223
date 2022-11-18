@@ -1,4 +1,4 @@
-npm i
+call npm i
 node index.js
-@RD /S /Q node_modules
+@RD /S /Q "node_modules"
 pause

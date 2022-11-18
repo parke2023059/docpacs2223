@@ -1,25 +1,34 @@
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 const fs = require('fs');
 
-var parsedData = '';
+app.use(bodyParser.urlencoded( {extended: true} ));
 
-/* // This is how you read files asynchronously
-fs.readFile('users.json', function (err, data) {
-    // Validate the data
-    if (err) {
-        console.log(err);
-    } else {
-        // Convert raw bytes into JS object with JSON.parse()
-        var parsedData = JSON.parse(data);
-        console.log(parsedData);
-    }
+app.set('view engine', 'ejs')
+
+var customerData = JSON.parse(fs.readFileSync('customers.json'));
+
+app.get('/', (req, res) => {
+    res.render('index', { ejsData: customerData})
+})
+
+app.get('/neworder', (req, res) => {
+    res.render('neworder')
 });
-*/
 
-// This is how you read files synchronously
-var data = fs.readFileSync('users.json')
-//convert buffer to JS object
-parsedData = JSON.parse(data)
+app.post('/createorder', (req, res) => {
+    let newOrder = {
+        id: customerData.lastOrder++,
+        name: req.body.customerName,
+        items: []
 
-console.log(parsedData);
+    }
+    customerData.orders.push(newOrder);
+    fs.writeFileSync('customers.json', JSON.stringify(customerData))
+    res.send('good')
+ });
 
-console.log(parsedData.users[0].name);
+
+
+app.listen(3000, () => { console.log("server started")})

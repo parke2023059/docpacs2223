@@ -1,4 +1,4 @@
 npm i
-node app.js
+node index.js
 @RD /S /Q node_modules
 pause

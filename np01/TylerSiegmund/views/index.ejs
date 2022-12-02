@@ -1,0 +1,19 @@
+<meta charset="UTF-8">
+<title>Home</title>
+
+<body>
+    <h2>Users In List</h2>
+    <ul>
+        <% for(var i = 0; i < user.length; i++) { %>
+            <li>
+                <%= JSON.stringify(user[i].name) %>
+                <%= JSON.stringify(user[i].id) %>
+            </li>
+        <% } %>
+    </ul>
+
+    <form action="/update" method="post">
+        <input type="text" name="name" id="name" placeholder="Put name here...">
+        <input type="submit">
+    </form>
+</body>

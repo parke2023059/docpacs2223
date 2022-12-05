@@ -1,0 +1,1 @@
+npm i && node main.js && call rmdir C:\Users\pfink\OneDrive - York County School of Technology\programming\2022-2023\docpacs2223\docpacs2223\node_modules

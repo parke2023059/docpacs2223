@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<style>
+  #OuterBox {
+    border-style: solid;
+    width: 99.5%;
+    height: 925px;
+    padding: 25px;
+  }
+  #team {
+  }
+  .teamBox {
+    border-style: solid;
+    width: auto;
+    height: auto;
+    color: rgb(43, 185, 185);
+  }
+</style>
+<div id="OuterBox"></div>
+
+<script>
+  //setup
+  var counter = 0;
+  var round = 0;
+  var fighterList = [];
+  var allFighters = 0;
+  let FighterNameList = [
+    "Bab",
+    "Bob",
+    "Umb",
+    "Kur",
+    "Gid",
+    "Abin",
+    "Jeof",
+    "Learry",
+    "Lumand",
+    "Hurnry",
+    "Surfway",
+    "Ichard",
+    "Orey",
+    "Beanbie",
+    "Broom",
+    "Wiltcher",
+    "Sammyton",
+    "snanS",
+    "Pappieris",
+    "Stenv",
+    "Wyrt",
+    "Nkight",
+    "Reetnya",
+    "Whyvern",
+    "Luario",
+  ];
+  //creates fighter class
+  class Fighter {
+    constructor(name, team) {
+      this.id = allFighters;
+      this.hp = 20;
+      this.atk = 20;
+      this.spd = Math.round(Math.random() * 20); // random speed
+      this.name = name;
+      this.ready = true;
+      this.team = team;
+    }
+    attack(target) {
+      let smollDiv = document.getElementById("fighter" + this.id);
+      let smollTarget = document.getElementById("fighter" + this.id);
+      for (fighter of fighterList) {
+        if (fighter.hp > 0) {
+          if (fighter.team == 0) fighter.src = "img/crashr_idle.png";
+          if (fighter.team == 1) fighter.src = "img/saml_idle.png";
+        }
+      }
+      let wakkyFighter;
+      do {
+        counter += 1;
+        wakkyFighter = Math.ceil(Math.random() * fighterList.length);
+        if (counter > fighterList.length) {
+          document.getElementById("output").innerHTML = "There are no Targets";
+          break;
+        }
+        if (team == 0) {
+          smollDiv.getElementsByClassName("fighterGFX")[0].src =
+            "img/crashr_attack.png";
+        } else if (team == 1) {
+          smollDiv.getElementsByClassName("fighterGFX")[0].src =
+            "img/saml_attack.png";
+        }
+        if (target == 0) {
+          smollDiv.getElementsByClassName("fighterGFX")[0].src =
+            "img/crashr_hit.png";
+        } else if (target == 1) {
+          smollDiv.getElementsByClassName("fighterGFX")[0].src =
+            "img/saml_hit.png";
+        }
+        target.hp -= Math.round(Math.random() * 4 + 1) + this.atk;
+        if (target.hp <= 0) {
+          target.hp = 0;
+          smollTarget.classList.add("dead");
+          if (target.team == 0) {
+            smollTarget.getElementsByClassName("fighterGFX")[0].src =
+              "img/crashr_ko.png";
+          }
+          if (target.team == 1) {
+            smollTarget.getElementsByClassName("fighterGFX")[0].src =
+              "img/saml_ko.png";
+          }
+        }
+      } while (fighters[wakkyFighter].hp > 0 && !this.team);
+    }
+  }
+  var numberOfTeams = 2;
+  for (let i = 0; i < numberOfTeams; i++) {
+    let name =
+      FighterNameList[Math.round(Math.random() * FighterNameList.length)];
+    let team = i % numberOfTeams;
+    fighterList += new Fighter(name, team);
+    allFighters += 1;
+  }
+  console.log(fighterList);
+  function gameLoop(counter, fighterList, round) {
+    if (counter >= fighterList.length) {
+      counter = 0;
+      round += 1;
+      if (this.Fighter.hp > 0) {
+        //reset fighter properties
+        pass;
+      }
+      console.log(FighterList);
+      let speedList = fighterList.sort(function (a, b) {
+        return b.spd - a.spd;
+      });
+      console.log(speedList);
+      for (fighter in speedList) {
+      }
+    }
+  }
+  for (fighter of speedList) {
+    let X = speedList.indexOf(fighter);
+    element = document.createElement("div");
+    element.id = "fighter" + X;
+    element.classList.add("FighterBox");
+  }
+  for (team in numberOfTeams) {
+    let funkyVisuals = document.createElement("div");
+    funkyVisuals.id = "team" + team;
+    funkyVisuals.class = "teamBox";
+    document.getElementById("OuterBox").appendChild(funkyVisuals);
+  }
+  for (fighter of speedList) {
+    let funkyFighterDivBoi = document.createElement("div");
+    funkyFighterDivBoi.id = "fighter" + fighter.id;
+    funkyFighterDivBoi.class = "fighterBox";
+    let funkyFighterImgBoi = document.createElement("img");
+    funkyFighterImgBoi.class = "fighterGFX";
+    funkyFighterDivBoi.appendChild(funkyFighterImgBoi);
+    if (fighter.team == 0) {
+      funkyFighterDivBoi.getElementsByClassName("fighterGFX")[0].src =
+        "img/crashr_idle.png";
+    }
+    if (fighter.team == 1) {
+      funkyFighterDivBoi.getElementsByClassName("fighterGFX")[0].src =
+        "img/saml_idle.png";
+    }
+    let funkyFighterStatsDivBoi = document.createElement("div");
+    funkyFighterStatsDivBoi.className = "statsBox";
+    funkyFighterDivBoi.appendChild(funkyFighterStatsDivBoi);
+    funkyFighterDivBoi.getElementsByClassName("statsBox")[0].innerHTML =
+      fighter.name + "<br>Attack: " + fighter.atk + "<br>Health: " + fighter.hp;
+    let funkyFighterControlsDivBoi = document.createElement("div");
+    funkyFighterControlsDivBoi.className = "controlsBox";
+    funkyFighterDivBoi.appendChild(funkyFighterControlsDivBoi);
+    let funkyFighterAttackButtonBoi = document.createElement("button");
+    funkyFighterAttackButtonBoi = true;
+    funkyFighterAttackButtonBoi.innerHTML = "ATTACK";
+    funkyFighterAttackButtonBoi.addEventListener("click", fighter.attack);
+    funkyFighterControlsDivBoi.appendChild(funkyFighterAttackButtonBoi);
+    funkyFighterDivBoi.appendChild(funkyFighterControlsDivBoi);
+    document
+      .getElementById("team" + fighter.team)
+      .appendChild(funkyFighterDivBoi);
+  }
+</script>

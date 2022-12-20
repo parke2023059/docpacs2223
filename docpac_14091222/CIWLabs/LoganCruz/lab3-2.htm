@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 3-2</title>
+
+<script type="text/javascript">
+
+
+/******************************************************
+Define a function that takes arguments on function call
+******************************************************/
+  function doom(ar){
+    alert('This function calls the argument'+ ar)
+  }
+/******************************************************
+Define a function that takes returns a value
+******************************************************/
+function doomer(){
+    return "Foiling my plans?? are you???!"
+}
+//-->
+</script>
+
+</head>
+
+<body>
+
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+
+<!-- Add an onclick event handler to call the function -->
+
+<form name="myForm">
+<input type="button" value="Call Function with arguments"onclick="doom('Flying around?')" /><br />
+<input type="button" value="Call Function with return" onclick="alert(doomer())"/>
+</form>
+
+</body>
+</html>

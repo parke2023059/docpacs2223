@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<style>
+  #OuterBox {
+    display: flex;
+  }
+  body {
+  }
+  .dead {
+    filter: grayscale(75%);
+    color: rgb(92, 92, 92);
+  }
+  .statsBox {
+    white-space: pre;
+  }
+  .teamBox {
+    margin-right: 69px;
+    color: rgb(0, 0, 0);
+  }
+  button {
+    background-color: #ce3ae5ad;
+  }
+  button:disabled {
+    background-color: rgb(255, 255, 255);
+  }
+</style>
+<div id="OuterBox"></div>
+
+<script>
+  //setup
+  var allFighters = 0;
+  var fighterList = [];
+  var speedList = [];
+  var counter = 0;
+  var round = 0;
+  var turn = 0;
+  let fighterNameList = [
+    "Bab",
+    "Bob",
+    "Umb",
+    "Kur",
+    "Gid",
+    "Abin",
+    "Jeof",
+    "Learry",
+    "Lumand",
+    "Hurnry",
+    "Surfway",
+    "Ichard",
+    "Orey-Os",
+    "Beanbie",
+    "Broom",
+    "Wiltcher",
+    "Sammyton",
+    "snaS",
+    "Pappieris",
+    "Stenv",
+    "Wyrt",
+    "Nkight",
+    "Reetnya",
+    "Whyvern",
+    "Luario",
+    "CawwMan",
+    "Capital f",
+    "capital F",
+    "PieThorn",
+    "JorvaSkirt",
+    "Thonew",
+    "Bob Sussy",
+    "Imporster",
+    "Sir. Cawmin",
+    "Jorgia",
+    "Marms",
+    "Mallter",
+    "MMike",
+    "Memenom",
+    "Mamburnger",
+    "X != 5",
+    "x == 5",
+    "x = = = = 5",
+    "Five = 5",
+    "ex = 5",
+    "equals = five",
+    "equalsequalsfive",
+    "Stabucs",
+    "EDCBA",
+    "Malloon",
+    "SteveyBoi",
+    "Twosday",
+    "SSC",
+    "Golden Comb",
+    "Saw Sage",
+    "Thicc Jim",
+    "Slimm Jimm",
+    "Werhe",
+    "$7.50 and some rocks",
+    "Moving Sucks",
+    ">IO_UY<",
+    "In need of venting",
+    "Grengorry",
+    "Feddy",
+    "Chimca",
+    "xXxMonYTxXx",
+    "Raxy",
+    "AAAAHHHHH",
+    "Ball Bod",
+    "Vallen",
+    "Eye of Jim",
+    "Wall of Jym",
+    "Brain of Jem",
+    "Empress of bab",
+    "MoodLord",
+    "TEN POGS TO GRIFFENDOR",
+    "Harry Wizard",
+    "LGBTQ+ wizards in hogwarts?<br>Its more likely than you think!",
+    "Fluffles",
+    "Proto Generation",
+    "OwO",
+    "owo",
+    "Trey",
+    "uwu",
+    "UwU",
+    "Scaly",
+    "Telephone",
+    "touch tone",
+    "DoveTroop",
+    "Denv the SpringTarp Milliliter",
+    "Cactus Clown",
+    "Snake Cactus Clown",
+    "Godread",
+    "Hoard of Ungrateful Toddlers",
+    "John",
+    "Sending stone",
+    "Littery not a rock",
+    "according to all known<br>laws of aviation...",
+    "Sussy",
+    "Street Fighter",
+    "Speed Racer",
+    "Devil Clown",
+    "GTS1",
+    "GTS2",
+    "GTS3",
+    "GTS4 (coming soon)",
+    "Geat two Skooll to",
+    "budda doge",
+    "Maybe Evil Snowman",
+    "Mab",
+    "Dab",
+    "Lab",
+    "Erb",
+    "Merb",
+    "Morbin",
+    "Morb",
+    "Venum",
+    "Venoius",
+    "Venmo",
+    "Lillley",
+    "Stop, u violated the law!",
+    "FBI OPEN UP",
+    "Renangle",
+    "Purpurpurpur",
+    "Saw Jim Vent",
+    "<br><br>",
+    '","',
+    "&#128296; &#128341;", //Hammer time
+    "&#128070 &#128070 &#128071 &#128071 &#128072 &#128073 &#127345 &#127344 start", //Konami Code
+  ];
+
+  let fighterNameListCopy = fighterNameList;
+  let emptyNames = [];
+
+  //creates fighter class
+  class Fighter {
+    constructor(id, name, team) {
+      this.id = id;
+      this.hp = Math.ceil(Math.random() * 10 + 21);
+      this.atk = Math.ceil(Math.random() * 5 + 6);
+      this.spd = Math.ceil(Math.random() * 100000000000); // random speed
+      this.name = name;
+      this.ready = true;
+      this.team = team;
+    }
+    attack() {
+      let smollFighter;
+      for (fighter of fighterList) {
+        if (this.parentElement.parentElement.id.slice(-1) == fighter.id)
+          smollFighter = fighterList[fighterList.indexOf(fighter)];
+      }
+      let smollDiv = document.getElementById("fighter" + smollFighter.id);
+      for (fighter of fighterList) {
+        if (fighter.hp > 0) {
+          let funkyFighterDivBoi = document.getElementById(
+            "fighter" + fighter.id
+          );
+          if (fighter.team % 2 == 0) {
+            funkyFighterDivBoi.getElementsByClassName("fighterGFX")[0].src =
+              "img/crashr_idle.png";
+          } else if (fighter.team % 2 == 1) {
+            funkyFighterDivBoi.getElementsByClassName("fighterGFX")[0].src =
+              "img/saml_idle.png";
+          }
+        }
+      }
+      counter = 0;
+      let smollTarget;
+      let smollTargetDiv;
+      do {
+        counter += 1;
+        smollTarget =
+          fighterList[Math.floor(Math.random() * fighterList.length)];
+        smollTargetDiv = document.getElementById("fighter" + smollTarget.id);
+        if (counter > fighterList.length) {
+          document.getElementById("output").innerHTML =
+            "There are no Targets left!";
+          smollTarget = null;
+          break;
+        }
+      } while (smollTarget.hp <= 0 || smollFighter.team == smollTarget.team);
+      if (smollTarget) {
+        let luck = Math.ceil(Math.random() * 20);
+        if (luck >= 17) {
+          smollTarget.hp -=
+            Math.round(Math.random() * 7 + 1) + smollFighter.atk;
+          console.log();
+        } else if (luck > 7) {
+          smollTarget.hp -= smollFighter.atk;
+        } else if (luck > 1) {
+          smollTarget.hp -=
+            smollFighter.atk - Math.round(Math.random() * 5 + 1);
+        } else {
+          smollTarget.hp -= 1;
+        }
+        if (smollFighter.team % 2 == 0) {
+          smollDiv.getElementsByClassName("fighterGFX")[0].src =
+            "img/crashr_attack.png";
+        } else if (smollFighter.team % 2 == 1) {
+          smollDiv.getElementsByClassName("fighterGFX")[0].src =
+            "img/saml_attack.png";
+        }
+        if (smollTarget.team % 2 == 0) {
+          smollTargetDiv.getElementsByClassName("fighterGFX")[0].src =
+            "img/crashr_hit.png";
+        } else if (smollTarget.team % 2 == 1) {
+          smollTargetDiv.getElementsByClassName("fighterGFX")[0].src =
+            "img/saml_hit.png";
+        }
+        if (smollTarget.hp <= 0) {
+          smollTarget.hp = 0;
+          smollTargetDiv.classList.add("dead");
+          if (smollTarget.team % 2 == 0) {
+            smollTargetDiv.getElementsByClassName("fighterGFX")[0].src =
+              "img/crashr_ko.png";
+          } else if (smollTarget.team % 2 == 1) {
+            smollTargetDiv.getElementsByClassName("fighterGFX")[0].src =
+              "img/saml_ko.png";
+          }
+        }
+
+        smollTargetDiv.getElementsByClassName("statsBox")[0].innerHTML =
+          smollTarget.name +
+          "<br>Attack: " +
+          smollTarget.atk +
+          "<br>Health: " +
+          smollTarget.hp;
+        document.getElementById("output").innerHTML =
+          smollFighter.name + "Shmeked" + smollTarget;
+        smollDiv.classList.remove("active");
+        smollFighter.ready = false;
+
+        for (fighter of fighterList) {
+          document
+            .getElementById("fighter" + fighter.id)
+            .getElementsByClassName("controlsBox")[0]
+            .getElementsByTagName("button")[0].disabled = true;
+        }
+        turn += 1;
+        gameLoop();
+      }
+    }
+  }
+
+  //Yes
+
+  //this
+
+  // Space
+
+  // is
+
+  // Vital
+
+  //team maker
+  var numberOfTeams = 2;
+  var numberOfFighters = 1;
+  console.log(fighterNameList);
+  //Fiddle with these^^^^
+  let tempFighterNameList = [];
+  for (let i = 0; i < numberOfTeams * numberOfFighters; i++) {
+    if (tempFighterNameList.length <= 0) {
+      for (name of fighterNameList) {
+        tempFighterNameList.push(name);
+      }
+    }
+    var fighterName = Math.floor(Math.random() * tempFighterNameList.length);
+    var fighter = new Fighter();
+
+    fighter.id = allFighters;
+    fighter.name = tempFighterNameList[fighterName];
+
+    fighter.team = i % numberOfTeams;
+    fighterList.push(fighter);
+    tempFighterNameList.splice(fighterName, 1);
+    allFighters += 1;
+  }
+  for (fighter of fighterList) {
+    speedList.push(fighter);
+  }
+  speedList.sort(function (a, b) {
+    return b.spd - a.spd;
+  });
+
+  for (fighter of speedList) {
+    let X = speedList.indexOf(fighter);
+    element = document.createElement("div");
+    element.id = "fighter" + X;
+    element.classList.add("FighterBox");
+  }
+  //Page Stuff
+  for (let i = 0; i < numberOfTeams; i++) {
+    let funkyVisuals = document.createElement("div");
+    funkyVisuals.id = "team" + i;
+    funkyVisuals.classList.add("teamBox");
+    document.getElementById("OuterBox").appendChild(funkyVisuals);
+  }
+  for (fighter of speedList) {
+    let funkyFighterDivBoi = document.createElement("div");
+    funkyFighterDivBoi.id = "fighter" + fighter.id;
+    funkyFighterDivBoi.class = "fighterBox";
+
+    let funkyFighterImgBoi = document.createElement("img");
+    funkyFighterImgBoi.className = "fighterGFX";
+    funkyFighterDivBoi.appendChild(funkyFighterImgBoi);
+    if (fighter.team % 2 == 0) {
+      funkyFighterDivBoi.getElementsByClassName("fighterGFX")[0].src =
+        "img/crashr_idle.png";
+    }
+    if (fighter.team % 2 == 1) {
+      funkyFighterDivBoi.getElementsByClassName("fighterGFX")[0].src =
+        "img/saml_idle.png";
+    }
+    let funkyFighterStatsDivBoi = document.createElement("div");
+    funkyFighterStatsDivBoi.className = "statsBox";
+    funkyFighterDivBoi.appendChild(funkyFighterStatsDivBoi);
+    funkyFighterDivBoi.getElementsByClassName("statsBox")[0].innerHTML =
+      fighter.name + "<br>Attack: " + fighter.atk + "<br>Health: " + fighter.hp;
+    let funkyFighterControlsDivBoi = document.createElement("div");
+    funkyFighterControlsDivBoi.className = "controlsBox";
+    funkyFighterDivBoi.appendChild(funkyFighterControlsDivBoi);
+    let funkyFighterAttackButtonBoi = document.createElement("button");
+    funkyFighterAttackButtonBoi.disabled = true;
+    funkyFighterAttackButtonBoi.innerHTML = "ATTACK";
+    funkyFighterAttackButtonBoi.addEventListener("click", fighter.attack);
+    funkyFighterControlsDivBoi.appendChild(funkyFighterAttackButtonBoi);
+    funkyFighterDivBoi.appendChild(funkyFighterControlsDivBoi);
+
+    document
+      .getElementById("team" + fighter.team)
+      .appendChild(funkyFighterDivBoi);
+  }
+  let FunkyFightersOutputBoi = document.createElement("div");
+  FunkyFightersOutputBoi.id = "output";
+  document.body.appendChild(FunkyFightersOutputBoi);
+  //game loop stuff
+  gameLoop();
+  function gameLoop() {
+    if (turn >= fighterList.length) {
+      turn = 0;
+      round += 1;
+      for (fighter of fighterList) {
+        if (fighter.hp > 0) {
+          fighter.ready = true;
+        }
+      }
+    }
+    for (fighter in speedList) {
+      funkyFighterDivBoi = document.getElementById(
+        "fighter" + speedList[fighter].id
+      );
+      if (fighter == turn && speedList[fighter].hp > 0) {
+        funkyFighterDivBoi.classList.add("active");
+        funkyFighterDivBoi
+          .getElementsByClassName("controlsBox")[0]
+          .getElementsByTagName("button")[0].disabled = false;
+        document.getElementById("output").innerHTML =
+          "Tis " + speedList[fighter].name + "'s Turn";
+      } else if (fighter == turn && speedList[fighter].hp <= 0) {
+        turn += 1;
+        gameLoop();
+      }
+    }
+  }
+</script>

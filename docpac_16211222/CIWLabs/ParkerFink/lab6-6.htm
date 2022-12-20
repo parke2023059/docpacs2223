@@ -9,11 +9,11 @@
 function openWindow(){
 var info="";
 
-  info += "Welcome, " +               ;         //Add appCodeName here
+  info += "Welcome, " + browser;         //Add appCodeName here
   info += " user!\nYou are using the "; 
-  info +=      + " browser,\nversion ";        //Add appName here
-  info +=      + ".\nYour user agent ";       //Add appVersion here
-  info += "information is " +         ;          //Add userAgent here
+  info +=     app + " browser,\nversion ";        //Add appName here
+  info +=     version + ".\nYour user agent ";       //Add appVersion here
+  info += "information is " + agent;          //Add userAgent here
 
   alert(info);
 }
@@ -29,7 +29,11 @@ var info="";
 <script type="text/javascript">
 
       //Add userAgent here to write to browser window
-
+  var browser = navigator.appCodeName
+  var app = navigator.appName
+  var version = navigator.appVersion
+  var agent = navigator.userAgent
+  console.log(browser, app, version, agent)
 </script>
 
 <form name="myForm">

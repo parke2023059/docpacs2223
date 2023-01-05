@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content=
+"text/html; charset=utf-8">
+<title>Lesson 6 Application Project</title>
+
+<script type="text/javascript">
+
+
+    function display_image(selectedImage) {
+  
+        var selectionName = selectedImage.options[selectedImage.selectedIndex].text;
+        var selection = selectedImage.options[selectedImage.selectedIndex].value;
+        var newdocument = window.open("","test","width = 500 height = 500");
+        with(newdocument.window){
+            document.write("<head><title> Document's Image </title> </head>");
+            document.write("<style> body {text-align:center;} </style>");
+            document.write("<body style='background-color: green;'><h3>" + selectionName + " </h3> <img src= "+ selection + " height = 150 width = 150>  </body> ");
+            document.write("<form> <input type='button' value='close' onClick='window.close()'> </form> ");
+            focus();
+
+        }}
+</script>
+</head>
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<p>
+Select an image:
+</p>
+<select name="images" onchange="display_image(this)">
+	<option value="images/ciw_on.gif" >CIW LOGO</option>
+    <option value="images/ciw1_on.gif"> SECOND CIW LOGO</option>
+</select>
+
+
+</body>
+</html>

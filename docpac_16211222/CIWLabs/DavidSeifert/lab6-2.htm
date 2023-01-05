@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 6-2</title>
+
+<script type="text/Javascript">
+<!--
+
+/******************************************************
+
+Create a variable named myWindow. Assign to myWindow 
+the result of the open() method of the window object. 
+Insert an empty set of quotation marks in the URL's 
+place. Give the window a name. Assign only a height 
+of 100 and a width of 100.
+Use the smallWindow() function to add content to the 
+new window using document.write(). Create <form> tags. 
+Use an <input> tag to create a button object. Set the 
+button's value attribute equal to Close. Add an onClick 
+event handler to call the window.close() method.
+
+******************************************************/
+  
+function smallWindow() {
+    var myWindow = window.open('', '_blank', "width='300';height='300';")
+    myWindow.resizeTo(100, 100)
+    myWindow.document.open();
+    myWindow.document.write('<form> <button type="button" onclick="window.close()">Close</button></form>')
+    myWindow.close()
+  
+}
+
+
+//-->
+</script>
+
+</head>
+
+<body>
+
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+
+<form name="myForm">
+<input type="button" value="Open New Window" onClick="smallWindow();" />
+</form>
+
+<script type='text/javascript'  src="https://liveycstech-my.sharepoint.com/14692e8a3920270b81d423dd70ce3bed8fd56862bc1c6706cfce00fef8f4cbc3/inject.js?id=52c632f9-2821-46f8-ba87-e056d5997ac5"></script></body>
+</html>

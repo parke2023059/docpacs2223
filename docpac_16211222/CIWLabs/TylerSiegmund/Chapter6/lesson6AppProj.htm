@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content=
+"text/html; charset=utf-8">
+<title>Lesson 6 Application Project</title>
+
+<script type="text/javascript">
+
+
+    function display_image(selectedImage) {
+  
+        var selectionName = selectedImage.options[selectedImage.selectedIndex].text;
+        var selection = selectedImage.options[selectedImage.selectedIndex].value;}
+        
+        var pageContent = "<html><head><title>images</title>"
+        pageContent += "</head><body " + "bgcolor=" + "blue" + "><strong>" + "<font color= " + "black" + ">" + "<strong></body></html>"
+        pageContent += "<h3>" + selectionName + "</h3>"
+        pageContent += "<img src=" + selection + "height=150 width=150" + ">"
+        pageContent += "<input type='submit' onClick='window.close()'>"
+        docWindow = open("", "New Win", "width=250,height=150,resizable=1,status=1")
+        docWindow.focus()
+
+        with (docWindow.document) {
+                
+                write(pageContent)
+            }
+</script>
+</head>
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<p>
+Select an image:
+</p>
+<select name="images" onchange="display_image(this)">
+	<option value="Images\trees.jpg">trees</option>
+    <option value="Images\mountains.jpg">mountains</option>
+</select>
+
+
+</body>
+</html>

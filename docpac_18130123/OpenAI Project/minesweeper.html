@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Minesweeper</title>
+	<style>
+		body {
+		    font-family: Arial, sans-serif;
+		    font-size: 12px;
+		    background-color: #eaeaea;
+		}
+		
+		#game {
+		    margin: 40px auto 0 auto;
+		    width: 500px;
+		    height: 500px;
+		    border: 1px solid #ccc;
+		    background-color: #fff;
+		}
+		
+		.tile {
+		    float: left;
+		    width: 50px;
+		    height: 50px;
+		    margin: 0 0 0 0;
+		    background-color: #ddd;
+		    border: 1px solid #ccc;
+		    text-align: center;
+		    font-size: 12px;
+		    font-weight: bold;
+	
+		}
+	</style>
+</head>
+<body>
+	<h1>Minesweeper</h1>
+	<div id="game">
+		<script type="text/javascript">
+			//Initialize the game
+			var grid = createGrid();
+			var bombs = placeBombs();
+			
+			//Create the game board
+			for (var row = 0; row < 4; row++) {
+				for (var col = 0; col < 10; col++) {
+					document.write('<div class="tile" onclick="reveal(' + row + ',' + col + ')"> </div>');
+				}
+				document.write('<div style="clear:both;"></div>');
+			}
+			
+			//Create the game grid
+			function createGrid() {
+				var grid = new Array(10);
+				for (var row = 0; row < 10; row++) {
+					grid[row] = new Array(10);
+					for (var col = 0; col < 10; col++) {
+						grid[row][col] = 0; // 0 = not clicked, 1 = clicked
+					}
+				}
+				return grid;
+			}
+			
+			//Place bombs randomly
+			function placeBombs() {
+				var bombs = new Array(10);
+				for (var row = 0; row < 10; row++) {
+					bombs[row] = new Array(10);
+					for (var col = 0; col < 10; col++) {
+						var random = Math.floor(Math.random() * 100);
+						if (random < 10) {
+							bombs[row][col] = 1; // 1 = bomb
+						} else {
+							bombs[
+
+row][col] = 0; // 0 = no bomb
+						}
+					}
+				}
+				return bombs;
+			}
+			
+			//Reveal the cell
+			function reveal(row, col) {
+				if (grid[row][col] == 0) {
+					if (bombs[row][col] == 1) {
+						document.getElementsByClassName("tile")[row * 10 + col].innerHTML = "B";
+						document.getElementsByClassName("tile")[row * 10 + col].style.backgroundColor = "#f00";
+						alert("Game Over!");
+					} else {
+						//Count the number of bombs around the cell
+						var numBombs = 0;
+						if (row > 0 && col > 0 && bombs[row - 1][col - 1] == 1)
+							numBombs++;
+						if (row > 0 && bombs[row - 1][col] == 1)
+							numBombs++;
+						if (row > 0 && col < 9 && bombs[row - 1][col + 1] == 1)
+							numBombs++;
+						if (col > 0 && bombs[row][col - 1] == 1)
+							numBombs++;
+						if (col < 9 && bombs[row][col + 1] == 1)
+							numBombs++;
+						if (row < 9 && col > 0 && bombs[row + 1][col - 1] == 1)
+							numBombs++;
+						if (row < 9 && bombs[row + 1][col] == 1)
+							numBombs++;
+						if (row < 9 && col < 9
+
+							&& bombs[row + 1][col + 1] == 1)
+							numBombs++;
+						
+						//Reveal the cell
+						document.getElementsByClassName("tile")[row * 10 + col].innerHTML = numBombs;
+						document.getElementsByClassName("tile")[row * 10 + col].style.backgroundColor = "#fff";
+						grid[row][col] = 1;
+					}
+				}
+			}
+		</script>
+	</div>
+</body>
+</html>

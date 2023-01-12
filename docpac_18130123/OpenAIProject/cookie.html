@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html>
+<style>
+    body {
+        background-image: url("images/route.jpg");
+        background-size: 100%;
+        text-align: center;
+    }
+</style>
 
 <head>
     <title>Cookie Clicker</title>
 </head>
 
-<body style="text-align: center;">
+<body>
     <h1>Cookie Clicker</h1>
-    <p>Cookies: <span id="cookies">0</span></p>
-    <button onclick="addCookie()" style="margin: auto;">Add Cookie</button>
+    <p>Pokemon: <span id="cookies">0</span></p>
+    <button onclick="addCookie()" style="margin: auto;"><img src="images/original.png" width="30" height="30"></button>
     <br><br>
-    <h2>Upgrades</h2>
-    <button id="upgrade1" onclick="buyUpgrade(1)"style="margin: auto;">Upgrade 1 - Cost: 10</button><br><br>
-    <button id="upgrade2" onclick="buyUpgrade(2)"style="margin: auto;">Upgrade 2 - Cost: 25</button><br><br>
-    <button id="upgrade3" onclick="buyUpgrade(3)"style="margin: auto;">Upgrade 3 - Cost: 50</button>
+    <h2>Shop</h2>
+    <button id="upgrade1" onclick="buyUpgrade(1)" style="margin: auto;">Great Ball - Cost: 10<img src="images/great.png" width="30" height="30"></button><br><br>
+    <button id="upgrade2" onclick="buyUpgrade(2)" style="margin: auto;">Ultra Ball - Cost: 25<img src="images/ultra.png" width="50" height="30"></button><br><br>
+    <button id="upgrade3" onclick="buyUpgrade(3)" style="margin: auto;">Quick Ball - Cost: 50<img src="images/quick.png" width="40" height="30"></button>
     <script>
         var cookies = 0;
         var upgrade1 = false;
@@ -50,7 +57,7 @@
             }
             document.getElementById("cookies").innerHTML = cookies;
         }
-                function buyUpgrade(upgrade) {
+        function buyUpgrade(upgrade) {
             if (upgrade === 1 && cookies >= 10) {
                 upgrade1Count++;
                 cookies -= 10;

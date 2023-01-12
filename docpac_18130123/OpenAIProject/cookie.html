@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cookie Clicker</title>
+</head>
+
+<body>
+    <h1>Cookie Clicker</h1>
+    <p>Cookies: <span id="cookies">0</span></p>
+    <button onclick="addCookie()">Add Cookie</button>
+    <br><br>
+    <h2>Upgrades</h2>
+    <button id="upgrade1" onclick="buyUpgrade(1)">Upgrade 1 - Cost: 10</button><br><br>
+    <button id="upgrade2" onclick="buyUpgrade(2)">Upgrade 2 - Cost: 25</button><br><br>
+    <button id="upgrade3" onclick="buyUpgrade(3)">Upgrade 3 - Cost: 50</button>
+    <script>
+        var cookies = 0;
+        var upgrade1 = false;
+        var upgrade2 = false;
+        var upgrade3 = false;
+        var upgrade1Count = 0;
+        var upgrade2Count = 0;
+        var upgrade3Count = 0;
+
+        function addCookie() {
+            cookies++;
+            if (upgrade1Count > 0) {
+                cookies += 2 * upgrade1Count;
+            }
+            if (upgrade2Count > 0) {
+                cookies += 5 * upgrade2Count;
+            }
+            if (upgrade3Count > 0) {
+                cookies += 10 * upgrade3Count;
+            }
+            document.getElementById("cookies").innerHTML = cookies;
+        }
+
+        function buyUpgrade(upgrade) {
+            if (upgrade === 1 && cookies >= 10) {
+                upgrade1 = true;
+                cookies -= 10;
+            } else if (upgrade === 2 && cookies >= 25) {
+                upgrade2 = true;
+                cookies -= 25;
+            } else if (upgrade === 3 && cookies >= 50) {
+                upgrade3 = true;
+                cookies -= 50;
+            }
+            document.getElementById("cookies").innerHTML = cookies;
+        }
+                function buyUpgrade(upgrade) {
+            if (upgrade === 1 && cookies >= 10) {
+                upgrade1Count++;
+                cookies -= 10;
+            } else if (upgrade === 2 && cookies >= 25) {
+                upgrade2Count++;
+                cookies -= 25;
+            } else if (upgrade === 3 && cookies >= 50) {
+                upgrade3Count++;
+                cookies -= 50;
+            }
+            document.getElementById("cookies").innerHTML = cookies;
+        }
+    </script>
+</body>
+
+</html>

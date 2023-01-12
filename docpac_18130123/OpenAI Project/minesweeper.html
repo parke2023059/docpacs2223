@@ -40,8 +40,8 @@
 			var bombs = placeBombs();
 			
 			//Create the game board
-			for (var row = 0; row < 4; row++) {
-				for (var col = 0; col < 10; col++) {
+			for (var row = 0; row < 8; row++) {
+				for (var col = 0; col < 8; col++) {
 					document.write('<div class="tile" onclick="reveal(' + row + ',' + col + ')"> </div>');
 				}
 				document.write('<div style="clear:both;"></div>');
@@ -49,10 +49,10 @@
 			
 			//Create the game grid
 			function createGrid() {
-				var grid = new Array(10);
-				for (var row = 0; row < 10; row++) {
-					grid[row] = new Array(10);
-					for (var col = 0; col < 10; col++) {
+				var grid = new Array(8);
+				for (var row = 0; row < 8; row++) {
+					grid[row] = new Array(8);
+					for (var col = 0; col < 8; col++) {
 						grid[row][col] = 0; // 0 = not clicked, 1 = clicked
 					}
 				}
@@ -69,9 +69,7 @@
 						if (random < 10) {
 							bombs[row][col] = 1; // 1 = bomb
 						} else {
-							bombs[
-
-row][col] = 0; // 0 = no bomb
+							bombs[row][col] = 0; // 0 = no bomb
 						}
 					}
 				}
@@ -82,8 +80,8 @@ row][col] = 0; // 0 = no bomb
 			function reveal(row, col) {
 				if (grid[row][col] == 0) {
 					if (bombs[row][col] == 1) {
-						document.getElementsByClassName("tile")[row * 10 + col].innerHTML = "B";
-						document.getElementsByClassName("tile")[row * 10 + col].style.backgroundColor = "#f00";
+						document.getElementsByClassName("tile")[row * 8 + col].innerHTML = "B";
+						document.getElementsByClassName("tile")[row * 8 + col].style.backgroundColor = "#f00";
 						alert("Game Over!");
 					} else {
 						//Count the number of bombs around the cell
@@ -108,8 +106,8 @@ row][col] = 0; // 0 = no bomb
 							numBombs++;
 						
 						//Reveal the cell
-						document.getElementsByClassName("tile")[row * 10 + col].innerHTML = numBombs;
-						document.getElementsByClassName("tile")[row * 10 + col].style.backgroundColor = "#fff";
+						document.getElementsByClassName("tile")[row * 8 + col].innerHTML = numBombs;
+						document.getElementsByClassName("tile")[row * 8 + col].style.backgroundColor = "#fff";
 						grid[row][col] = 1;
 					}
 				}

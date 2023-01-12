@@ -6,7 +6,7 @@
 		body {
 		    font-family: Arial, sans-serif;
 		    font-size: 12px;
-		    background-color: #eaeaea;
+		    background-color: #white;
 		}
 		
 		#game {
@@ -14,7 +14,7 @@
 		    width: 500px;
 		    height: 500px;
 		    border: 1px solid #ccc;
-		    background-color: #fff;
+		    background-color: black;
 		}
 		
 		.tile {
@@ -22,8 +22,8 @@
 		    width: 50px;
 		    height: 50px;
 		    margin: 0 0 0 0;
-		    background-color: #ddd;
-		    border: 1px solid #ccc;
+		    background-color: white;
+		    border: 1px solid black;
 		    text-align: center;
 		    font-size: 12px;
 		    font-weight: bold;
@@ -56,6 +56,8 @@
 						grid[row][col] = 0; // 0 = not clicked, 1 = clicked
 					}
 				}
+
+			
 				return grid;
 			}
 			
@@ -83,6 +85,8 @@
 						document.getElementsByClassName("tile")[row * 8 + col].innerHTML = "B";
 						document.getElementsByClassName("tile")[row * 8 + col].style.backgroundColor = "#f00";
 						alert("Game Over!");
+						location.reload()
+
 					} else {
 						//Count the number of bombs around the cell
 						var numBombs = 0;
@@ -100,11 +104,13 @@
 							numBombs++;
 						if (row < 9 && bombs[row + 1][col] == 1)
 							numBombs++;
-						if (row < 9 && col < 9
-
-							&& bombs[row + 1][col + 1] == 1)
+						if (row < 9 && col < 9 && bombs[row + 1][col + 1] == 1)
 							numBombs++;
 						
+				
+						
+
+
 						//Reveal the cell
 						document.getElementsByClassName("tile")[row * 8 + col].innerHTML = numBombs;
 						document.getElementsByClassName("tile")[row * 8 + col].style.backgroundColor = "#fff";

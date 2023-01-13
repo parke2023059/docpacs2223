@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var game = document.createElement('div');
+        game.innerHTML = '<h1>Collect the coins!</h1>';
+        document.body.appendChild(game);
+        var score = 0;
+        var scoreDisplay = document.createElement('div');
+        scoreDisplay.innerHTML = 'Score: ' + score;
+        game.appendChild(scoreDisplay);
+        var coin = document.createElement('div');
+        coin.innerHTML = '<img src="OpenAIsImages/coin.png">';
+        coin.style.position = 'absolute';
+        coin.style.left = '5px';
+        coin.style.top = '5px';
+        game.appendChild(coin);
+        var coinX = 0;
+        var coinY = 0;
+        var player = document.createElement('div');
+        player.innerHTML = '<img src="OpenAIsImages/player.png">';
+        player.style.position = 'absolute';
+        player.style.left = '5px';
+        player.style.top = '5px';
+        game.appendChild(player);
+        var playerX = 0;
+        var playerY = 0;
+        var movePlayer = function (dx, dy) {
+            playerX += dx;
+            playerY += dy;
+            player.style.left = playerX + 'px';
+            player.style.top = playerY + 'px';
+        };
+        var moveCoin = function () {
+            coinX = Math.floor(Math.random() * 500);
+            coinY = Math.floor(Math.random() * 500);
+            coin.style.left = coinX + 'px';
+            coin.style.top = coinY + 'px';
+        };
+        moveCoin();
+        var checkCollision = function () {
+            console.log(Math.abs(playerX - coinX) < 50)
+            console.log(Math.abs(playerY - coinY) < 50)
+            if (Math.abs(playerX - coinX) < 50 && Math.abs(playerY - coinY) < 50) {
+                score += 1;
+                scoreDisplay.innerHTML = 'Score: ' + score;
+                console.log(score)
+                moveCoin();
+            }
+            else
+            {
+                console.log("Nope")
+            }
+        };
+        var loop = function () {
+            checkCollision();
+            setTimeout(loop, 10);
+        };
+        loop();
+        document.onkeydown = function (event) {
+            if (event.keyCode === 37) {
+                movePlayer(-10, 0);
+            } else if (event.keyCode === 38) {
+                movePlayer(0, -10);
+            } else if (event.keyCode === 39) {
+                movePlayer(10, 0);
+            } else if (event.keyCode === 40) {
+                movePlayer(0, 10);
+            }
+        };
+    </script>
+</body>
+
+</html>

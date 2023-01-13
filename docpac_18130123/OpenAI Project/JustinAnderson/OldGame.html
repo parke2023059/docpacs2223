@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>Click Game</title>
+    <script>
+      var points = 0;
+      var timeLeft = 10;
+      var gameInterval = null;
+      
+      function onClick() {
+       points++;
+       document.getElementById("points").innerHTML = "Points: " + points;
+      }
+
+      function startTimer() {
+        gameInterval = setInterval(function() {
+          timeLeft--;
+          document.getElementById("time").innerHTML = "Time Left: " + timeLeft;
+          if (timeLeft <= 0) {
+          clearInterval(gameInterval);
+          alert("Time's up! Your final score is " + points);
+          }
+        }, 1000);
+      }  
+    </script>
+    <style>
+    </style>
+  </head>
+  <body onload="startTimer()">
+    <h1>Click Game</h1>
+    <button id="click-btn" onclick="onClick()">Click Me!</button>
+    <p id="points">Points: 0</p>
+    <p id="time">Time Left: 10</p>
+  </body>
+</html>

@@ -14,12 +14,13 @@
       this.showEmployeeY = showEmployee;
     }
   
-    // Instantiate 3 instances of employeeObject
+    
     var employees = new Array();
     employees[0] = "Select Employee";
     employees[1] = new employeeObject("Mai Li", "Sales", 551);
     employees[2] = new employeeObject("Maria Alvarez", "Human Resources", 441);
     employees[3] = new employeeObject("Tom Smith", "Marketing", 331);
+	employeeObject.employed = "Yes";
   
   var len = employees.length;
   
@@ -28,6 +29,7 @@
     info += "Employee: " + this.name + "\n";
       info += "Department: " + this.department +  "\n";
     info += "Extension: " + this.extension + "\n";
+	    info += "Employed: " + this.employed;
       alert(info);
     }
 
@@ -37,6 +39,7 @@
         info += "Employee: " + employees[i].name + "\n";
         info += "Department: " + employees[i].department +  "\n";
       info += "Extension: " + employees[i].extension + "\n";
+	      info += "Employed: " + employees[i].employed + "\n\n";
       }
     
     alert(info);

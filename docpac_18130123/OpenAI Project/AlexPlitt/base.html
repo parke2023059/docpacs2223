@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Is This... A Game?!</title>
+    </head>
+    <body>
+        <script>
+            // Initialize game variables
+            let playerName = "";
+            let playerHealth = 100;
+            let playerLevel = 1;
+
+            let hPotionTotal = 5;
+
+            let inventory = ["Health Potion x" + hPotionTotal];
+
+            // Add player's attack and defense stats
+            let playerAttack = 5;
+            let playerDefense = 5;
+            let playerMana = 100;
+            let playerMaxHealth = 100;
+
+            // Get player's name
+            playerName = prompt("What is your character's name?");
+
+            //Add magic spells
+            let spells = ["Fireball", "Lightning Bolt", "Heal"];
+            let spellManaCosts = {
+                "Fireball": 20,
+                "Lightning Bolt": 30,
+                "Heal": 40,
+                "Hocus Pocus": 100
+            };
+            let spellDamages = {
+                "Fireball": 40,
+                "Lightning Bolt": 50,
+                "Heal": -50,
+                "Hocus Pocus": 100
+            };
+
+            // Welcome player to the game
+            alert("Welcome, " + playerName + "! Your journey is about to begin.");
+
+            // Function to handle player's attack
+            function attack() {
+                // Code to handle attack goes here
+                playerAttack += playerLevel * 2;
+                return playerAttack;
+            }
+
+            // Function to handle player's defend
+            function defend() {
+                // Code to handle defend goes here
+                playerDefense += playerLevel * 2;
+                return playerDefense;
+            }
+
+            // Function to handle player's inventory
+            function useItem(item) {
+                if (inventory.indexOf(item) !== -1) {
+                    if (item.startsWith("Health potion")) {
+                        let healthIncrease = item.split(" ")[2];
+                        playerHealth == parseInt(healthIncrease);
+                        alert("You used " + item + ". Your health is now " + playerHealth);
+                        let itemIndex = inventory.indexOf(item);
+                        inventory.splice(itemIndex, 1);
+                    }
+                } else {
+                    alert("You don't have that item.");
+                }
+            }
+
+            function useMana(cost) {
+                if (cost > playerMana) {
+                    alert("You don't have enough mana.");
+                    return false;
+                } else {
+                    playerMana -= cost;
+                    alert("You used " + cost + " mana. Your mana: " + playerMana);
+                    return true;
+                }
+            }
+
+            function gainMana(amount) {
+                playerMana += amount;
+                alert("You gained " + amount + " mana. Your mana: " + playerMana);
+            }
+
+            function heal(amount) {
+                playerHealth += amount;
+                if (playerHealth > playerMaxHealth) {
+                    playerHealth = playerMaxHealth;
+                }
+                alert("You healed for " + amount + " Your health is now " + playerHealth);
+            }
+
+            function useSpell(spell) {
+                if (spells.indexOf(spell) !== -1) {
+                    if (useMana(spellManaCosts[spell])) {
+                        let spellDamage = spellDamage[spell];
+                        enemyHealth -= spellDamage;
+                        alert("You used " + spell + " and dealt " + spellDamage + " damage. Enemy Health: " + enemyHealth);
+                        if (enemyHealth <= 0) {
+                            alert("You have defeated the enemy!");
+                            playerLevel++;
+                            alert("You are now level " + playerLevel);
+                            enemyHealth = 50 + (playerLevel * 10);
+                            enemyAttack = 10 + (playerLevel * 2);
+                            enemyDefense = 5 + (playerLevel * 2);
+                            alert("A stronger enemy has appeared!");
+                        }
+                        let enemyDamage = enemyAttack - defend();
+                        if (enemyDamage > 0) {
+                            playerHealth -= enemyDamage;
+                            alert("Enemy dealt " + enemyDamage + " damage to you. Your health: " + playerHealth);
+                        } else {
+                            alert("Your defense was too strong. No damage taken.");
+                        }
+                    }
+                } else {
+                    alert("You don't know that spell.");
+                }
+            }
+
+            // Initialize enemy
+            let enemyHealth = 50;
+            let enemyAttack = 10;
+            let enemyDefense = 5;
+
+            function addToInventory(item) {
+                inventory.push(item);
+                alert("You got " + item + " and added it to your inventory.");
+            }
+            
+            // Function to handle player's shop
+            let shopInventory = ["Health potion x5", "Mana potion x5", "Damage potion x5"];
+
+            function shop() {
+                let shopChoice = prompt("Welcome to the shop! What would you like to buy?" + shopInventory.join(", ") + " (Enter item name or 'exit' to leave)");
+                if (shopChoice === "exit") {
+                    alert("Thanks for visiting the shop!");
+                } else if (shopInventory.indexOf(shopChoice) !== -1) {
+                    let itemCost = shopChoice.split(" ")[2] * 10;
+                    if (itemCost <= playerLevel * 50) {
+                        addToInventory(shopChoice);
+                        playerLevel -= itemCost;
+                        alert("You bought " + shopChoice + " and now your level is " + playerLevel);
+                    } else {
+                        alert("You don't have enough money to buy " + shopChoice);
+                    }
+                } else {
+                    alert("Invalid choice. Please enter a valid item name or 'exit'.");
+                }
+            }
+
+            // Save and Load functionality
+            function saveGame() {
+                localStorage.setItem("playerName", playerName);
+                localStorage.setItem("playerLevel", playerLevel);
+                localStorage.setItem("playerHealth", playerHealth);
+                localStorage.setItem("enemyHealth", enemyHealth);
+                localStorage.setItem("enemyAttack", enemyAttack);
+                localStorage.setItem("enemyDefense", enemyDefense);
+                alert("Game saved!");
+            }
+            
+            function loadGame() {
+                playerName = localStorage.getItem("playerName");
+                playerLevel = localStorage.getItem("playerLevel");
+                playerHealth = localStorage.getItem("playerHealth");
+                enemyHealth = localStorage.getItem("enemyHealth");
+                enemyAttack = localStorage.getItem("enemyAttack");
+                enemyDefense = localStorage.getItem("enemyDefense");
+                alert("Game loaded!");
+            }
+
+            function checkSavedData() {
+                let savedData = localStorage.getItem("playerName");
+                if (savedData !== null) {
+                    let confirmation = confirm("Would you like to load the save data?");
+                    if (confirmation) {
+                        loadGame();
+                    }
+                }
+            }
+
+            checkSavedData();
+
+            // Function to handle player's quit
+            function quit() {
+                let confirmation = confirm("Are you sure you want to quit?");
+                if (confirmation) {
+                    alert("Thanks for playing!");
+                    playerHealth = 0;
+                }
+            }
+
+            // Main game loop
+            while (playerHealth > 0) {
+                let playerChoice = prompt("What would you like to do? (attack/defend/save/quit/shop)");
+                if (playerChoice === "attack") {
+                    let playerAttack = attack();
+                    let damage = playerAttack - enemyDefense;
+                    if (damage > 0) {
+                        enemyHealth -= damage;
+                        alert("You dealt " + damage + " damage to this enemy. Enemy health: " + enemyHealth);
+                    } else {
+                        alert("Enemy's defense was too strong. No damage dealt.");
+                    }
+                    if (enemyHealth <= 0) {
+                        alert("You have defeated the enemy!");
+                        playerLevel++;
+                        alert("You are now level " + playerLevel);
+                        enemyHealth = 50 + (playerLevel * 10);
+                        enemyAttack = 10 + (playerLevel * 2);
+                        enemyDefense = 5 + (playerLevel * 2);
+                        alert("A stronger enemy has appeared!");
+                    }
+                    let enemyDamage = enemyAttack - defend();
+                    if (enemyDamage > 0) {
+                        playerHealth -= enemyDamage;
+                        alert("Enemy dealt: " + enemyDamage + " damage to you. Your health: " + playerHealth);
+                    } else {
+                        alert("Your defense was too strong. No damage taken.");
+                    }
+                } else if (playerChoice === "defend") {
+                    //defend();
+                    let enemyDamage = enemyAttack - defend();
+                    if (enemyDamage > 0) {
+                        playerHealth -= enemyDamage;
+                        alert("Enemy dealt " + enemyDamage + " damage to you. Your health: " + playerHealth);
+                    } else {
+                        alert("Your defense was too strong. No damage taken.");
+                    }
+                } else if (playerChoice === "shop") {
+                    shop();
+                } else if (playerChoice === "save") {
+                    saveGame();
+                } else if (playerChoice === "quit") {
+                    quit();
+                } else {
+                    alert("Invalid choice. Please enter 'attack', 'defend', 'save', 'shop', or 'quit'.");
+                }
+            }
+
+            alert("Game Over!");
+        </script>
+        <style>
+
+        </style>
+    </body>
+</html>

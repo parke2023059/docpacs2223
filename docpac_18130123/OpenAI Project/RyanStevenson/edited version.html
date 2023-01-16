@@ -1,0 +1,466 @@
+<html>
+
+<head>
+	<style>
+		.IMG {
+			position: absolute;
+			width: 40px;
+			left: 230px;
+		}
+
+		#pointerIMG {
+			top: 0px;
+		}
+
+		#grandmaIMG {
+			top: 50px;
+		}
+
+		#farmIMG {
+			top: 100px;
+		}
+
+		#factoryIMG {
+			top: 150px;
+		}
+	</style>
+	<img src="pointer.png" id='pointerIMG' class='IMG'>
+	<img src="grandma.png" id='grandmaIMG' class='IMG'>
+	<img src="farm.png" id='farmIMG' class='IMG'>
+	<img src="factory.png" id='factoryIMG' class='IMG'>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+
+			var cookie = document.createElement('div');
+			cookie.innerHTML = 'Cookie';
+			cookie.style.width = '100px';
+			cookie.style.height = '100px';
+			cookie.style.backgroundColor = '#ff0';
+			cookie.style.borderRadius = '50px';
+			cookie.style.position = 'absolute';
+			cookie.style.top = '50%';
+			cookie.style.left = '50%';
+			cookie.style.marginLeft = '-50px';
+			cookie.style.marginTop = '-50px';
+			cookie.style.cursor = 'pointer';
+			cookie.style.userSelect = 'none';
+			cookie.style.webkitUserSelect = 'none';
+			cookie.style.MozUserSelect = 'none';
+			cookie.style.msUserSelect = 'none';
+			cookie.style.oUserSelect = 'none';
+			document.body.appendChild(cookie);
+
+
+
+			cookie.innerHTML = '';
+
+
+
+			cookie.style.backgroundColor = '#a52a2a';
+
+
+
+			cookie.style.backgroundColor = '#8c4f0e';
+
+
+
+			for (var i = 0;i < 40;i++) {
+				var chip = document.createElement('div');
+				var size = Math.random() * 25 + 20
+				chip.style.width = size + 'px';
+				chip.style.height = size + 'px';
+				chip.style.backgroundColor = '#000';
+				chip.style.borderRadius = '100%';
+				chip.style.position = 'absolute';
+				chip.style.top = Math.random() * 100 + '%';
+				chip.style.left = Math.random() * 100 + '%';
+				chip.style.marginLeft = '-5px';
+				chip.style.marginTop = '-5px';
+				cookie.appendChild(chip);
+			}
+
+
+
+			var counter = document.createElement('div');
+			counter.innerHTML = '0';
+			counter.style.position = 'absolute';
+			counter.style.top = '0';
+			counter.style.right = '0';
+			counter.style.fontSize = '24px';
+			counter.style.fontFamily = 'sans-serif';
+			counter.style.fontWeight = 'bold';
+			counter.style.color = '#fff';
+			counter.style.padding = '5px';
+			counter.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			document.body.appendChild(counter);
+
+
+
+			var count = 0;
+			cookie.addEventListener('click', function () {
+				count++;
+				counter.innerHTML = count;
+			});
+
+
+
+			cookie.style.width = '500px';
+			cookie.style.height = '500px';
+			cookie.style.marginLeft = '-250px';
+			cookie.style.marginTop = '-250px';
+
+
+
+			cookie.style.borderRadius = '100px';
+
+
+
+			var clickers = document.createElement('div');
+			clickers.innerHTML = '0';
+			clickers.style.position = 'absolute';
+			clickers.style.top = '0';
+			clickers.style.left = '0';
+			clickers.style.fontSize = '24px';
+			clickers.style.fontFamily = 'sans-serif';
+			clickers.style.fontWeight = 'bold';
+			clickers.style.color = '#fff';
+			clickers.style.padding = '5px';
+			clickers.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			document.body.appendChild(clickers);
+
+
+
+			var buyClicker = document.createElement('div');
+			buyClicker.innerHTML = 'Buy Clicker';
+			buyClicker.style.position = 'absolute';
+			buyClicker.style.bottom = '0';
+			buyClicker.style.left = '0';
+			buyClicker.style.fontSize = '24px';
+			buyClicker.style.fontFamily = 'sans-serif';
+			buyClicker.style.fontWeight = 'bold';
+			buyClicker.style.color = '#fff';
+			buyClicker.style.padding = '5px';
+			buyClicker.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			buyClicker.style.cursor = 'pointer';
+			buyClicker.style.userSelect = 'none';
+			buyClicker.style.webkitUserSelect = 'none';
+			buyClicker.style.MozUserSelect = 'none';
+			buyClicker.style.msUserSelect = 'none';
+			buyClicker.style.oUserSelect = 'none';
+			document.body.appendChild(buyClicker);
+
+
+
+			buyClicker.addEventListener('click', function () {
+				if (count >= 10) {
+					count -= 10;
+					counter.innerHTML = count;
+					clickers.innerHTML = parseInt(clickers.innerHTML) + 1;
+				}
+			});
+
+
+
+			setInterval(function () {
+				count += parseInt(clickers.innerHTML);
+				counter.innerHTML = count;
+			}, 1000);
+
+
+
+			var cookiesLabel = document.createElement('div');
+			cookiesLabel.innerHTML = 'Cookies';
+			cookiesLabel.style.position = 'absolute';
+			cookiesLabel.style.top = '0';
+			cookiesLabel.style.right = '100px';
+			cookiesLabel.style.fontSize = '24px';
+			cookiesLabel.style.fontFamily = 'sans-serif';
+			cookiesLabel.style.fontWeight = 'bold';
+			cookiesLabel.style.color = '#fff';
+			cookiesLabel.style.padding = '5px';
+			cookiesLabel.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			document.body.appendChild(cookiesLabel);
+
+
+
+			var clickersLabel = document.createElement('div');
+			clickersLabel.innerHTML = 'Clickers';
+			clickersLabel.style.position = 'absolute';
+			clickersLabel.style.top = '0';
+			clickersLabel.style.left = '100px';
+			clickersLabel.style.fontSize = '24px';
+			clickersLabel.style.fontFamily = 'sans-serif';
+			clickersLabel.style.fontWeight = 'bold';
+			clickersLabel.style.color = '#fff';
+			clickersLabel.style.padding = '5px';
+			clickersLabel.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			document.body.appendChild(clickersLabel);
+
+
+
+			var grandmas = document.createElement('div');
+			grandmas.innerHTML = '0';
+			grandmas.style.position = 'absolute';
+			grandmas.style.top = '0';
+			grandmas.style.left = '200px';
+			grandmas.style.fontSize = '24px';
+			grandmas.style.fontFamily = 'sans-serif';
+			grandmas.style.fontWeight = 'bold';
+			grandmas.style.color = '#fff';
+			grandmas.style.padding = '5px';
+			grandmas.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			document.body.appendChild(grandmas);
+
+
+
+			grandmas.style.left = '0';
+			grandmas.style.top = '50px';
+
+
+
+			document.body.removeChild(clickersLabel);
+
+
+
+			buyClicker.style.left = '100px';
+
+
+
+			buyClicker.style.bottom = 'auto';
+			buyClicker.style.top = '0';
+
+
+
+			var buyGrandma = document.createElement('div');
+			buyGrandma.innerHTML = 'Buy Grandma';
+			buyGrandma.style.position = 'absolute';
+			buyGrandma.style.top = '0';
+			buyGrandma.style.left = '200px';
+			buyGrandma.style.fontSize = '24px';
+			buyGrandma.style.fontFamily = 'sans-serif';
+			buyGrandma.style.fontWeight = 'bold';
+			buyGrandma.style.color = '#fff';
+			buyGrandma.style.padding = '5px';
+			buyGrandma.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			buyGrandma.style.cursor = 'pointer';
+			buyGrandma.style.userSelect = 'none';
+			buyGrandma.style.webkitUserSelect = 'none';
+			buyGrandma.style.MozUserSelect = 'none';
+			buyGrandma.style.msUserSelect = 'none';
+			buyGrandma.style.oUserSelect = 'none';
+			document.body.appendChild(buyGrandma);
+
+
+
+			buyGrandma.style.top = '50px';
+
+
+
+			buyGrandma.style.left = '100px';
+
+
+
+			buyGrandma.addEventListener('click', function () {
+				if (count >= 100) {
+					count -= 100;
+					counter.innerHTML = count;
+					grandmas.innerHTML = parseInt(grandmas.innerHTML) + 1;
+				}
+			});
+
+
+
+			setInterval(function () {
+				count += parseInt(grandmas.innerHTML) * 5;
+				counter.innerHTML = count;
+			}, 1000);
+
+
+
+			var farms = document.createElement('div');
+			farms.innerHTML = '0';
+			farms.style.position = 'absolute';
+			farms.style.top = '100px';
+			farms.style.left = '0';
+			farms.style.fontSize = '24px';
+			farms.style.fontFamily = 'sans-serif';
+			farms.style.fontWeight = 'bold';
+			farms.style.color = '#fff';
+			farms.style.padding = '5px';
+			farms.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			document.body.appendChild(farms);
+
+
+
+			var buyFarm = document.createElement('div');
+			buyFarm.innerHTML = 'Buy Farm';
+			buyFarm.style.position = 'absolute';
+			buyFarm.style.top = '100px';
+			buyFarm.style.left = '100px';
+			buyFarm.style.fontSize = '24px';
+			buyFarm.style.fontFamily = 'sans-serif';
+			buyFarm.style.fontWeight = 'bold';
+			buyFarm.style.color = '#fff';
+			buyFarm.style.padding = '5px';
+			buyFarm.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			buyFarm.style.cursor = 'pointer';
+			buyFarm.style.userSelect = 'none';
+			buyFarm.style.webkitUserSelect = 'none';
+			buyFarm.style.MozUserSelect = 'none';
+			buyFarm.style.msUserSelect = 'none';
+			buyFarm.style.oUserSelect = 'none';
+			document.body.appendChild(buyFarm);
+
+
+
+			buyFarm.addEventListener('click', function () {
+				if (count >= 1000) {
+					count -= 1000;
+					counter.innerHTML = count;
+					farms.innerHTML = parseInt(farms.innerHTML) + 1;
+				}
+			});
+
+
+
+			setInterval(function () {
+				count += parseInt(farms.innerHTML) * 10;
+				counter.innerHTML = count;
+			}, 1000);
+
+
+
+			var factories = document.createElement('div');
+			factories.innerHTML = '0';
+			factories.style.position = 'absolute';
+			factories.style.top = '150px';
+			factories.style.left = '0';
+			factories.style.fontSize = '24px';
+			factories.style.fontFamily = 'sans-serif';
+			factories.style.fontWeight = 'bold';
+			factories.style.color = '#fff';
+			factories.style.padding = '5px';
+			factories.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			document.body.appendChild(factories);
+
+
+
+			var buyFactory = document.createElement('div');
+			buyFactory.innerHTML = 'Buy Factory';
+			buyFactory.style.position = 'absolute';
+			buyFactory.style.top = '150px';
+			buyFactory.style.left = '100px';
+			buyFactory.style.fontSize = '24px';
+			buyFactory.style.fontFamily = 'sans-serif';
+			buyFactory.style.fontWeight = 'bold';
+			buyFactory.style.color = '#fff';
+			buyFactory.style.padding = '5px';
+			buyFactory.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			buyFactory.style.cursor = 'pointer';
+			buyFactory.style.userSelect = 'none';
+			buyFactory.style.webkitUserSelect = 'none';
+			buyFactory.style.MozUserSelect = 'none';
+			buyFactory.style.msUserSelect = 'none';
+			buyFactory.style.oUserSelect = 'none';
+			document.body.appendChild(buyFactory);
+
+
+
+			buyFactory.addEventListener('click', function () {
+				if (count >= 5000) {
+					count -= 5000;
+					counter.innerHTML = count;
+					factories.innerHTML = parseInt(factories.innerHTML) + 1;
+				}
+			});
+
+
+
+			setInterval(function () {
+				count += parseInt(factories.innerHTML) * 100;
+				counter.innerHTML = count;
+			}, 1000);
+
+
+
+			var cps = document.createElement('div');
+			cps.innerHTML = '0';
+			cps.style.position = 'absolute';
+			cps.style.top = '0';
+			cps.style.right = '200px';
+			cps.style.fontSize = '24px';
+			cps.style.fontFamily = 'sans-serif';
+			cps.style.fontWeight = 'bold';
+			cps.style.color = '#fff';
+			cps.style.padding = '5px';
+			cps.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+			document.body.appendChild(cps);
+
+
+
+			cps.style.top = '50px';
+
+
+
+			cps.style.right = '0';
+
+
+
+			cps.innerHTML += ' cookies/s';
+
+
+
+			setInterval(function () {
+				cps.innerHTML = (parseInt(clickers.innerHTML) + parseInt(grandmas.innerHTML) * 5 + parseInt(farms.innerHTML) * 10 + parseInt(factories.innerHTML) * 100) + ' cookies/s';
+			}, 1);
+
+			document.body.removeChild(cookiesLabel);
+
+			counter.style.right = '50%';
+			counter.style.marginRight = '-50px';
+
+			setInterval(function () {
+				counter.innerHTML = count + ' Cookies';
+			}, 1);
+
+			cps.style.right = '50%';
+			cps.style.marginRight = '-50px';
+
+			buyClicker.style.left = '50px';
+
+			buyGrandma.style.left = '50px';
+
+			buyFarm.style.left = '50px';
+
+			buyFactory.style.left = '50px';
+
+			cookie.style.borderRadius = '100%';
+		});
+	</script>
+</head>
+
+<body style="margin: 0;">
+	<div
+		style="background-color: black; position: fixed; bottom: 0; width: 100%; height: 20px; padding: 20px; opacity: .85; z-index: 1000;">
+		<svg id="Layer_1" data-name="Layer 1" height="40px" width="40px" style="top: -8px;
+            position: relative;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+			<defs>
+				<style>
+					.cls-1 {
+						fill: #fff;
+					}
+				</style>
+			</defs>
+			<title>openai-symbol-flat-white</title>
+			<path class="cls-1"
+				d="M617.24,354a126.36,126.36,0,0,0-10.86-103.79,127.8,127.8,0,0,0-137.65-61.32,126.36,126.36,0,0,0-95.31-42.49A127.81,127.81,0,0,0,251.5,234.89,126.4,126.4,0,0,0,167,296.19a127.82,127.82,0,0,0,15.72,149.86,126.36,126.36,0,0,0,10.86,103.79,127.81,127.81,0,0,0,137.65,61.32,126.36,126.36,0,0,0,95.31,42.49A127.81,127.81,0,0,0,548.5,565.11,126.4,126.4,0,0,0,633,503.81,127.82,127.82,0,0,0,617.24,354ZM426.58,620.49a94.79,94.79,0,0,1-60.85-22c.77-.42,2.12-1.16,3-1.7l101-58.34a16.42,16.42,0,0,0,8.3-14.37V381.69l42.69,24.65a1.52,1.52,0,0,1,.83,1.17V525.43A95.18,95.18,0,0,1,426.58,620.49ZM222.34,533.26A94.74,94.74,0,0,1,211,469.56c.75.45,2.06,1.25,3,1.79l101,58.34a16.44,16.44,0,0,0,16.59,0l123.31-71.2v49.3a1.53,1.53,0,0,1-.61,1.31L352.19,568.05A95.16,95.16,0,0,1,222.34,533.26ZM195.77,312.77a94.71,94.71,0,0,1,49.48-41.68c0,.87-.05,2.41-.05,3.48V391.25a16.41,16.41,0,0,0,8.29,14.36L376.8,476.8l-42.69,24.65a1.53,1.53,0,0,1-1.44.13l-102.11-59A95.16,95.16,0,0,1,195.77,312.77Zm350.74,81.62L423.2,323.19l42.69-24.64a1.53,1.53,0,0,1,1.44-.13l102.11,58.95a95.08,95.08,0,0,1-14.69,171.55c0-.88,0-2.42,0-3.49V408.75A16.4,16.4,0,0,0,546.51,394.39ZM589,330.44c-.75-.46-2.06-1.25-3-1.79L485,270.31a16.46,16.46,0,0,0-16.59,0l-123.31,71.2v-49.3a1.53,1.53,0,0,1,.61-1.31L447.81,232A95.07,95.07,0,0,1,589,330.44ZM321.89,418.31l-42.7-24.65a1.52,1.52,0,0,1-.83-1.17V274.57a95.07,95.07,0,0,1,155.9-73c-.77.42-2.11,1.16-3,1.7l-101,58.34a16.41,16.41,0,0,0-8.3,14.36Zm23.19-50L400,336.59l54.92,31.7v63.42L400,463.41l-54.92-31.7Z" />
+		</svg>
+		<div
+			style="display: inline-block; color: white; vertical-align: top; margin-top: 4px; font-family: Helvetica, sans-serif;">
+			Code generated by <a style="color: white; text-decoration: none; font-weight: bold;"
+				href="https://openai.com/blog/openai-codex/">OpenAI Codex</a>
+		</div>
+	</div>
+</body>
+
+</html>

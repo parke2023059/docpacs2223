@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hatsune Miku Simulator</title>
+</head>
+<style>
+  :root {
+    --miku-pink: #FF1688;
+    --miku-blue: #47C8C0;
+    --miku-green: #87E5CF;
+    --miku-purple: #FF629D;
+    --miku-yellow: #E2DCCF;
+  }
+body{
+text-align: center;
+background-color:var(--miku-yellow) ;
+}
+  #resources {
+    border-color: var(--miku-pink);
+  }
+  
+  #actions button {
+    background-color: var(--miku-blue);
+    color: white;
+  }
+  
+  #actions button:hover {
+    background-color: var(--miku-purple);
+  }
+  #resources p {
+    color: var(--miku-pink);
+    
+  }
+  
+  #resources p span {
+    color: var(--miku-pink);
+  }
+
+</style>
+<body>
+  <h1>Hatsune Miku Simulator</h1>
+<img src="Miku.gif" width="170" height="150">
+  <div id="resources">
+    <p>Money: <span id="money">1000</span></p>
+    <p>Fans: <span id="fans">0</span></p>
+  </div>
+
+  <div id="actions">
+    <button id="perform-live">Perform Live</button> $1000
+    <button id="create-album">Create Album</button> $600
+    <button id="promote">Promote</button> $100
+    <button onclick="sponsor()">Sponsor</button>
+  </div>
+  <div id="status settings">
+    <p></p>
+    <p id="status"></p>
+  </div>
+  <script>
+const performLiveButton = document.getElementById('perform-live');
+const createAlbumButton = document.getElementById('create-album');
+const promoteButton = document.getElementById('promote');
+const moneySpan = document.getElementById('money');
+const fansSpan = document.getElementById('fans');
+const status = document.getElementById('status');
+let money = 1000;
+let fans = 0;
+let concerts = 0;
+
+
+function probability(n) {
+    return Math.random() < n;
+}
+
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+performLiveButton.addEventListener('click', () => {
+  let cost = 1000
+  if(cost > money){
+alert('Not enough money')
+  } else {
+    money -= cost;
+    moneySpan.textContent = money;
+    if(probability(0.70)){
+      status.textContent = "The concert went well!"
+      money += Math.floor(randomNumber(300, 1000)) + fans
+      fans += Math.floor(randomNumber(200, 300));
+      moneySpan.textContent = money;
+      fansSpan.textContent = fans;
+    } else if (probability(0.35)){
+      status.textContent = "The concert went AMAZING!!"
+      money += Math.floor(randomNumber(500, 1500)) + fans
+      fans += Math.floor(randomNumber(100, 200));
+      moneySpan.textContent = money;
+      fansSpan.textContent = fans;
+    }else if(fans <= 0){
+      status.textContent = "The concert went very poorly..."
+      money += Math.floor(randomNumber(0, 100))
+      fans += Math.floor(randomNumber(0, 5));
+      moneySpan.textContent = money;
+      fansSpan.textContent = fans;
+    }else {
+      status.textContent = "The concert went poorly..."
+      money += Math.floor(randomNumber(100, 200)) + fans
+      fans += Math.floor(randomNumber(10, 20));
+      moneySpan.textContent = money;
+      fansSpan.textContent = fans;
+    } 
+  }
+
+});
+
+createAlbumButton.addEventListener('click', () => {
+  let cost = 600
+  if(cost > money){
+    alert('Not enough money')
+  } else if (money >= cost) {
+  albumsSold = Math.floor(randomNumber(100, 500));
+  money -= cost;
+  money += albumsSold + fans;
+  fans += albumsSold 
+  moneySpan.textContent = money;
+  fansSpan.textContent = fans;
+  status.textContent = `We sold ${albumsSold} albums`
+  }
+});
+
+promoteButton.addEventListener('click', () => {
+  let cost = 100
+  if(cost > money){
+    alert('Not enough money')
+  } else {
+  money -= cost;
+  fans += 10;
+  moneySpan.textContent = money;
+  fansSpan.textContent = fans;
+  }
+});
+
+function sponsor (){
+let text = 'Would you like to take a sponsor? Takes 60 fans.';
+  if(confirm(text)==true){
+      fans -= 60
+      money += 1000
+      moneySpan.textContent = money
+      fansSpan.textContent = fans
+      sponsorTaken = true;
+    }
+}
+
+
+  </script>
+</body>
+</html>

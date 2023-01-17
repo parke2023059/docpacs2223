@@ -4,11 +4,11 @@ class Sprite {
         this.position = position
         this.velocity = velocity
         this.lastKey
-        this.attackBox = {
-            position,
-            width,
-            height
-        }
+        this.isAttacking
+        this.color 
+        this.width
+        this.length
+        this.time
     }
     draw() {
         v.fillStyle = 'red'
@@ -26,6 +26,11 @@ class Sprite {
             this.velocity.y += gravity
         }
     }
+    attackBox(height,width,length,time){
+        if (keys.p.pressed && lastKey === 'p'){
+
+        }
+    }
 }
 const gravity = 0.6
 const canvas = document.querySelector('canvas')
@@ -39,10 +44,8 @@ const player1 = new Sprite({
     velocity: {
         x: 0,
         y: 2.5
-    },
-    attackBox:{
-        
     }
+   
 })
 const enemy = new Sprite({
     position:{
@@ -68,9 +71,6 @@ const keys = {
     d:{
         pressed:false
     },
-    w:{
-        pressed:false
-    },
     ArrowLeft:{
         pressed:false
     },
@@ -81,6 +81,21 @@ const keys = {
         pressed:false
     },
     p:{
+        pressed:false
+    },
+    w:{
+        pressed:false
+    },
+    s:{
+        pressed:false
+    },
+    o:{
+        pressed:false
+    },
+    z:{
+        pressed:false
+    },
+    x:{
         pressed:false
     }
 }
@@ -124,6 +139,9 @@ window.addEventListener('keydown', (event) => {
         case 'w':
             player1.velocity.y = -17
             break
+        case 'p':
+            lastKey = 'p'
+            break
     }
     switch(event.key){
 
@@ -140,6 +158,14 @@ window.addEventListener('keydown', (event) => {
             case 'ArrowUp':
                 enemy.velocity.y = -17
                 break
+            case 'z':
+                keys.z.pressed= true
+                enemy.lastKey = 'z'
+                break
+            case 'x':
+                keys.x.pressed = true
+                enemy.lastKey = 'x'
+                break
     }
 
 })
@@ -153,6 +179,9 @@ window.addEventListener('keydown', (event) => {
                 break
             case 'w':
                 keys.w.pressed = false
+                break
+            case 'p':
+                keys.p.pressed = false
                 break
         }
         //for the enemy

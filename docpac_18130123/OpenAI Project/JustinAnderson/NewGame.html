@@ -1,0 +1,216 @@
+<html>
+  <head>
+    <body onload="startGame(); startTimer(); accelerate(0.0);">
+    <button id="restart-btn" style="display: none;" onclick="restartGame()">Restart</button>
+    </body>
+    <title>The Ultimate Clicker Game</title>
+      <div style="text-align: center;">
+    <script>
+      
+var myGamePiece;
+var myObstacles = [];
+
+function startGame() {
+    myGamePiece = new component(30, 30, "red", 10, 120);
+    myGamePiece.gravity = 0.05;
+    myGameArea.start();
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        updateGameArea();
+        },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function component(width, height, color, x, y, type) {
+    this.type = type;
+    this.score = 0;
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;    
+    this.x = x;
+    this.y = y;
+    this.gravity = 0;
+    this.gravitySpeed = 0;
+    this.update = function() {
+        ctx = myGameArea.context;
+        if (this.type == "text") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+    this.newPos = function() {
+        this.gravitySpeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;
+        this.hitBottom();
+    }
+    this.hitBottom = function() {
+        var rockbottom = myGameArea.canvas.height - this.height;
+        if (this.y > rockbottom) {
+            this.y = rockbottom;
+            this.gravitySpeed = 0;
+        }
+    }
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+            crash = false;
+        }
+        return crash;
+    }
+}
+
+function updateGameArea() {
+    var x, height, gap, minHeight, maxHeight, minGap, maxGap;
+    for (i = 0; i < myObstacles.length; i += 1) {
+        if (myGamePiece.crashWith(myObstacles[i])) {
+          alert("Game Over!! Your final score is points: " + points + " key points: " + keyPoints);
+        } 
+    }
+    myGameArea.clear();
+    myGameArea.frameNo += 1;
+    if (myGameArea.frameNo == 1 || everyinterval(150)) {
+        x = myGameArea.canvas.width;
+        minHeight = 20;
+        maxHeight = 200;
+        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        minGap = 50;
+        maxGap = 100;
+        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        myObstacles.push(new component(10, height, "green", x, 0));
+        myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
+    }
+    for (i = 0; i < myObstacles.length; i += 1) {
+        myObstacles[i].x += -1;
+        myObstacles[i].update();
+    }
+    myGamePiece.newPos();
+    myGamePiece.update();
+}
+
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+}
+
+function accelerate(n) {
+    if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 20);}
+
+    myGamePiece.gravity = n;
+}
+
+
+</script>
+<script>
+      var points = 0;
+      var keyPoints = 0;
+      var timeLeft = 30;
+      var gameInterval = null;
+      
+      function onKeyPress(event) {
+      if (event.code === "KeyA") {
+      keyPoints++;
+      document.getElementById("keyPoints").innerHTML = "Key Points: " + keyPoints;
+      }
+      else if (event) {
+        event.preventDefault();
+      }
+      }
+      document.addEventListener("keydown", onKeyPress);
+
+      function onClick() {
+       points++;
+       document.getElementById("points").innerHTML = "Points: " + points;
+      }
+
+      function restartGame() {
+      points = 0;
+      keyPoints = 0;
+      timeLeft = 30;
+      document.getElementById("keyPoints").innerHTML = "Key Points: " + keyPoints;
+      document.getElementById("points").innerHTML = "Points: " + points;
+      document.getElementById("time").innerHTML = "Time Left: " + timeLeft;
+      document.getElementById("restart-btn").style.display = "none";
+      document.getElementById("click-btn").style.display = "block";
+      startTimer();
+     }
+
+      function startTimer() {
+        gameInterval = setInterval(function() {
+          timeLeft--;
+          document.getElementById("time").innerHTML = "Time: " + timeLeft;
+        }, 1000);
+      }  
+    </script>
+    <style>
+      h1, p {
+        position: relative;
+        bottom: -100px;
+        margin-right: 700;
+        margin: center;
+      }
+
+      #click-btn, #restart-btn {
+        position: relative;
+        bottom: -100px;
+        margin-right: 1200;
+        margin: center;
+        padding: 50px 50px;
+        font-size: 50px; 
+      }
+
+      #points {
+        position: relative;
+        bottom: -100px;
+        margin-right: 1200;
+        font-size: 50px; 
+        margin: center;
+      }
+
+      #keyPoints {
+        position: relative;
+        bottom: -100px;
+        margin-right: 1200;
+        font-size: 50px; 
+        margin: center;
+      }
+      
+      #time { 
+        position: relative;
+        bottom: -100px;
+        margin-right: 1200;
+        font-size: 50px; 
+        margin: center;
+      }
+    </style>
+  </head>
+    <button id="click-btn" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)" onclick="onClick()">Click Me! & A Key</button>
+    <p id="points">Points: 0</p>
+    <p id="keyPoints">Key Points: 0</p>
+    <p id="time">Time Left: 30</p>
+  </body>
+</div>
+</html>

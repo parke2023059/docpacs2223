@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title class="bannaa">Sprite Sprint</title>
+  <style>
+    body {
+      background-color: rgb(192, 228, 193);
+    }
+
+    #canvas {
+      background-color: #b7ebff;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Sprite Sprint</h1>
+  <h2>Use the up arrow to move upwards<h2>
+  <h3>Use the down arrow to move downwards</h3>
+  <h4>Dodge the Coke spray!</h4>
+  <canvas id="canvas"></canvas>
+  <script>
+    // get canvas element
+    var canvas = document.getElementById('canvas');
+    // get canvas context
+    var context = canvas.getContext('2d');
+    // set canvas dimensions
+    canvas.width = window.innerWidth - 300;
+    canvas.height = window.innerHeight - 300;
+    // define player properties
+    var player = {
+      x: 50,
+      y: canvas.height / 2,
+      width: 20,
+      height: 20,
+      speed: 0,
+      color: '#fff',
+      
+    };
+    // define obstacles properties
+    var obstacles = {
+      _obstacles: [],
+      colors: ["rgb(54, 20, 0)"],
+      addObstacle: function () {
+        this._obstacles.push({
+          x: canvas.width,
+          y: Math.floor(Math.random() * (canvas.height - 50)),
+          width: 10,
+          height: 10,
+          color: this.colors[Math.floor(Math.random() * this.colors.length)]
+        });
+      },
+      draw: function () {
+        for (var i = 0; i < this._obstacles.length; i++) {
+          var obstacle = this._obstacles[i];
+          context.fillStyle = obstacle.color;
+          context.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+        }
+      },
+      update: function () {
+        for (var i = 0; i < this._obstacles.length; i++) {
+          var obstacle = this._obstacles[i];
+          obstacle.x -= 3;
+          if (obstacle.x + obstacle.width < 0) {
+            this._obstacles.splice(i, 1);
+          }
+        }
+      }
+    };
+    // define functions
+    //function drawPlayer() {
+      //context.fillStyle = player.color;
+      
+      //context.fillRect(player.x, player.y, player.width, player.height);
+      //}
+      function movePlayer() {
+        if (player.y > 0 && player.y + player.height < canvas.height) {
+          player.y += player.speed;
+        }
+      }
+      function clearCanvas() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      // define update function
+      function update() {
+        clearCanvas();
+        movePlayer();
+        var can = new Image()
+        can.src = "can.png"
+        can.width = 50 + "px";
+        context.drawImage(can, player.x ,player.y, 25, 25)
+        for (var i = 0; i < obstacles._obstacles.length; i++) {
+          if (player.x > obstacles._obstacles[i].x && player.x < obstacles._obstacles[i].x + obstacles._obstacles[i].width && player.y > obstacles._obstacles[i].y && player.y < obstacles._obstacles[i].y + obstacles._obstacles[i].height) {
+            console.log("absolute hit")
+            alert("GMEAEO GREEE")
+            break
+          }
+        else{
+          console.log('nothing')
+        }
+      }
+      //drawPlayer();
+      obstacles.update();
+      obstacles.draw();
+      
+      
+      
+      requestAnimationFrame(update);
+      
+    }
+    // define keydown event listener
+    document.addEventListener('keydown', function (e) {
+      if (e.keyCode == 38) {
+        player.speed = -7;
+      } else if (e.keyCode == 40) {
+        player.speed = 7;
+      }
+    });
+    // define keyup event listener
+    document.addEventListener('keyup', function (e) {
+      player.speed = 0;
+    });
+    // define interval to add obstacles
+    setInterval(function () {
+      obstacles.addObstacle();
+    }, 1000);
+    // call update function
+    update();
+    var img2 = document.createElement('img')
+    img2.src = "coke.jpg"
+    img2.style.position = "absolute"
+    img2.style.left = 700 + "px"
+    img2.style.top = 200 + "px"
+    img2.style.zIndex = 1;
+    img2.style.width = 1000 + "px"
+    img2.style.height = 600 + "px"
+    
+    document.body.appendChild(img2)
+    
+    
+
+    </script>
+</body>
+
+</html>

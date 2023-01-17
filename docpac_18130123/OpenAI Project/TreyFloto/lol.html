@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    /* container for counters */
+    .counters {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #3b3b3b;
+        padding: 20px;
+        color: #fff;
+        font-family: Arial, sans-serif;
+    }
+
+    /* center the headers and make font larger */
+
+    #counter, #time, #misses, #streak, #percent {
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+        margin-right: 20px;
+    }
+    /* set button position absolute and give it high z-index */
+    #submit-button {
+        position: absolute;
+        z-index: 10;
+        background-color: #f44336;
+        color: #fff;
+        font-size: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-transform: uppercase;
+        transition: all 0.2s ease-in-out;
+    }
+    /* give the counters a high z-index to cover the button */
+    .counters {
+        pointer-events: none;
+        z-index: 5;
+    }
+    /* on hover, change background color of button */
+    #submit-button:hover {
+        background-color: #c62828;
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+  <form onsubmit="submitForm(); return false;">
+    <input id="submit-button" type="submit" value="Submit" onclick="moveButton()">
+  </form>
+  <div class="counters">
+    <div id="counter">
+        Hits:
+        <span id="hits-number">0</span>
+    </div>
+    <div id="time">
+        Time:
+        <span id="time-number">0ms</span>
+    </div>
+    <div id="misses">
+        Misses:
+        <span id="misses-number">0</span>
+    </div>
+    <div id="streak">
+        Streak:
+        <span id="streak-number">0</span>
+    </div>
+    <div id="percent">
+        Percent:
+        <span id="percent-number">0%</span>
+    </div>
+  </div>
+  <audio id="audio" src="boom.mp3" preload="auto"></audio>
+    <script>
+    var count = 0;
+    var time = 0;
+    var lastClick = 0;
+    var misses = 0;
+    var streak = 0;
+    var percent = 0;
+    var colors = ["red", "orange", "yellow", "green", "blue", "purple"];
+    var currentColor = 0;
+    var counters = document.getElementsByClassName("counters")[0];
+    var audio = document.getElementById("audio");
+    var audio3 = new Audio("triple.mp3");
+    var audio4 = new Audio("caramelldansen.mp3");
+
+    function changeBackground() {
+        document.body.style.backgroundColor = colors[currentColor];
+      currentColor = (currentColor + 1) % colors.length;
+    }
+
+    function moveButton() {
+    var button = document.getElementById("submit-button");
+    var counters = document.querySelector('.counters');
+    var countersRect = counters.getBoundingClientRect();
+    button.style.top = Math.floor(Math.random() * (window.innerHeight - countersRect.height - button.clientHeight)) + countersRect.height + "px";
+    button.style.left = Math.floor(Math.random() * (window.innerWidth - button.clientWidth)) + "px";
+    var now = Date.now();
+    if (lastClick === 0) {
+        lastClick = now;
+    } else {
+        time = now - lastClick;
+        lastClick = now;
+    }
+    count++;
+    streak++;
+    percent = (count/(count+misses))*100;
+    document.getElementById("hits-number").innerHTML = count;
+    document.getElementById("time-number").innerHTML = time + "ms";
+    document.getElementById("misses-number").innerHTML = misses;
+    document.getElementById("streak-number").innerHTML = streak;
+    document.getElementById("percent-number").innerHTML = percent + "%";
+    button.style.backgroundColor = colors[currentColor];
+    currentColor = (currentColor+1) % colors.length;
+    if(streak === 3) {
+        audio3.play();
+    }
+    else if(streak === 100) {
+        audio4.play();
+        var backgroundInterval = setInterval(changeBackground, 300);
+        var img = document.createElement("img");
+        img.src = "miku.gif";
+        img.style.position = "absolute";
+        img.style.top = "50%";
+        img.style.left = "50%";
+        img.style.transform = "translate(-50%, -50%)";
+        document.body.appendChild(img);
+    }
+    else{
+        audio.currentTime = 0;
+        audio.play();
+    }
+    // send POST request to server-side script
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "submit-form-url", true);
+    xhr.send();
+}
+    function submitForm() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "submit-form-url", true);
+        xhr.send();
+    }
+    document.addEventListener("click", function(e) {
+    if (e.target.id !== "submit-button") {
+        misses++;
+        percent = (count/(count+misses))*100;
+        document.getElementById("misses-number").innerHTML = misses;
+        document.getElementById("percent-number").innerHTML = percent + "%";
+        streak = 0;
+        document.getElementById("streak-number").innerHTML = streak;
+    }
+    });
+  </script>
+</body>
+</html>

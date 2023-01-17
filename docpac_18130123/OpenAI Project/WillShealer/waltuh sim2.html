@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Waltuh Simulator</title>
+</head>
+<style>
+    body {
+      background-image: url('lab.jpg');
+      background-size: cover;
+      color: aliceblue;
+      text-align: center;
+    }
+    </style> 
+<body>
+  <h1>Waltuh Simulator</h1>
+    <img src="waltuh4.jpg" role=button id="clicker-button"> <img>
+  </div>
+  <p>Meth: <span id="score">0</span></p>
+  <table>
+    <tr>
+      <td>Hire Mike Ehrmantraut</td>
+      <td id="autoclicker-cost">100</td>
+      <td>Automatically earns 1 pound of meth per second</td>
+      <td><button id="autoclicker-button">Upgrade</button></td>
+    </tr>
+    <tr>
+        <td>Hire Saul Goodman</td>
+        <td id="autoclicker-cost2">500</td>
+        <td>Automatically earns 2 pound of meth per second</td>
+        <td><button id="autoclicker-button2">Upgrade</button></td>
+      </tr>
+      <tr>
+        <td>Hire Gustavo Fring</td>
+        <td id="autoclicker-cost3">1000</td>
+        <td>Automatically earns 3 pound of meth per second</td>
+        <td><button id="autoclicker-button3">Upgrade</button></td>
+      </tr>
+      <tr>
+        <td>Hire Jesse Pinkman</td>
+        <td id="autoclicker-cost4">5000</td>
+        <td>Automatically earns 4 pound of meth per second</td>
+        <td><button id="autoclicker-button4">Upgrade</button></td>
+      </tr>
+    <tr>
+      <td>Double waltuh</td>
+      <td id="double-points-cost">2000</td>
+      <td>Earn double meth for every click</td>
+      <td><button id="double-points-button">Upgrade</button></td>
+    </tr>
+  </table>
+  <script>
+    var score = 0;
+
+    // Get the button and score elements from the HTML
+    var button = document.getElementById("clicker-button");
+    var scoreElement = document.getElementById("score");
+
+    // Add an event listener to the button that increments the score
+    // and updates the score display when clicked
+    button.addEventListener("click", function() {
+      score++;
+      scoreElement.innerHTML = score;
+    });
+// variable to keep track if autoclick is active
+var autoClick = false;
+// variable to keep track if double point is active
+var doublePoints = false;
+
+var autoclickerButton = document.getElementById("autoclicker-button");
+var autoclickerButton2 = document.getElementById("autoclicker-button2");
+var autoclickerButton3 = document.getElementById("autoclicker-button3");
+var autoclickerButton4 = document.getElementById("autoclicker-button4");
+var doublePointsButton = document.getElementById("double-points-button");
+
+var autoclickerCost = document.getElementById("autoclicker-cost");
+var autoclickerCost2 = document.getElementById("autoclicker-cost2");
+var autoclickerCost3 = document.getElementById("autoclicker-cost3");
+var autoclickerCost4 = document.getElementById("autoclicker-cost4");
+var doublePointsCost = document.getElementById("double-points-cost");
+
+autoclickerButton.addEventListener("click", function() {
+  if (score >= autoclickerCost.innerHTML) {
+    score -= autoclickerCost.innerHTML;
+    scoreElement.innerHTML = score;
+    autoClick = true;
+    autoclickerButton.innerHTML = "Upgraded";
+    autoclickerButton.disabled = true;
+    startAutoClick();
+  } else {
+    alert("Not enough points to upgrade");
+  }
+});
+
+autoclickerButton2.addEventListener("click", function() {
+  if (score >= autoclickerCost2.innerHTML) {
+    score -= autoclickerCost2.innerHTML;
+    scoreElement.innerHTML = score;
+    autoClick = true;
+    autoclickerButton2.innerHTML = "Upgraded";
+    autoclickerButton2.disabled = true;
+    startAutoClick2();
+  } else {
+    alert("Not enough points to upgrade");
+  }
+});
+
+autoclickerButton3.addEventListener("click", function() {
+  if (score >= autoclickerCost3.innerHTML) {
+    score -= autoclickerCost3.innerHTML;
+    scoreElement.innerHTML = score;
+    autoClick = true;
+    autoclickerButton3.innerHTML = "Upgraded";
+    autoclickerButton3.disabled = true;
+    startAutoClick3();
+  } else {
+    alert("Not enough points to upgrade");
+  }
+});
+
+autoclickerButton4.addEventListener("click", function() {
+  if (score >= autoclickerCost4.innerHTML) {
+    score -= autoclickerCost4.innerHTML;
+    scoreElement.innerHTML = score;
+    autoClick = true;
+    autoclickerButton4.innerHTML = "Upgraded";
+    autoclickerButton4.disabled = true;
+    startAutoClick4();
+  } else {
+    alert("Not enough points to upgrade");
+  }
+});
+
+doublePointsButton.addEventListener("click", function() {
+  if (score >= doublePointsCost.innerHTML) {
+    score -= doublePointsCost.innerHTML;
+    scoreElement.innerHTML = score;
+    doublePoints = true;
+    doublePointsButton.innerHTML = "Upgraded";
+    doublePointsButton.disabled = true;
+  } else {
+    alert("Not enough points to upgrade");
+  }
+});
+
+function startAutoClick() {
+    setInterval(function() {
+        if (autoClick) {
+            score++;
+            scoreElement.innerHTML = score;
+        }
+    }, 1000);
+}
+
+function startAutoClick2() {
+    setInterval(function() {
+        if (autoClick) {
+            score+=2;
+            scoreElement.innerHTML = score;
+        }
+    }, 1000);
+}
+
+function startAutoClick3() {
+    setInterval(function() {
+        if (autoClick) {
+            score+=3;
+            scoreElement.innerHTML = score;
+        }
+    }, 1000);
+}
+
+function startAutoClick4() {
+    setInterval(function() {
+        if (autoClick) {
+            score+=4;
+            scoreElement.innerHTML = score;
+        }
+    }, 1000);
+}
+
+
+button.addEventListener("click", function() {
+  if(doublePoints){
+      score += 2;
+  }else{
+    score++;
+  }
+  scoreElement.innerHTML = score;
+});
+
+    
+  </script>
+</body>
+</html>

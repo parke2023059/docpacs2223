@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!-- the style set in html element change our cursor to a crosshair and change the background images -->
+<html id="Back" style="background-image:url(image/map1.png) ; background-repeat: no-repeat; background-size: cover; cursor: crosshair; user-select: none;" >
+<head >
+    <title>headshot Simulator</title>
+    <script type="text/javascript">
+        // set initial score to 0
+        var score = 0;
+        //get the width of the screen as well the height of the screen
+        var width = window.innerWidth;
+        var height  = window.innerHeight;
+        // make a number to change the map and the hero number to change the hero on screen
+        var number = 1
+        var heronumber = 1
+        // tell the system if the game have started or not
+        var gamestart = false
+        // function to randomly show and hide the hero on screen
+        function toggleButton() {
+            var image = document.getElementById("clickimage");
+            var randomHeight = Math.floor(Math.random() * height - 300);
+            var randomWidth = Math.floor(Math.random() * width - 300);
+            // check the hero if it hidden than it is true.
+            if (image.style.display === "none") {
+                image.style.display = "block";
+                image.style.top = randomHeight + "px"
+                image.style.left = randomWidth + "px"
+                image.src = `image/hero${heronumber}.png`
+            } else {
+                image.style.display = "none";
+            }
+        }
+
+        //function to change the map
+        function mapchange() {
+            number++
+            // tells which map number to open on the background.
+            if (number == 9) {
+                number = 1
+            }
+           let Maps = document.getElementById("Back");
+           Maps.style.backgroundImage = `url(image/map${number}.png)`
+
+        }
+        // function to increase score and start the game on the first kill
+        function increaseScore() {
+            score++;
+            heronumber++;
+            //change the hero per kill because respawn time.
+            if (heronumber == 6) {
+                heronumber = 1
+            }
+            // change the score
+            document.getElementById("score").innerHTML = "Kills: " + score;
+            // hide the map button because you can only change the map before the game started
+            document.getElementById("mapbutton").style.display = "none"
+            // the second agrument set the time length per game the longer the game the more glitchy it can get
+            setTimeout(function(){endgame()},10000)
+            gamestart = true
+        }
+        function endgame() {
+            // once the game end. it alert you the score and the map change buttom comes back
+            if (gamestart == true) {
+                alert("round over \n You have kill " + score + " heros")
+                score = 0 
+                document.getElementById("score").innerHTML = "Kills: " + score;
+            }
+            gamestart = false
+            document.getElementById("mapbutton").style.display = "block"
+        }
+
+        // call toggleButton function every 1 second it tells the hero to hide or show.
+        setInterval(toggleButton, 1000);
+    </script>
+</head>
+<body>
+    <!--the title of the game-->
+    <h1 style="text-align:center;">HeadShot Simulator</h1>
+    <!--this is the hero image going around. if it click than it start the togglebutton and increaseScore functions.-->
+    <img id="clickimage" onclick="increaseScore(); toggleButton();" style="position:absolute; height: 190px; width: 150px;" src="image/hero1.png" draggable="false">
+    <p id="score" style="position: absolute;  bottom: 20px;text-align: center; width: 99%; font-weight: 900;font-size: 50px;">Kills: 0  </p>
+    <!-- it a button the calls the mapchange function-->
+    <button id="mapbutton" onclick="mapchange()" style="position: absolute;  bottom: 20px;text-align: center; width: 99%; font-weight: 900;font-size: 50px; height: 150px;">
+        Change Map
+        </button>
+</body>
+</html>

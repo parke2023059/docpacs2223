@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* container for counters */
+        .counters {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        /* center the headers */
+        #counter, #time, #misses {
+          text-align: center;
+        }
+        /* set button position absolute and give it high z-index */
+        #submit-button {
+          position: absolute;
+          z-index: 10;
+        }
+      </style>
+</head>
+
+<body>
+  <form onsubmit="submitForm(); return false;">
+    <input id="submit-button" type="submit" value="Submit" onclick="moveButton()">
+  </form>
+  <div class="counters">
+    <div id="counter">Hits: 0</div>
+    <div id="time">Time: 0ms</div>
+    <div id="misses">Misses: 0</div>
+  </div>
+  <script>
+    var count = 0;
+    var time = 0;
+    var lastClick = 0;
+    var misses = 0;
+    function moveButton() {
+      var button = document.getElementById("submit-button");
+      /* give the button a random position above counters area */
+      button.style.top = Math.floor(Math.random() * 400) + "px";
+      button.style.left = Math.floor(Math.random() * 800) + "px";
+      var now = Date.now();
+      if (lastClick === 0) {
+        lastClick = now;
+      } else {
+        time = now - lastClick;
+        lastClick = now;
+      }
+      count++;
+      document.getElementById("counter").innerHTML = "Hits: " + count;
+      document.getElementById("time").innerHTML = "Time: " + time + "ms";
+    }
+
+    function submitForm() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "submit-form-url", true);
+        xhr.send();
+    }
+    document.addEventListener("click", function(e) {
+    if (e.target.id !== "submit-button") {
+        misses++;
+        document.getElementById("misses").innerHTML = "Misses: " + misses;
+    }
+    });
+  </script>
+</body>
+</html>

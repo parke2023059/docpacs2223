@@ -1,0 +1,97 @@
+<html>
+<canvas id="game-canvas"></canvas>
+<style>
+    body {
+        overflow: hidden;
+    }
+</style>
+<body>
+    <script>
+        // setup canvas
+        var canvas = document.getElementById("game-canvas");
+        var ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // player object
+        var player = {
+            x: canvas.width / 2,
+            y: canvas.height - 50,
+            width: 50,
+            height: 50,
+            color: "green"
+        };
+
+        // array to store projectiles
+        var projectiles = [];
+
+        // function to create projectiles
+        function createProjectile() {
+            var projectile = {
+                x: Math.random() * canvas.width,
+                y: 0,
+                width: 20,
+                height: 20,
+                color: "red"
+            };
+            projectiles.push(projectile);
+        }
+
+        // update projectiles position
+        function updateProjectiles() {
+            for (var i = 0; i < projectiles.length; i++) {
+                projectiles[i].y += 5; // move projectiles down by 5 pixels
+                if (projectiles[i].y > canvas.height) {
+                    projectiles.splice(i, 1); // remove projectiles when they go off screen
+                }
+            }
+        }
+
+        // check for collision between player and projectiles
+        function checkCollision() {
+            for (var i = 0; i < projectiles.length; i++) {
+                if (
+                    player.x < projectiles[i].x + projectiles[i].width &&
+                    player.x + player.width > projectiles[i].x &&
+                    player.y < projectiles[i].y + projectiles[i].height &&
+                    player.y + player.height > projectiles[i].y
+                ) {
+                    alert("Game Over!");
+                    location.reload();
+                }
+            }
+        }
+
+        // move player based on user input
+        document.onkeydown = function (e) {
+            if (e.keyCode === 37) {
+                player.x -= 10; // move left
+            } else if (e.keyCode === 39) {
+                player.x += 10; // move right
+            }
+        };
+
+        // main game loop
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
+            createProjectile(); // create new projectile
+            updateProjectiles(); // update projectiles position
+            checkCollision(); // check for collision
+
+            // draw player
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+
+            // draw projectiles
+            for (var i = 0; i < projectiles.length; i++) {
+                ctx.fillStyle = projectiles[i].color;
+                ctx.fillRect(projectiles[i].x, projectiles[i].y, projectiles[i].width, projectiles[i].height);
+            }
+
+            requestAnimationFrame(gameLoop);
+        }
+        gameLoop();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <canvas id="game"></canvas>
+  <div id="position"></div>
+  <script>
+    // Get canvas and context
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+  
+    // Set canvas dimensions
+    canvas.width = 800;
+    canvas.height = 600;
+  
+    // Create player object
+    const player = {
+      x: 50,
+      y: 50,
+      width: 25,
+      height: 50,
+      speed: 5,
+      ySpeed: 5,
+      jumpSpeed: 100
+    };
+  
+    // Create platform objects
+    const platforms = [
+      {x: 0, y: 550, width: 800, height: 50},
+      {x: 200, y: 400, width: 100, height: 20},
+      // ...
+    ];
+    
+    let keysDown = {};
+    document.addEventListener("keydown", function(event) {
+          keysDown[event.code] = true;
+    });
+    document.addEventListener("keyup", function(event) {
+      delete keysDown[event.code];
+    });
+  
+    // Draw player on canvas
+    function drawPlayer() {
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+    }
+  
+    // Draw platforms on canvas
+    function drawPlatforms() {
+      ctx.fillStyle = 'gray';
+      platforms.forEach(platform => {
+        ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+      });
+    }
+  
+    // Clear canvas
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    //variable to check if the player is already jumping
+    let jumping = false;
+  
+    
+    // Handle player jump
+    function handleJump() {
+      if (keysDown['Space']) {
+        if(!jumping){
+          jumping = true;
+          player.y -= player.jumpSpeed;
+         }
+        }
+      else{
+        jumping = false;
+        }
+      }
+
+
+    // Handle player movement
+    function handleMovement() {
+      // Check for arrow key presses and update player's position accordingly
+      if (keysDown['ArrowRight']) {
+        player.x += player.speed;
+      }
+      if (keysDown['ArrowLeft']) {
+        player.x -= player.speed;
+      }
+      // add gravity to player
+      player.y += player.ySpeed;
+      // handle jumping logic
+      handleJump();
+      // ...
+    }
+
+
+  
+    // Check for collision between player and platforms
+    function checkCollision() {
+    platforms.forEach(platform => {
+    if (player.x < platform.x + platform.width &&
+        player.x + player.width > platform.x &&
+        player.y < platform.y + platform.height &&
+        player.y + player.height > platform.y) {
+
+            if(player.y + player.height < platform.y){
+                jumping = false;
+            }
+            player.y = platform.y - player.height;
+            player.ySpeed = 0;
+          } else {
+            player.ySpeed = 5;
+          }
+    });
+}
+  
+    // Main game loop
+    function gameLoop() {
+      clearCanvas();
+      handleMovement();
+      checkCollision();
+      drawPlayer();
+      drawPlatforms();
+      updatePosition();
+      requestAnimationFrame(gameLoop);
+    }
+    function updatePosition() {
+        var positionDiv = document.getElementById("position");
+        positionDiv.innerHTML = "x: " + player.x + " y: " + player.y;
+    }
+    // Start game loop
+    gameLoop();
+  </script>
+</body>
+
+</html>

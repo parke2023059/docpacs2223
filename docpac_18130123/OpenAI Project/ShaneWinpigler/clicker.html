@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Clicker</title>
+    <style>
+      /* CSS styles go here */
+    </style>
+  </head>
+  <body>
+    <h1>Cookie Clicker</h1>
+    <div id="cookie-counter">0</div>
+    <button id="cookie-button">Click me!</button>
+    <script>
+      // Initialize the cookie count to 0
+      var cookieCount = 0;
+      
+      // Get references to the button and counter elements
+      var cookieButton = document.getElementById("cookie-button");
+      var cookieCounter = document.getElementById("cookie-counter");
+      
+      // Attach a click event listener to the button
+      cookieButton.addEventListener("click", function() {
+        // Increment the cookie count by 1
+        cookieCount += 1;
+        
+        // Update the counter on the page
+        cookieCounter.innerHTML = cookieCount;
+      });
+    </script>
+  </body>
+</html>

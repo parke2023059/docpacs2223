@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    
+    <title>Text-Based Adventure Game</title>
+    <style>
+        /* CSS for styling the game */
+        /* Add some basic styling to the body */
+body {
+    background-color: #030000;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Style the game container */
+#game {
+    background-color: rgb(5, 1, 25);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(60, 57, 57);
+    min-width: 400px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Style the game message */
+#game p {
+    color: white;
+    font-size: 1.2em;
+    line-height: 1.5;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+/* Style the game options */
+#game button {
+    background-color: #ff0000;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 1em;
+}
+
+#game button:hover {
+    background-color: #1a1313;
+}
+#hunger-display{
+    background-color: forestgreen;
+    text-align: center;
+    
+}
+#heat-display{
+    background-color: forestgreen;
+    text-align: center;
+}
+    </style>
+</head>
+
+<body>
+    <audio id="bg-music"controls autoplay loop  >
+        <source src="Beethoven+-+Moonlight+Sonata+1st+Movement.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="game"></div>
+    <div id="hunger-display"></div>
+    <div id="heat-display"></div>
+    <script>
+        let userName;
+
+    const audio = document.getElementById("bg-music");
+    audio.volume=1
+    
+    let hunger = 50;
+let heat = 50;
+function askForName() {
+    userName = prompt("What is your name?");
+}
+window.onload = askForName;
+// Update hunger and heat levels over time
+setInterval(() => {
+    hunger--;
+    heat--;
+    updateHunger();
+    updateHeat();
+}, 60000);
+const hungerDisplay = document.getElementById("hunger-display");
+const heatDisplay = document.getElementById("heat-display");
+
+function updateHungerDisplay() {
+    hungerDisplay.innerText = `Hunger: ${hunger}`;
+}
+
+function updateHeatDisplay() {
+    heatDisplay.innerText = `Heat: ${heat}`;
+}
+
+function updateHunger() {
+    // End the game if hunger drops to 0
+    if (hunger <= 0) {
+        gameState = "end";
+        gameData.end.message = "You have died of starvation, and your story ends here....";
+        updateGame();
+    }
+}
+
+function updateHeat() {
+    // End the game if heat drops to 0
+    if (heat <= 0) {
+        gameState = "end";
+        gameData.end.message = "You have died of hypothermia, as your frozen body will never be found, and your story ends here....";
+        updateGame();
+    }
+}
+
+
+        // Initialize the game state
+        let inventory = [];
+        
+        let gameState = "start";
+
+        // Define the game messages and actions
+        const gameData = {
+            start: {
+                message: "You wake up in a middle of a cell, the razor cold winds hitting your skin as you shiver, the only way out is north, to the door.",
+                options: [
+                    { text: "North", nextState: "northPath" },
+                    
+                ]
+            },
+            northPath: {
+                message: "You stand up, walking over to the door as you shiver, desperatly wanting warmth, and food. Eventually you stand in front of it. What will you do? ",
+                options: [
+                    { text: "Examine it", nextState: "examineDoor" },
+                    { text: "Push it", nextState: "fallenDoor" }
+                ]
+            },
+            examineDoor: {
+                message: "Your eyes look at the condition of the door, as parts of the metal was rusted, and the supports looked worn. Maybe a push could break the door down.",
+                options: [
+                    { text: "Push it", nextState: "fallenDoor" },
+                    { text: "Pull it", nextState: "death1" }
+                ]
+            },
+            fallenDoor: {
+                message: "You push the door down with all of your might that you have left, as the door falls down with a loud crash. You almost fell upon it, but you caught yourself with the little strength you have in your legs. Where are you going now?",
+                options: [
+                    { text: "North", nextState: "northRoad" },
+                    {text:"East", nextState:"eastRoad"},
+                    {text:"West",nextState:"westRoad"}
+                              
+                ]
+            },
+            death1: {
+                message: "You pull on the door with everything you had, but the door falls on you, crushing your bones...as your story ends there.",
+                options: [
+                    
+                ]
+            },
+            northRoad: {
+                message: "As you push on against the cold, finding three doors . They all seemed lock, two by name locks, and one by a regular lock.",
+                options: [
+                    { text: "Left Door", nextState: "parentDoor" },
+                    {text:"Middle Door", nextState:"middleDoor"},
+                    {text:"RightDoor",nextState:"smithDoor"}
+                ]
+            },
+                parentDoor: {
+                message: "The left door has a name lock on it.",
+                options: [
+                    { text: "South", nextState: "northRoad" },
+                    { text:"Open it", nextState:"momAndDad"}
+                ],
+                onEnter:() => {
+                    if(userName != "Zayra" || userName != "zayra" ){
+                        gameState = 'death2'
+                    }
+                },
+            },
+            momAndDad:{
+                message:"Thank you for helping me Mom an Dad. You guys are my world. So i Thank you for everything. If there is anything i can do to help you, let me know.",
+                options:[
+
+                ],
+                onAction: () => gameState = "end",
+            },
+            smithDoor:{
+                message:"The name lock is on the door, seems like can open it if your name is in the lock.",
+                option:[
+                    {text:"Open it", nextState:"smith"},
+                    {text:"Return", nextState:"northRoad"}
+                ],
+                onEnter:() => {
+                    if(userName != "Zayra" || userName != "zayra" ){
+                        gameState = 'death2'
+                    }
+
+            }
+        },
+        smith:{
+            message:"Thank you for teaching me about coding. It is my dream to help people with code, either by making a game to unite everyone or protect everyone from hackers. You are a good teacher, don't forget that.",
+            options:[
+
+            ],
+            onAction: () => gameState = "end",
+        },  
+        death2:{
+            message:"before you even touch the knob, a bullet enters your body, hitting your heart as you lay on your side, dying.",
+            options:[
+
+            ],
+            onAction: () => gameState = "end",
+        },
+        eastRoad:{
+            message:"As you walk, you meet a wall. A big wall. Even if you try and break it, you will die before you make a scratch it.",
+            options:[
+                {text:"Return", gameState:'fallenDoor'}
+            ]
+        },
+        westRoad:{
+            message:"Another dead End. How many walls does this place have?",
+            options:[
+                {text:'Return',g}
+            ]
+        },
+            end: {
+                message: "To be continued...",
+                options: []
+            }
+        };
+
+        // The function to update the game state and display the current message
+        const game = document.getElementById("game");
+
+function updateGame() {
+    updateHungerDisplay();
+    updateHeatDisplay();
+    // Get the current game data
+    const currentData = gameData[gameState];
+
+    // Clear the game container
+    game.innerHTML = "";
+
+    // Create a new message element and add it to the game container
+    const message = document.createElement("p");
+    message.innerText = currentData.message;
+    game.appendChild(message);
+
+    // Check if there are any options for the current game state
+    if (currentData.options.length) {
+        // Create a new element to hold the options
+        const optionsContainer = document.createElement("div");
+
+        // Create a button element for each option
+        currentData.options.forEach((option) => {
+            const optionButton = document.createElement("button");
+            optionButton.innerText = option.text;
+
+            // When the option is clicked, update the game state and run the updateGame function again
+            optionButton.addEventListener("click", () => {
+                gameState = option.nextState;
+                if (option.onAction) option.onAction();
+                updateGame();
+            });
+
+            optionsContainer.appendChild(optionButton);
+        });
+
+        // Add the options container to the game container
+        game.appendChild(optionsContainer);
+    }
+}
+
+//Start the game
+updateGame();
+</script>
+</body>
+</html>

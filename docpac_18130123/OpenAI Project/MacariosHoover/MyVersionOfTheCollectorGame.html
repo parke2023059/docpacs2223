@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <h1 id="hehahe" style="color: white">Collect the coins!</h1>
+</head>
+
+<style>
+    body {
+        background-image: url("MyGameImages/castleBackground.png")
+    }
+</style>
+
+<body>
+    <script>
+        var cannon1 = document.createElement('img');
+        cannon1.id = "Cannon1";
+        cannon1.style.width = 250 + "px";
+        cannon1.style.left = 1420 + "px";
+        cannon1.style.height = 130 + "px";
+        cannon1.style.top = 70 + "px";
+        cannon1.style.position = "absolute";
+        cannon1.src = "MyGameImages/cannonStill.png"
+        document.body.appendChild(cannon1)
+        var cannon2 = document.createElement('img');
+        cannon2.id = "Cannon2";
+        cannon2.style.width = 250 + "px";
+        cannon2.style.left = 1420 + "px";
+        cannon2.style.top = 200 + "px";
+        cannon2.style.height = 130 + "px";
+        cannon2.style.position = "absolute";
+        cannon2.src = "MyGameImages/cannonStill.png"
+        document.body.appendChild(cannon2)
+        var cannon3 = document.createElement('img');
+        cannon3.id = "Cannon3";
+        cannon3.style.width = 250 + "px";
+        cannon3.style.left = 1420 + "px";
+        cannon3.style.top = 340 + "px";
+        cannon3.style.height = 130 + "px";
+        cannon3.style.position = "absolute";
+        cannon3.src = "MyGameImages/cannonStill.png"
+        document.body.appendChild(cannon3)
+        var cannon4 = document.createElement('img');
+        cannon4.id = "Cannon4";
+        cannon4.style.width = 250 + "px";
+        cannon4.style.left = 1420 + "px";
+        cannon4.style.top = 480 + "px";
+        cannon4.style.height = 130 + "px";
+        cannon4.style.position = "absolute";
+        cannon4.src = "MyGameImages/cannonStill.png"
+        document.body.appendChild(cannon4)
+        var cannon5 = document.createElement('img');
+        cannon5.id = "Cannon5";
+        cannon5.style.width = 250 + "px";
+        cannon5.style.left = 1420 + "px";
+        cannon5.style.top = 610 + "px";
+        cannon5.style.height = 130 + "px";
+        cannon5.style.position = "absolute";
+        cannon5.src = "MyGameImages/cannonStill.png"
+        document.body.appendChild(cannon5)
+        var score = 0;
+        var scoreDisplay = document.createElement('div');
+        scoreDisplay.id = "score"
+        scoreDisplay.style.color = "white"
+        scoreDisplay.innerHTML = 'Score: ' + score + "\n";
+        document.body.appendChild(scoreDisplay);
+        var lives = 3;
+        var livesDisplay = document.createElement('div');
+        livesDisplay.id = "lives"
+        livesDisplay.style.color = "white"
+        livesDisplay.innerHTML = 'Lives: ' + lives + "\n";
+        document.body.appendChild(livesDisplay);
+        var game = document.createElement('div');
+        game.style.width = 1400 + "px";
+        game.style.height = 650 + "px";
+        game.style.border = "thick solid black"
+        game.style.backgroundImage = "url(MyGameImages/legrass.png)"
+        game.style.backgroundRepeat = "no-repeat"
+        game.style.backgroundSize = "1400px 650px" 
+        document.body.appendChild(game);
+        var coin = document.createElement('div');
+        coin.innerHTML = '<img src="MyGameImages/coin.png">';
+        coin.style.position = 'absolute';
+        coin.style.left = '5px';
+        coin.style.top = '5px';
+        game.appendChild(coin);
+        var coinX = 0;
+        var coinY = 0;
+        var cannon1X = 0;
+        var cannon1Y = 0;
+        var cannonsFire = true;
+        var bulletsMove = true;
+        var player = document.createElement('div');
+        player.innerHTML = '<img src="MyGameImages/player.png">';
+        player.style.position = 'absolute';
+        player.style.left = '25px';
+        player.style.top = '120px';
+        game.appendChild(player);
+        var playerX = 25;
+        var playerY = 120;
+
+        const delay = ms => new Promise(res => setTimeout(res, ms));
+
+        var movePlayer = function (dx, dy) {
+            if (playerX <= 25) {
+                playerX = 35;
+            }
+            if (playerX >= 1350) {
+                playerX = 1340;
+            }
+            if (playerY <= 120) {
+                playerY = 130;
+            }
+            if (playerY >= 670) {
+                playerY = 660;
+            }
+            playerX += dx;
+            playerY += dy;
+            player.style.left = playerX + 'px';
+            player.style.top = playerY + 'px';
+        };
+        var moveCoin = function () {
+            coinX = Math.floor(Math.random() * 1300) + 10;
+            coinY = Math.floor(Math.random() * 500) + 150;
+            coin.style.left = coinX + 'px';
+            coin.style.top = coinY + 'px';
+        };
+        moveCoin();
+        var checkCollision = function () {
+            if (Math.abs(playerX - coinX) < 50 && Math.abs(playerY - coinY) < 50) {
+                score += 1;
+                scoreDisplay.innerHTML = 'Score: ' + score;
+                moveCoin();
+            }
+        };
+        var loop = function () {
+            checkCollision();
+            setTimeout(loop, 10);
+        };
+        loop();
+        document.onkeydown = function (event) {
+            if (lives >= 1) {
+                if (event.keyCode === 37) {
+                    movePlayer(-10, 0);
+                } else if (event.keyCode === 38) {
+                    movePlayer(0, -10);
+                } else if (event.keyCode === 39 || event.keyCode === 87) {
+                    movePlayer(10, 0);
+                } else if (event.keyCode === 40) {
+                    movePlayer(0, 10);
+                }
+            }
+            if (lives == 0) {
+                document.getElementById("hehahe").innerHTML = "You Died!"
+                cannonsFire = false;
+                bulletsMove = false;
+                document.getElementById("score").innerHTML = ''
+                document.getElementById("lives").innerHTML = ''
+                var finalScore = document.createElement("div")
+                finalScore.innerHTML = "FINAL SCORE: " + score
+                finalScore.style.position = "absolute"
+                finalScore.style.left = parseInt(player.style.left, 10) - 125 + 'px';
+                finalScore.style.top = parseInt(player.style.top, 10) - 50 + 'px'
+                finalScore.style.width = 400 + 'px'
+                finalScore.style.height = 100 + 'px'
+                finalScore.style.font = "40px Arial";
+                document.body.appendChild(finalScore)
+                var restartButton = document.createElement('button')
+                restartButton.innerHTML = "Restart"
+                restartButton.style.position = "absolute"
+                restartButton.style.left = parseInt(player.style.left, 10) - 10 + 'px';
+                restartButton.style.top = parseInt(player.style.top, 10) + 70 + 'px'
+                restartButton.style.width = 60 + 'px'
+                restartButton.style.height = 30 + 'px'
+                restartButton.onclick = function()
+                {
+                    window.location.reload()
+                }
+                document.body.appendChild(restartButton)
+            }
+        };
+
+        function ShootCannon() {
+            if (cannonsFire == true) {
+                for (let i = 1; i <= 5; i++) {
+                    var timeOutTime = Math.random() * 4000 + 1000;
+                    console.log(timeOutTime)
+                    setTimeout(function () {
+                        var Cannon = document.getElementById("Cannon" + i);
+                        Cannon.src = "MyGameImages/cannonAttack.gif"
+                        setTimeout(() => {
+                            var currentBullet = document.createElement("img");
+                            currentBullet.style.left = parseInt(Cannon.style.left, 10) - 30 + "px";
+                            currentBullet.style.top = parseInt(Cannon.style.top, 10) + 60 + "px";
+                            currentBullet.id = "Bullet" + i;
+                            currentBullet.className = "Bullet"
+                            currentBullet.src = "MyGameImages/bulletFrame1.png";
+                            currentBullet.style.position = "absolute"
+                            currentBullet.style.width = 95 + "px"
+                            currentBullet.style.height = 50 + "px"
+                            document.body.appendChild(currentBullet)
+                        }, 300)
+                        setTimeout(function () {
+                            var Cannon = document.getElementById("Cannon" + i);
+                            Cannon.src = "MyGameImages/cannonStill.png"
+                            console.log("Heee")
+                        }, 1200)
+                    }, timeOutTime)
+                }
+            }
+        }
+
+        setInterval(ShootCannon, 8000)
+
+        setInterval(() => {
+            if (bulletsMove == true) {
+                var bullets = document.getElementsByClassName("Bullet")
+                for (var i = 0; i <= 5; i++) {
+                    if (parseInt(bullets[i].style.left, 10) <= 0) {
+                        bullets[i].remove();
+                    }
+                    if (Math.abs(parseInt(player.style.left, 10) - parseInt(bullets[i].style.left, 10)) < 50 && Math.abs(parseInt(player.style.top, 10) - parseInt(bullets[i].style.top, 10)) < 50) {
+                        if (lives >= 1) {
+                            console.log("Same")
+                            lives--;
+                            livesDisplay.innerHTML = 'Lives: ' + lives + "\n";
+                            bullets[i].remove()
+                        }
+                    }
+                    bullets[i].style.left = parseInt(bullets[i].style.left, 10) - 10 + "px"
+                }
+            }
+        }, 30);
+
+    </script>
+</body>
+
+</html>

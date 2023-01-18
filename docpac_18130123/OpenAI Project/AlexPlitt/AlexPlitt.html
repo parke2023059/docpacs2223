@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Is This... A Game?!</title>
+    </head>
+    <body>
+        <div id="stats">
+
+        </div>
+        <div id="blank">
+
+        </div>
+        <div id="spellList">
+
+        </div>
+        <img id="adventureScreen" height="300" width="500" src="goblin.png">
+        <div id="adventureText">
+
+        </div>
+        <button type="button" id="attackButton" onclick="attack()">Attack</button>
+        <button type="button" id="defendButton" onclick="defend()">Defend</button>
+        <button type="button" id="itemButton" onclick="chooseItem()">Item</button>
+        <button type="button" id="saveButton" onclick="saveGame()">Save</button>
+        <button type="button" id="quitButton" onclick="quit()">Quit</button>
+        <div id="enemyStats">
+
+        </div>
+        <script>
+            // Initialize game variables
+            let playerName = "";
+            let playerHealth = 100;
+            let playerLevel = 1;
+
+            let hPotionTotal = 5;
+
+            let inventory = ["Health Potion x" + hPotionTotal];
+
+            // Add player's attack and defense stats
+            let playerAttack = 5;
+            let playerDefense = 5;
+            let playerMana = 100;
+            let playerMaxHealth = 100;
+
+            // Get player's name
+            playerName = prompt("What is your character's name?");
+
+            var statsDisplay = document.getElementById("stats");
+            statsDisplay.innerHTML = "<h4>Stats</h4>Name: " + playerName + "<br />Health: " + playerHealth + "<br />Level: " + playerLevel + "<br />Inventory: " + inventory + "<br />Attack: " + playerAttack + "<br />Defense: " + playerDefense + "<br />Mana: " + playerMana;
+
+            // Add magic spells
+            let spells = ["Fireball", "Lightning Bolt", "Heal", "Hocus Pocus"];
+            let spellManaCosts = {
+                "Fireball": 20,
+                "Lightning Bolt": 30,
+                "Heal": 40,
+                "Hocus Pocus": 100
+            };
+            let spellDamages = {
+                "Fireball": 40,
+                "Lightning Bolt": 50,
+                "Heal": 50,
+                "Hocus Pocus": 100
+            };
+
+            var spellDisplay = document.getElementById("spellList");
+            spellDisplay.innerHTML = "<h4>Spells</h4>" + `${spells[0]}: Deals 40 damage, uses 20 mana<br />${spells[1]}: Deals 50 damage, uses 30 mana<br />${spells[2]}: Heals for 50, uses 40 mana<br />${spells[3]}: Deals 100 damage, uses 100 mana`;
+
+            var adventureTextDisplay = document.getElementById("adventureText");
+            alert("Welcome " + playerName + "! Your journey is about to begin!");
+
+            var backgroundDisplay = document.getElementById("adventureScreen");
+
+            // Initialize enemy
+            let enemyHealth = 50;
+            let enemyAttack = 10;
+            let enemyDefense = 5;
+
+            var enemyDisplay = document.getElementById("enemyStats");
+            enemyDisplay.innerHTML = "<h4>Enemy</h4>Health: " + enemyHealth;
+
+            function attack() {
+                let damage = (playerAttack + (playerLevel * 2)) - enemyDefense;
+                if (damage > 0) {
+                    enemyHealth -= damage;
+                    adventureTextDisplay.innerHTML = "You dealt " + damage + " damage to this enemy.";
+                    enemyDisplay.innerHTML = "<h4>Enemy</h4>Health: " + enemyHealth;
+                } else {
+                    adventureTextDisplay.innerHTML = "Enemy's defense was too strong. No damage dealt.";
+                }
+                if (enemyHealth <= 0) {
+                    adventureTextDisplay.innerHTML = "You have defeated the enemy!";
+                    playerLevel++;
+                    alert("You are now level " + playerLevel + "!");
+                    enemyHealth = 50 + (playerLevel * 2);
+                    enemyAttack = 10 + playerLevel;
+                    enemyDefense = 5 + playerLevel;
+                    enemyDisplay.innerHTML = "<h4>Enemy</h4>Health: " + enemyHealth;
+                    adventureTextDisplay.innerHTML = "A new enemy has appeared!";
+                    statsDisplay.innerHTML = "<h4>Stats</h4>Name: " + playerName + "<br />Health: " + playerHealth + "<br />Level: " + playerLevel + "<br />Inventory: " + inventory + "<br />Attack: " + playerAttack + "<br />Defense: " + playerDefense + "<br />Mana: " + playerMana;
+                }
+                let enemyDamage = enemyAttack - (playerDefense + (playerLevel * 2));
+                if (enemyDamage > 0) {
+                    playerHealth -= enemyDamage;
+                    adventureTextDisplay.innerHTML = "Enemy dealt " + enemyDamage + " damage to you.";
+                    statsDisplay.innerHTML = "<h4>Stats</h4>Name: " + playerName + "<br />Health: " + playerHealth + "<br />Level: " + playerLevel + "<br />Inventory: " + inventory + "<br />Attack: " + playerAttack + "<br />Defense: " + playerDefense + "<br />Mana: " + playerMana;
+                } else {
+                    adventureTextDisplay.innerHTML = "Your defense was too strong. No damage taken.";
+                };
+                if (playerHealth <= 0) {
+                    statsDisplay.innerHTML = "<h4>Stats</h4>Name: " + playerName + "<br />Health: " + playerHealth + "<br />Level: " + playerLevel + "<br />Inventory: " + inventory + "<br />Attack: " + playerAttack + "<br />Defense: " + playerDefense + "<br />Mana: " + playerMana;
+                    alert("You lose! lol");
+                    close();
+                }
+            };
+
+            function defend() {
+                let enemyDamage = enemyAttack - (playerDefense + (playerLevel * 5));
+                if (enemyDamage > 0) {
+                    playerHealth -= enemyDamage;
+                    adventureTextDisplay.innerHTML = "Enemy dealt " + enemyDamage + " damage to you.";
+                    statsDisplay.innerHTML = "<h4>Stats</h4>Name: " + playerName + "<br />Health: " + playerHealth + "<br />Level: " + playerLevel + "<br />Inventory: " + inventory + "<br />Attack: " + playerAttack + "<br />Defense: " + playerDefense + "<br />Mana: " + playerMana;
+                } else {
+                    adventureTextDisplay.innerHTML = "Your defense was too strong. No damage taken.";
+                };
+                if (playerHealth <= 0) {
+                    statsDisplay.innerHTML = "<h4>Stats</h4>Name: " + playerName + "<br />Health: " + playerHealth + "<br />Level: " + playerLevel + "<br />Inventory: " + inventory + "<br />Attack: " + playerAttack + "<br />Defense: " + playerDefense + "<br />Mana: " + playerMana;
+                    alert("You lose! lol");
+                    close();
+                }
+            };
+
+            function chooseItem() {
+                let chosenItem = prompt("What item would you like to use? (Use Proper Capitalization and No Number)");
+                if (inventory.indexOf(chosenItem)) {
+                    if (chosenItem.startsWith("Health Potion")) {
+                        let healthIncrease = 50;
+                        playerHealth += healthIncrease;
+                        adventureTextDisplay.innerHTML = "You used " + chosenItem + ".";
+                        if (playerHealth > playerMaxHealth) {
+                            playerHealth = playerMaxHealth;
+                        };
+                        hPotionTotal--;
+                        let itemIndex = inventory.indexOf(chosenItem);
+                        inventory.splice(itemIndex, 1);
+                        inventory.splice(itemIndex, 0, "Health Potion x" + hPotionTotal);
+                        statsDisplay.innerHTML = "<h4>Stats</h4>Name: " + playerName + "<br />Health: " + playerHealth + "<br />Level: " + playerLevel + "<br />Inventory: " + inventory + "<br />Attack: " + playerAttack + "<br />Defense: " + playerDefense + "<br />Mana: " + playerMana;
+                    }
+                }
+            };
+
+            // Save and Load functionality
+            function saveGame() {
+                localStorage.setItem("playerName", playerName);
+                localStorage.setItem("playerLevel", playerLevel);
+                localStorage.setItem("playerHealth", playerHealth);
+                localStorage.setItem("enemyHealth", enemyHealth);
+                localStorage.setItem("enemyAttack", enemyAttack);
+                localStorage.setItem("enemyDefense", enemyDefense);
+                alert("Game saved!");
+            };
+            
+            function loadGame() {
+                playerName = localStorage.getItem("playerName");
+                playerLevel = localStorage.getItem("playerLevel");
+                playerHealth = localStorage.getItem("playerHealth");
+                enemyHealth = localStorage.getItem("enemyHealth");
+                enemyAttack = localStorage.getItem("enemyAttack");
+                enemyDefense = localStorage.getItem("enemyDefense");
+                statsDisplay.innerHTML = "<h4>Stats</h4>Name: " + playerName + "<br />Health: " + playerHealth + "<br />Level: " + playerLevel + "<br />Inventory: " + inventory + "<br />Attack: " + playerAttack + "<br />Defense: " + playerDefense + "<br />Mana: " + playerMana;
+                enemyDisplay.innerHTML = "<h4>Enemy</h4>Health: " + enemyHealth;
+                alert("Game loaded!");
+            };
+
+            function checkSavedData() {
+                let savedData = localStorage.getItem("playerName");
+                if (savedData !== null) {
+                    let confirmation = confirm("Would you like to load the save data?");
+                    if (confirmation) {
+                        loadGame();
+                    }
+                };
+            };
+
+            checkSavedData();
+
+            function quit() {
+                let confirmation = confirm("Are you sure you want to quit?");
+                if (confirmation) {
+                    alert("Thanks for playing!");
+                    close();
+                }
+            };
+
+            function gameStart() {
+                adventureTextDisplay.innerHTML = "An enemy appeared! What would you like to do?";
+            };
+            gameStart();
+        </script>
+        <style>
+            #stats {
+                border-style: solid;
+                border-width: 1px; 
+                width: 250px;
+            }
+            #spellList {
+                border-style: solid;
+                border-width: 1px;
+                width: 300px;
+            }
+            #blank {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+            #adventureText {
+                margin: 0px 700px;
+                transform: translate(-10px, -325px);
+            }
+            #adventureScreen {
+                border-style: solid;
+                transform: translate(600px, -350px);
+                max-width: 500px;
+                max-height: 500px;
+            }
+            #enemyStats {
+                border-style: solid;
+                border-width: 1px; 
+                width: 250px;
+                transform: translate(1150px, -650px);
+            }
+            #attackButton {
+                transform: translate(1150px, -500px);
+            }
+            #defendButton {
+                transform: translate(1150px, -500px);
+            }
+            #saveButton {
+                transform: translate(1150px, -500px);
+            }
+            #quitButton {
+                transform: translate(1150px, -500px);
+            }
+            #itemButton {
+                transform: translate(1150px, -500px);
+            }
+        </style>
+    </body>
+</html>

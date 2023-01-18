@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Text-Based Adventure Game</title>
+    <style>
+        /* CSS for styling the game */
+        /* Add some basic styling to the body */
+body {
+    background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Style the game container */
+#game {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #aaa;
+    min-width: 400px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Style the game message */
+#game p {
+    font-size: 1.2em;
+    line-height: 1.5;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+/* Style the game options */
+#game button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 1em;
+}
+
+#game button:hover {
+    background-color: #3e8e41;
+}
+
+    </style>
+</head>
+
+<body>
+    <div id="game"></div>
+
+    <script>
+        // Initialize the game state
+        let inventory = [];
+        let gameState = "start";
+
+        // Define the game messages and actions
+        const gameData = {
+            start: {
+                message: "You find yourself in a dark forest. There is a path to the east and a path to the west. Which way do you want to go?",
+                options: [
+                    { text: "East", nextState: "eastPath" },
+                    { text: "West", nextState: "westPath" }
+                ]
+            },
+            eastPath: {
+                message: "You follow the path to the east and come across a stream. The water looks clear and refreshing. Do you drink from the stream or continue on?",
+                options: [
+                    { text: "Drink from the stream", nextState: "drinkStream" },
+                    { text: "Continue on", nextState: "eastPath2" }
+                ]
+            },
+            drinkStream: {
+                message: "You drink from the stream and feel refreshed. You see a small pouch on the ground nearby. Do you open it?",
+                options: [
+                    { text: "Open it", nextState: "openPouch" },
+                    { text: "Leave it", nextState: "eastPath2" }
+                ]
+            },
+            openPouch: {
+                message: "You open the pouch and find a key inside. You add the key to your inventory.",
+                onAction: () => inventory.push("key"),
+                options: [
+                    { text: "Continue on", nextState: "eastPath2" }
+                ]
+            },
+            eastPath2: {
+                message: "You continue on the path and find a locked door. Do you use the key from your inventory?",
+                options: [
+                    { text: "Use key", nextState: "useKey" },
+                    { text: "Return", nextState: "start" }
+                ]
+            },
+            useKey: {
+                message: "You use the key from your inventory and the door opens. You have escaped the forest!",
+                onAction: () => gameState = "end",
+                options: []
+            },
+            westPath: {
+                message: "You follow the path to the west and find a dead end. You must turn back.",
+                options: [
+                    { text: "Return", nextState: "start" }
+                ]
+            },
+            end: {
+                message: "Congratulations, you have successfully escaped the forest!",
+                options: []
+            }
+        };
+
+        // The function to update the game state and display the current message
+        const game = document.getElementById("game");
+
+function updateGame() {
+    // Get the current game data
+    const currentData = gameData[gameState];
+
+    // Clear the game container
+    game.innerHTML = "";
+
+    // Create a new message element and add it to the game container
+    const message = document.createElement("p");
+    message.innerText = currentData.message;
+    game.appendChild(message);
+
+    // Check if there are any options for the current game state
+    if (currentData.options.length) {
+        // Create a new element to hold the options
+        const optionsContainer = document.createElement("div");
+
+        // Create a button element for each option
+        currentData.options.forEach((option) => {
+            const optionButton = document.createElement("button");
+            optionButton.innerText = option.text;
+
+            // When the option is clicked, update the game state and run the updateGame function again
+            optionButton.addEventListener("click", () => {
+                gameState = option.nextState;
+                if (option.onAction) option.onAction();
+                updateGame();
+            });
+
+            optionsContainer.appendChild(optionButton);
+        });
+
+        // Add the options container to the game container
+        game.appendChild(optionsContainer);
+    }
+}
+
+//Start the game
+updateGame();
+</script>
+</body>
+</html>

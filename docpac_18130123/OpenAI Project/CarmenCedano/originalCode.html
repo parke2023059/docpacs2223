@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guesser</title>
+</head>
+
+<body>
+    <script>
+
+        // Game variables
+        let points = 0;
+        let level = 1;
+
+        // Generate a random number between 1 and 10
+        function generateNumber() {
+            return Math.floor(Math.random() * 10) + 1;
+        }
+
+        // Check if the player's guess is correct
+        function checkGuess(guess) {
+            let target = generateNumber();
+            if (guess === target) {
+                console.log("Correct!");
+                points += level;
+                console.log("Points: " + points);
+                if (level < 5) {
+                    level++;
+                }
+                console.log("Level: " + level);
+            } else {
+                console.log("Wrong! The number was " + target);
+                if (points > 0) {
+                    points--;
+                }
+                console.log("Points: " + points);
+            }
+        }
+
+        // Get player's guess
+        let guess = prompt("Guess a number between 1 and 10:");
+        
+        checkGuess(guess);
+    </script>
+</body>
+
+</html>

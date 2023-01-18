@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* styles for the chessboard */
+        .chessboard {
+            display: flex;
+            flex-wrap: wrap;
+            width: 600px;
+            height: 600px;
+        }
+
+        .chessboard div {
+            width: 75px;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        /* styles for the orange squares */
+        .chessboard .orange {
+            background-color: orange;
+        }
+
+        /* styles for the white squares */
+        .chessboard .white {
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chessboard" id="chessboard"></div>
+    <script>
+        // get the chessboard element
+        const chessboard = document.getElementById("chessboard");
+
+        // create 8x8 chessboard
+        for (let i = 0; i < 64; i++) {
+            const square = document.createElement("div");
+            if ((i + Math.floor(i / 8)) % 2 === 0) {
+                square.classList.add("white");
+            } else {
+                square.classList.add("orange");
+            }
+            chessboard.appendChild(square);
+        }
+        //add chess pieces
+        const whitePieces = [
+            "\u2654", // White King
+            "\u2655", // White Queen
+            "\u2656", // White Rook
+            "\u2657", // White Bishop
+            "\u2658", // White Knight
+            "\u2659", // White Pawn
+        ];
+        const blackPieces = [
+            "\u265A", // Black King
+            "\u265B", // Black Queen
+            "\u265C", // Black Rook
+            "\u265D", // Black Bishop
+            "\u265E", // Black Knight
+            "\u265F", // Black Pawn
+        ];
+
+        // add white pieces to the chessboard
+        chessboard.children[0].innerHTML = whitePieces[2];
+        chessboard.children[1].innerHTML = whitePieces[4];
+        chessboard.children[2].innerHTML = whitePieces[3];
+        chessboard.children[3].innerHTML = whitePieces[1];
+        chessboard.children[4].innerHTML = whitePieces[0];
+        chessboard.children[5].innerHTML = whitePieces[3];
+        chessboard.children[6].innerHTML = whitePieces[4];
+        chessboard.children[7].innerHTML = whitePieces[2];
+
+        // add black pieces to the chessboard
+        chessboard.children[56].innerHTML = blackPieces[2];
+        chessboard.children[57].innerHTML = blackPieces[4];
+        chessboard.children[58].innerHTML = blackPieces[3];
+        chessboard.children[59].innerHTML = blackPieces[1];
+        chessboard.children[60].innerHTML = blackPieces[0];
+        chessboard.children[61].innerHTML = blackPieces[3];
+        chessboard.children[62].innerHTML = blackPieces[4];
+        chessboard.children[63].innerHTML = blackPieces[2];
+
+        // add the pawns
+        for (let i = 8; i < 16; i++) {
+            chessboard.children[i].innerHTML = whitePieces[5];
+        }
+        for (let i = 48; i < 56; i++) {
+            chessboard.children[i].innerHTML = blackPieces[5];
+        }
+        chessboard.addEventListener("click", (event) => {
+            if (event.target.innerHTML === whitePieces[5]) {
+                // check if the square clicked on is a white pawn
+                if (event.target.parentNode.children.indexOf(event.target) < 16) {
+                    // check if the pawn is in its starting position
+                    event.target.parentNode.children[event.target.parentNode.children.indexOf(event.target) + 8]
+                        .innerHTML = whitePieces[5];
+                    event.target.innerHTML = "";
+                } else {
+                    event.target.parentNode.children[event.target.parentNode.children.indexOf(event.target) + 8]
+                        .innerHTML = whitePieces[5];
+                    event.target.innerHTML = "";
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

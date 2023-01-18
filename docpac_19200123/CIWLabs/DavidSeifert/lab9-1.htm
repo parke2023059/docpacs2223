@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 9-1</title>
+
+<script type="text/javascript">
+
+function changeButton()
+{
+  if(document.getElementById('radiobuttonWebdev').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonWebdev').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Web Developer!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonGovernment').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonGovernment').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Uncle Sam!";
+	alert("Hello " + header);
+  }
+
+  if(document.getElementById('radiobuttonPew').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonPew').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Minecraft hammer";
+	alert("Hello " + header);
+  }
+  
+  if(document.getElementById('radiobuttonYT').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonYT').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "here watch some videos";
+	alert("Hello " + header);
+  } 
+  
+  if(document.getElementById('radiobuttonGit').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonGit').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "here is github";
+	alert("Hello " + header);
+  }
+  getTest();
+}
+
+</script>
+</head>
+
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<form>
+<p>Please select your favorite type of Web site:</p>
+<input id="radiobuttonWebdev" type="radio" name="group1" value="Web_Development" checked>Web Development</input><br />
+<input id="radiobuttonGovernment" type="radio" name="group1" value="Government">U.S. Government</input><br />
+<input id="radiobuttonPew" type="radio" name="group1" value="Pew_Pew">Pew Pew</input><br />
+<input id="radiobuttonYT" type="radio" name="group1" value="Youtube">Youtube</input><br />
+<input id="radiobuttonGit" type="radio" name="group1" value="Github">Github</input><br />
+
+
+<script type="text/javascript">
+
+function getTest()
+{
+  document.write("<h3>CIW JavaScript Specialist</h3>");
+  document.write("<hr />");
+
+  if(radioButton == "Web_Development")
+  {
+	document.write("<p>Here's a great site for Web developers:</p><a href=http://www.CIWcertified.com/>CIW Certified</a>");
+  }
+	
+  if(radioButton == "Government")
+  {
+	document.write("<p>Here's a great site if you're interested in U.S. government:</p><a href=http://www.whitehouse.gov/>The White House</a>");
+  }
+  
+  if(radioButton == "Pew_Pew")
+  {
+	document.write("<p>Funny minecraft nerf gun:</p><a href=https://nerf.hasbro.com/en-us/product/nerf-minecraft-stormlander-dart-blasting-hammer-fires-3-darts-includes-3-nerf-elite-darts-pull-back-priming-handle:CCF4F9D1-EA9E-4A45-8A8F-903F910940FF>Minecraft Hammer pew pew</a>");
+  }
+  if(radioButton == "Youtube")
+  {
+	document.write("<p>Watch some videos</p><a href=https://www.youtube.com/>Youtube</a>");
+  }
+  if(radioButton == "Github")
+  {
+	document.write("<p>Watch some videos</p><a href=https://github.com/>Github</a>");
+  }
+}
+
+</script>
+
+<p>
+<input type="button" onclick="changeButton()" value="Click Here" />
+</p>
+</form>
+
+</body>
+</html>

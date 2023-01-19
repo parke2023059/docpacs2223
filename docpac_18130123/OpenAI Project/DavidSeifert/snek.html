@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Snake Game</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="game"></canvas>
+    <p>Score: <span id="score"></span></p>
+    <p id="gameover" style="display:none;">Game Over</p>
+    <script>
+        // set up canvas
+        const canvas = document.getElementById("game");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 400;
+        canvas.height = 400;
+        const score = document.getElementById("score");
+        const gameover = document.getElementById("gameover");
+
+        // snake object
+        const snake = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            size: 15,
+            speed: 3,
+            xSpeed: 0,
+            ySpeed: 0
+        };
+
+        let point = 0;
+        let gameIsRunning = true;
+        // draw snake
+        function drawSnake() {
+            ctx.fillStyle = "green";
+            ctx.fillRect(snake.x, snake.y, snake.size, snake.size);
+        }
+        // draw snake body
+        function drawSnakeBody() {
+            for (let i = 0; i < snakeBody.length; i++) {
+                ctx.fillStyle = "green";
+                ctx.fillRect(snakeBody[i].x, snakeBody[i].y, snakeBody[i].size, snakeBody[i].size);
+            }
+        }
+
+        // draw the border
+        function drawBorder() {
+            ctx.strokeStyle = "black";
+            ctx.strokeRect(0, 0, canvas.width, canvas.height);
+        }
+        // fruit object
+        let fruit = {
+            x: Math.floor(Math.random() * canvas.width),
+            y: Math.floor(Math.random() * canvas.height),
+            size: 15,
+        };
+
+        let snakeBody = [{ x: snake.x, y: snake.y, size: snake.size }];
+
+        // draw the fruit
+        function drawFruit() {
+            ctx.fillStyle = "red";
+            ctx.fillRect(fruit.x, fruit.y, fruit.size, fruit.size);
+            console.log(fruit.x, fruit.y)
+        }
+
+        // update snake position
+        function updateSnakePosition() {
+            snake.x += snake.xSpeed;
+            snake.y += snake.ySpeed;
+            snakeBody.unshift({ x: snake.x, y: snake.y, size: snake.size });
+            if (snake.x < fruit.x + fruit.size &&
+                snake.x + snake.size > fruit.x &&
+                snake.y < fruit.y + fruit.size &&
+                snake.y + snake.size > fruit.y) {
+                point++;
+                fruit.x = Math.floor(Math.random() * (canvas.width - fruit.size));
+                fruit.y = Math.floor(Math.random() * (canvas.height - fruit.size));
+                if (fruit.x + fruit.size > canvas.width) {
+                    fruit.x = canvas.width - fruit.size;
+                }
+                if (fruit.y + fruit.size > canvas.height) {
+                    fruit.y = canvas.height - fruit.size;
+                }
+            } else {
+                snakeBody.pop();
+            }
+        }
+        // Function to check if snake hit the border
+        function checkCollision() {
+            if (snake.x < 0 || snake.x + snake.size > canvas.width || snake.y < 0 || snake.y + snake.size > canvas.height) {
+                gameIsRunning = false;
+                gameover.style.display = "block";
+                return;
+            }
+            for (let i = 1; i < snakeBody.length; i++) {
+                if (snake.x === snakeBody[i].x && snake.y === snakeBody[i].y) {
+                    gameIsRunning = false;
+                    gameover.style.display = "block";
+                    return;
+                }
+            }
+        }
+
+        // Function to handle key presses
+        function handleKeyPress(event) {
+            if (!gameIsRunning) {
+                return;
+            }
+            if (event.code === "ArrowUp" || event.code === "KeyW") {
+                snake.ySpeed = -snake.speed;
+                snake.xSpeed = 0;
+            } else if (event.code === "ArrowDown" || event.code === "KeyS") {
+                snake.ySpeed = snake.speed;
+                snake.xSpeed = 0;
+            } else if (event.code === "ArrowLeft" || event.code === "KeyA") {
+                snake.xSpeed = -snake.speed;
+                snake.ySpeed = 0;
+            } else if (event.code === "ArrowRight" || event.code === "KeyD") {
+                snake.xSpeed = snake.speed;
+                snake.ySpeed = 0;
+            }
+        }
+
+        // listen for key presses
+        document.addEventListener("keydown", handleKeyPress);
+
+        // game loop
+        function gameLoop() {
+            if (!gameIsRunning) {
+                return;
+            }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBorder();
+            drawFruit();
+            drawSnake();
+            drawSnakeBody();
+            updateSnakePosition();
+            checkCollision();
+
+            score.innerHTML = point;
+            requestAnimationFrame(gameLoop);
+        }
+
+        // start game loop
+        gameLoop();
+    </script>
+</body>
+
+</html>

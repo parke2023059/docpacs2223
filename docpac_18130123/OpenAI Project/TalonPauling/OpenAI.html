@@ -1,0 +1,107 @@
+<html>
+
+<head>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var companies = [
+        {
+          name: 'Apple',
+          value: 100
+        },
+        {
+          name: 'Google',
+          value: 100
+        },
+        {
+          name: 'Microsoft',
+          value: 100
+        }
+      ];
+      var player = {
+        money: 1000,
+        stocks: []
+      };
+      var stockMarket = document.createElement('div');
+      stockMarket.id = 'stock-market';
+      document.body.appendChild(stockMarket);
+      var playerInfo = document.createElement('div');
+      playerInfo.id = 'player-info';
+      document.body.appendChild(playerInfo);
+      var updatePlayerInfo = function () {
+        playerInfo.innerHTML = 'Money: ' + player.money;
+      };
+      var updateStockMarket = function () {
+        var stockMarketHTML = '';
+        for (var i = 0; i < companies.length; i++) {
+          stockMarketHTML += '<div class="company">';
+          stockMarketHTML += '<div class="company-name">' + companies[i].name + '</div>';
+          stockMarketHTML += '<div class="company-value">' + companies[i].value + '</div>';
+          stockMarketHTML += '<button class="buy" data-index="' + i + '">Buy Stock</button>';
+          stockMarketHTML += '</div>';
+        }
+        stockMarket.innerHTML = stockMarketHTML;
+      };
+      var updateStocks = function () {
+        var stocksHTML = '';
+        for (var i = 0; i < player.stocks.length; i++) {
+          stocksHTML += '<div class="stock">';
+          stocksHTML += '<div class="company-name">' + player.stocks[i].name + '</div>';
+          stocksHTML += '<div class="company-value">' + player.stocks[i].value + '</div>';
+          stocksHTML += '<button class="sell" data-index="' + i + '">Sell</button>';
+          stocksHTML += '</div>';
+        }
+        playerInfo.innerHTML = 'Money: ' + player.money + '<br>' + stocksHTML;
+      };
+      var buyStock = function (index) {
+        if (player.money >= companies[index].value) {
+          player.money -= companies[index].value;
+          player.money -= companies[index].value * 0.05;
+          player.stocks.push({
+            name: companies[index].name,
+            value: companies[index].value
+          });
+          updatePlayerInfo();
+          updateStocks();
+        }
+      };
+      var sellStock = function (index) {
+        player.money += companies[index].value;
+        player.stocks.splice(index, 1);
+        updatePlayerInfo();
+        updateStocks();
+      };
+      var randomInterval = function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      };
+      var randomChange = function (stockValue) {
+        var maxChange = stockValue * 0.05;
+        var change = randomInterval(-maxChange, maxChange);
+        var newValue = stockValue + change;
+        return newValue;
+      };
+      var changeStockValues = function () {
+        for (var i = 0; i < companies.length; i++) {
+          companies[i].value = randomChange(companies[i].value);
+        }
+        updateStockMarket();
+      };
+      var interval = window.setInterval(changeStockValues, 5000);
+      stockMarket.addEventListener('click', function (event) {
+        if (event.target.className === 'buy') {
+          var index = parseInt(event.target.dataset.index);
+          buyStock(index);
+        }
+      });
+      playerInfo.addEventListener('click', function (event) {
+        if (event.target.className === 'sell') {
+          var index = parseInt(event.target.dataset.index);
+          sellStock(index);
+        }
+      });
+      updatePlayerInfo();
+      updateStockMarket();
+    });
+  </script>
+
+  <head>
+    <html>

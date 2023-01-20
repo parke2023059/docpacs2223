@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 9-1</title>
+
+<script type="text/javascript">
+<!--
+function changeButton()
+{
+  if(document.getElementById('radiobuttonWebdev').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonWebdev').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Web Developer!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonGovernment').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonGovernment').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Uncle Sam!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonOptiA').checked === true)
+  {
+  radioButton = document.getElementById('radiobuttonOptiA').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "curious viewer!";
+	alert("Welcome " + header);
+  }
+  if(document.getElementById('radiobuttonOptiB').checked === true)
+  {
+  radioButton = document.getElementById('radiobuttonOptiB').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Gamers";
+	alert("Good Morning " + header);
+  }
+  if(document.getElementById('radiobuttonOptiC').checked === true)
+  {
+  radioButton = document.getElementById('radiobuttonOptiC').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Programmer";
+	alert("Howdy " + header);
+  }
+  getTest();
+}
+-->
+</script>
+</head>
+
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<form>
+<p>Please select your favorite type of Web site:</p>
+<input id="radiobuttonWebdev" type="radio" name="group1" value="Web_Development" checked>Web Development</input><br />
+<input id="radiobuttonGovernment" type="radio" name="group1" value="Government">U.S. Government</input><br />
+<input id="radiobuttonOptiA" type="radio" name="group1" value="A">Popular Video Sharing Platform</input><br />
+<input id="radiobuttonOptiB" type="radio" name="group1" value="B">Popular Gaming Website</input><br />
+<input id="radiobuttonOptiC" type="radio" name="group1" value="C">My Computer Programming Teachers Github</input><br />
+
+
+<script type="text/javascript">
+<!--
+function getTest()
+{
+  document.write("<h3>CIW JavaScript Specialist</h3>");
+  document.write("<hr />");
+
+  if(radioButton == "Web_Development")
+  {
+	document.write("<p>Here's a great site for Web developers:</p><a href=http://www.CIWcertified.com/>CIW Certified</a>");
+  }
+	
+  if(radioButton == "Government")
+  {
+	document.write("<p>Here's a great site if you're interested in U.S. government:</p><a href=http://www.whitehouse.gov/>The White House</a>");
+  }
+
+  if(radioButton == "A")
+  {
+	document.write("<p>Here's a popular video sharing platform:</p><a href=http://www.youtube.com/><img src='Imgs/youtube.png' width='150' height='150'></a>");
+  }
+
+  if(radioButton == "B")
+  {
+	document.write("<p>Here's a popular gaming website:</p><a href=http://store.steampowered.com/><img src='Imgs/steam.png' width='150' height='150'></a>");
+  }
+  
+  if(radioButton == "C")
+  {
+	document.write("<p>Here's my teachers github link:</p><a href=https://github.com/csmith1188/><img src='Imgs/github.png' width='150' height='150'></a>");
+  }
+}
+-->
+</script>
+
+<p>
+<input type="button" onclick="changeButton()" value="Click Here" />
+</p>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<html>
+<title>Stock Marketer</title>
+<body>
+
+</body>
+<head>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var companies = [
+        {
+          name: 'long Bannas',
+          value: 1000
+        },
+        {
+          name: 'Groggle',
+          value: 100
+        },
+        {
+          name: 'MacroHard',
+          value: 10
+
+        }
+      ];
+      var player = {
+        money: 1000,
+        stocks: []
+      };
+      var stockMarket = document.createElement('div');
+      stockMarket.id = 'stock-market';
+      document.body.appendChild(stockMarket);
+      var playerInfo = document.createElement('div');
+      playerInfo.id = 'player-info';
+      document.body.appendChild(playerInfo);
+
+      var updatePlayerInfo = function () {
+        playerInfo.innerHTML = 'Money: ' + player.money;
+      };
+
+      var updateStockMarket = function () {
+        var stockMarketHTML = '';
+        for (var i = 0; i < companies.length; i++) {
+          stockMarketHTML += '<div class="company">';
+          stockMarketHTML += '<div class="company-name">' + companies[i].name + '</div>';
+          stockMarketHTML += '<div class="company-value">' + companies[i].value + '</div>';
+          stockMarketHTML += '<button class="buy" data-index="' + i + '">Buy</button>';
+          stockMarketHTML += '</div>';
+        }
+        stockMarket.innerHTML = stockMarketHTML;
+      };
+
+      var updateStocks = function () {
+        var stocksHTML = '';
+        for (var i = 0; i < player.stocks.length; i++) {
+          stocksHTML += '<div class="stock">';
+          stocksHTML += '<div class="company-name">' + player.stocks[i].name + '</div>';
+          stocksHTML += '<div class="company-value">' + player.stocks[i].value + '</div>';
+          stocksHTML += '<button class="sell" data-name="' + player.stocks[i].name + '" data-index="' + i + '">Sell</button>';
+          stocksHTML += '</div>';
+        }
+        playerInfo.innerHTML = 'Money: ' + player.money + '<br>' + stocksHTML;
+      };
+
+      var buyStock = function (index) {
+        if (player.money >= companies[index].value) {
+          console.log(index)
+          console.log("buy");
+          console.log(companies[index]);
+          console.log(companies[index].value);
+          player.money -= companies[index].value;
+          player.stocks.push({
+            name: companies[index].name,
+            value: companies[index].value
+          });
+          updatePlayerInfo();
+          updateStocks();
+        }
+      };
+
+      var sellStock = function (index) {
+        player.money += companies[index].value;
+        console.log(index)
+          console.log("sell");
+          console.log(companies[index]);
+          console.log(companies[index].value);
+        player.stocks.splice(index, 1);
+        updatePlayerInfo();
+        updateStocks();
+      };
+
+      var randomChange = function (stockValue) {
+        var maxChange = Math.random()*stockValue * 0.05;
+        var minChange = Math.random()*stockValue * 0.02;
+        return Math.round(stockValue + (Math.random() * (maxChange - minChange + 1) - minChange));
+      };
+
+      var changeStockValues = function () {
+        for (var i = 0; i < companies.length; i++) {
+          companies[i].value = randomChange(companies[i].value);
+        }
+        updateStockMarket();
+      };
+
+      var interval = window.setInterval(changeStockValues, 5000);
+
+      stockMarket.addEventListener('click', function (event) {
+        if (event.target.className === 'buy') {
+          var index = parseInt(event.target.dataset.index);
+          buyStock(index);
+        }
+      });
+
+      playerInfo.addEventListener('click', function (event) {
+        if (event.target.className === 'sell') {
+
+          var index = "error"
+          if(event.target.dataset.name==='long Bannas'){
+            index = 0
+          }
+          if(event.target.dataset.name==='Groggle'){
+            index = 1
+          }
+          if(event.target.dataset.name==='MacroHard'){
+            index = 2
+          }
+          sellStock(index);
+
+        }
+      });
+      updatePlayerInfo();
+      updateStockMarket();
+    });
+  </script>
+
+  <head>
+    <html>

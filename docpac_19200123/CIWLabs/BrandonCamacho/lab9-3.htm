@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title class="title1">Lab 9-3</title>
+</head>
+
+<body>
+  <h3 class="head3">CIW JavaScript Specialist</h3>
+  <div class="div1">
+    <p class="p1" id="p1">This is a sample webpage.</p>
+  </div>
+  <button id="button" onclick="changeText()">Change Text</button>
+  <script>
+    console.log(document.getElementsByClassName("div1")[0]);
+    function changeText() {
+      console.log(document.getElementById("p1").style.fontFamily = "Verdana");
+      console.log(document.getElementById("p1").style.fontSize = "20px");
+      console.log(document.getElementById("p1").style.textDecoration = "underline");
+      console.log(document.getElementById("p1").style.visibility = "hidden");
+      console.log(document.getElementById("p1").style.visibility = "visible");
+      button.style.visibility = 'hidden';
+    }
+  </script>
+</body>
+
+</html>

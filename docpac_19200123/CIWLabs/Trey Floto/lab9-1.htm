@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 9-1</title>
+
+<script type="text/javascript">
+<!--
+function changeButton()
+{
+  //the unfunny
+  if(document.getElementById('radiobuttonWebdev').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonWebdev').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Web Developer!";
+	alert("Hello " + header);
+  }
+
+//bing chilling
+  if(document.getElementById('radiobuttonGovernment').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonGovernment').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Uncle Sam!";
+	alert("Hello " + header);
+  }
+
+//the funny
+  if(document.getElementById('rbsteam').checked === true)
+  {
+	radioButton = document.getElementById('rbsteam').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "gaymer :3";
+	alert("Hello " + header);
+  }
+
+//sus
+  if(document.getElementById('rbopenai').checked === true)
+  {
+	radioButton = document.getElementById('rbopenai').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = ", please verify you're not a robot.";
+	alert("Hello " + header);
+  }
+
+//ok grandma
+  if(document.getElementById('rbyoutube').checked === true)
+  {
+	radioButton = document.getElementById('rbyoutube').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = ", you're old now!";
+	alert("Hello " + header);
+  }
+  getTest();
+}
+-->
+</script>
+</head>
+
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<form>
+<p>Please select your favorite type of Web site:</p>
+<input id="radiobuttonWebdev" type="radio" name="group1" value="Web_Development" checked>Web Development</input><br />
+<input id="radiobuttonGovernment" type="radio" name="group1" value="Government">U.S. Government</input><br />
+<input id="rbsteam" type="radio" name="group1" value="Steam">Steam</input><br />
+<input id="rbopenai" type="radio" name="group1" value="openai">openai</input><br />
+<input id="rbyoutube" type="radio" name="group1" value="youtube">youtube</input><br />
+
+
+<script type="text/javascript">
+<!--
+function getTest()
+{
+  document.write("<h3>CIW JavaScript Specialist</h3>");
+  document.write("<hr />");
+//the unfunny
+  if(radioButton == "Web_Development")
+  {
+	document.write("<h3> Certified Internet Web Professional </h3> <br> <p>The Certified Internet Web Professional (CIW) education program was created by a community of Web designers and developers in the late 1990s. The company that currently owns CIW, Certification Partners, offers books, on-line learning and high-stakes exams. Third-party companies also sell CIW preparation material.[1]</p><a href=http://www.CIWcertified.com/>CIW Certified</a>");
+  }
+//bing chilling	
+  if(radioButton == "Government")
+  {
+	document.write("<h3>The birds work for the Bourgeoisie</h3> <br> <p>all the birds died in 1986 due to reagan killing them and replacing them with spies that are now watching us.</p><a href=http://www.whitehouse.gov/>The White House</a>");
+  }
+//gaymer
+if(radioButton == "Steam")
+  {
+	document.write("<h3>Steam (service)</h3> <br> <p>Steam is a video game digital distribution service and storefront by Valve. It was launched as a software client in September 2003 as a way for Valve to provide automatic updates for their games, and expanded to distributing and offering third-party game publishers' titles in late 2005. Steam offers various features, like digital rights management (DRM), game server matchmaking, anti-cheat measures, social networking and game streaming services. It provides the user with automatic game updating, saved game cloud synchronization, and community features such as friends messaging, in-game chat and a community market. </p><a href=http://store.steampowered.com/>steampowered</a>");
+  }
+//capcha
+if(radioButton == "openai")
+  {
+	document.write("<h3>Exploring the Capabilities and Impact of OpenAI: A Look into the Future of Artificial Intelligence</h3> <p>OpenAI is a cutting-edge artificial intelligence research laboratory that aims to develop safe AI in a way that benefits all of humanity. The organization, co-founded by Elon Musk, Sam Altman and other leaders in technology, has made significant strides in the field of AI with its development of GPT-3, a language model that can generate human-like text. OpenAI's work has the potential to revolutionize industries such as finance, healthcare, and transportation, but it also raises important ethical questions about the impact of AI on society. OpenAI's work is not only focused on developing advanced technology, but also on ensuring that it is used in a responsible and safe manner. The organization has open-sourced its research and actively engages with the wider AI community to promote collaboration and transparency in the field. The future of AI is exciting, and OpenAI is at the forefront of this rapidly developing field, pushing the boundaries of what is possible and shaping the way we think about the role of AI in our world.</p><a href=http://www.openai.com/>openai</a>");
+  }
+//how are you alive
+if(radioButton == "youtube")
+  {
+	document.write("<h3>Youtube</h3><p>YouTube is a global online video sharing and social media platform headquartered in San Bruno, California. It was launched on February 14, 2005, by Steve Chen, Chad Hurley, and Jawed Karim. It is owned by Google, and is the second most visited website, after Google Search. YouTube has more than 2.5 billion monthly users[7] who collectively watch more than one billion hours of videos each day.[8] As of May 2019, videos were being uploaded at a rate of more than 500 hours of content per minute.[9][10] </p><a href=http://www.youtube.com/>youtube</a>");
+  }
+}
+-->
+</script>
+
+<p>
+<input type="button" onclick="changeButton()" value="Click Here" />
+</p>
+</form>
+
+</body>
+</html>

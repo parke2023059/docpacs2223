@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hatsune Miku Resource Management Game</title>
+</head>
+<body>
+  <h1>Hatsune Miku Resource Management Game</h1>
+
+  <div id="resources">
+    <p>Money: <span id="money">1000</span></p>
+    <p>Fans: <span id="fans">0</span></p>
+  </div>
+
+  <div id="actions">
+    <button id="perform-live">Perform Live</button> 
+    <button id="create-album">Create Album</button>
+    <button id="promote">Promote</button> 
+  </div>
+ 
+  <script>
+const performLiveButton = document.getElementById('perform-live');
+const createAlbumButton = document.getElementById('create-album');
+const promoteButton = document.getElementById('promote');
+const moneySpan = document.getElementById('money');
+const fansSpan = document.getElementById('fans');
+
+let money = 1000;
+let fans = 0;
+
+
+
+
+performLiveButton.addEventListener('click', () => {
+    fans += 200;
+    moneySpan.textContent = money;
+    moneySpan.textContent = money;
+    fansSpan.textContent = fans;
+
+});
+
+createAlbumButton.addEventListener('click', () => {
+  money += 100;
+  fans += 100
+  moneySpan.textContent = money;
+  fansSpan.textContent = fans;
+
+});
+
+promoteButton.addEventListener('click', () => {
+  money += 100;
+  fans += 10;
+  moneySpan.textContent = money;
+  fansSpan.textContent = fans;
+});
+
+
+
+  </script>
+</body>
+</html>

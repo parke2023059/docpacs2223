@@ -1,0 +1,9 @@
+#game {
+    display: flex;
+  }
+  
+  #player-hand, #dealer-hand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

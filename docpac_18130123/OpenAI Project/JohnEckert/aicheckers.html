@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Checkers!</title>
+</head>
+
+<body>
+  <div id="checkerboard"></div>
+  <script>
+    /* make checker pieces */
+    var pieces = document.createElement('table');
+    for (var i = 0; i < 8; i++) {
+      var row = document.createElement('tr');
+      for (var j = 0; j < 8; j++) {
+        var cell = document.createElement('td');
+        cell.style.width = '70px';
+        cell.style.height = '70px';
+        cell.style.backgroundColor = (i + j) % 2 == 0 ? 'black' : 'white';
+        console.log(cell.axis)
+        if (i < 3) {
+          var piece = document.createElement('div');
+          piece.style.width = '60px';
+          piece.style.height = '60px';
+          piece.style.backgroundColor = 'red';
+          piece.style.borderRadius = '50%';
+          cell.appendChild(piece);
+        } else if (i > 4) {
+          var piece = document.createElement('div');
+          piece.style.width = '60px';
+          piece.style.height = '60px';
+          piece.style.backgroundColor = 'blue';
+          piece.style.borderRadius = '50%';
+          cell.appendChild(piece);
+        }
+        row.appendChild(cell);
+      }
+      pieces.appendChild(row);
+    }
+    document.body.appendChild(pieces);
+
+    /* change the white squares into green squares */
+    var cells = document.getElementsByTagName('td');
+    for (var i = 0; i < cells.length; i++) {
+      if (cells[i].style.backgroundColor == 'white') {
+        cells[i].style.backgroundColor = 'orange';
+      }
+    }
+
+    /* Make all pieces movable */
+    var pieces = document.getElementsByTagName('div');
+    for (var i = 0; i < pieces.length; i++) {
+      pieces[i].style.position = 'absolute';
+      pieces[i].style.left = '650px';
+      pieces[i].style.top = '280px';
+      pieces[i].style.zIndex = '1';
+      pieces[i].style.cursor = 'pointer';
+      pieces[i].onmousedown = function (e) {
+        var piece = e.target;
+        var offsetX = e.clientX - parseInt(piece.style.left);
+        var offsetY = e.clientY - parseInt(piece.style.top);
+        document.onmousemove = function (e) {
+          piece.style.left = (e.clientX - offsetX) + 'px';
+          piece.style.top = (e.clientY - offsetY) + 'px';
+        }
+        document.onmouseup = function () {
+          document.onmousemove = null;
+          document.onmouseup = null;
+        }
+      }
+    }
+
+    /* remove half the red pieces */
+    var pieces = document.getElementsByTagName('div');
+    for (var i = 0; i < pieces.length; i++) {
+      if (pieces[i].style.backgroundColor == 'red') {
+        pieces[i].parentNode.removeChild(pieces[i]);
+      }
+    }
+
+    /* remove half the blue pieces */
+    var pieces = document.getElementsByTagName('div');
+    for (var i = 0; i < pieces.length; i++) {
+      if (pieces[i].style.backgroundColor == 'blue') {
+        pieces[i].parentNode.removeChild(pieces[i]);
+      }
+    }
+  </script>
+</body>
+
+</html>

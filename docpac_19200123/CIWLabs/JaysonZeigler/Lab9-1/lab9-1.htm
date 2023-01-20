@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 9-1</title>
+
+<script type="text/javascript">
+<!--
+function changeButton()
+{
+  if(document.getElementById('radiobuttonWebdev').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonWebdev').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Web Developer!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonGovernment').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonGovernment').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Uncle Sam!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonYoutube').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonYoutube').value;
+	var header = document.getElementById('radiobuttonYoutube').value.innerHTML = "Entertainment!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonMinesweeper').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonMinesweeper').value;
+	var header = document.getElementById('radiobuttonMinesweeper').value.innerHTML = "Mines!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonW3Schools').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonW3Schools').value;
+	var header = document.getElementById('radiobuttonW3Schools').value.innerHTML = "Programming!";
+	alert("Hello " + header);
+  }
+  getTest();
+}
+-->
+</script>
+</head>
+
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<form>
+<p>Please select your favorite type of Web site:</p>
+<input id="radiobuttonWebdev" type="radio" name="group1" value="Web_Development" checked>Web Development</input><br />
+<input id="radiobuttonGovernment" type="radio" name="group1" value="Government">U.S. Government</input><br />
+<input id="radiobuttonYoutube" type="radio" name="group1" value="Youtube">Youtube</input><br />
+<input id="radiobuttonMinesweeper" type="radio" name="group1" value="Minesweeper">Minesweeper</input><br />
+<input id="radiobuttonW3Schools" type="radio" name="group1" value="W3Schools">W3Schools</input><br />
+
+
+<script type="text/javascript">
+<!--
+function getTest()
+{
+  document.write("<h3>CIW JavaScript Specialist</h3>");
+  document.write("<hr />");
+
+  if(radioButton == "Web_Development")
+  {
+	document.write("<p>Here's a great site for Web developers:</p><a href=http://www.CIWcertified.com/>CIW Certified</a>");
+  }
+	
+  if(radioButton == "Government")
+  {
+	document.write("<p>Here's a great site if you're interested in U.S. government:</p><a href=http://www.whitehouse.gov/>The White House</a>");
+  }
+
+  if(radioButton == "Youtube")
+  {
+  document.write("<p>Here is a decent website if you want to watch videos:</p><a href=https://www.youtube.com/>Youtube</a>");
+  }
+  if(radioButton == "Minesweeper")
+  {
+  document.write("<p>Here is a game that can be pretty challenging at times:</p><a href=https://www.google.com/search?client=firefox-b-1-d&q=minesweeper&safe=active&surl=1#cobssid=s/>Minesweeper</a>");
+  }
+  if(radioButton == "W3Schools")
+  {
+  document.write("<p>Here is a really good website that can help learn about multiple programming languages:</p><a href=https://www.w3schools.com/>W3Schools</a>");
+  }
+}
+-->
+</script>
+
+<p>
+<input type="button" onclick="changeButton()" value="Click Here" />
+</p>
+</form>
+
+</body>
+</html>

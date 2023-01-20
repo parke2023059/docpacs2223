@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Platformer</title>
+
+</head>
+
+<body>
+    <canvas id="game"></canvas>
+
+    <script>
+        // Get canvas element
+        var canvas = document.getElementById("game");
+        var ctx = canvas.getContext("2d");
+
+
+        // Set canvas dimensions
+        canvas.width = 1900;
+        canvas.height = 800;
+
+        // Load the background image
+        var backgroundImg = new Image();
+        backgroundImg.src = "images/trees.png";
+
+
+        // Draw the background on the canvas
+        //function drawBackground() {
+        //ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+        //}
+        // Create image objects for the background layers
+        var bg1 = new Image();
+        bg1.src = "images/clouds.png";
+
+        var bg2 = new Image();
+        bg2.src = "images/city.png";
+
+        var bg3 = new Image();
+        bg3.src = "images/train.png";
+
+        var bg4 = new Image();
+        bg4.src = "images/front.png";
+
+        // Variables to store the x position of each background layer
+        var bg1x = 0;
+        var bg2x = 0;
+        var bg3x = 0;
+        var bg4x = 0
+
+        // Draw the background on the canvas
+        function drawBackground() {
+            ctx.drawImage(bg1, bg1x, 3, canvas.width + 5000, canvas.height);
+            ctx.drawImage(bg4, bg4x, 3, canvas.width + 100, canvas.height);
+            ctx.drawImage(bg2, bg2x, 3, canvas.width + 5000, canvas.height);
+            ctx.drawImage(bg3, bg3x, 3, canvas.width + 5000, canvas.height + 750);
+
+
+            // Move the background layers at different speeds
+            bg1x -= 1;
+            bg2x -= 2;
+            bg3x -= 3;
+            bg4x -= 1;
+
+            // Check if the background has scrolled off the canvas
+            if (bg1x <= -canvas.width) {
+                bg1x = 0;
+            }
+            if (bg2x <= -canvas.width) {
+                bg2x = 0;
+            }
+            if (bg3x <= -canvas.width) {
+                bg3x = 0;
+            }
+            if (bg4x <= -canvas.width) {
+                bg4x = 0;
+            }
+        }
+
+        //player image work in progress
+        var dinoImg1 = new Image();
+        dinoImg1.src = "images/left.png"
+        var honse2 = new Image();
+        honse2.src = "images/player.png"
+
+
+
+
+        // Create a player object
+        var player = {
+            x: 70,
+            y: canvas.height - 50,
+            width: 50,
+            height: 50,
+            color: "black",
+            speed: 5,
+            gravity: .7,
+            lives: 3,
+            jump_speed: 130,
+            jumping: false,
+            max_jump_height: 200,
+        };
+        // Create an enemy object
+        var enemy = {
+            x: canvas.width - 50,
+            y: canvas.height - 50,
+            width: 50,
+            height: 50,
+            color: "#046616",
+            speed: 5
+        }
+
+
+
+        // Function to check for game over
+
+
+        // Function to update player lives
+        function updateLives(lives) {
+            player.lives = lives;
+            checkGameOver();
+        }
+
+        function update() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBackground()
+
+            // Draw the player
+            var honse = new Image()
+            honse.src = "images/player.png"
+            honse.width = 10 + "px";
+            ctx.drawImage(honse, player.x, player.y - 50, 400, 100)
+
+            //ctx.fillStyle = player.color;
+            //ctx.fillRect(player.x, player.y, player.width, player.height);
+
+            // Draw the enemy
+            var dinoImg2 = new Image()
+            dinoImg2.src = "images/left.png"
+            dinoImg2.width = 10 + "px";
+            ctx.drawImage(dinoImg2, enemy.x, enemy.y - 50, 400, 100)
+
+            //ctx.fillStyle = enemy.color;
+            //ctx.fillRect(enemy.x + 70, enemy.y, enemy.width, enemy.height);
+
+            // Move the enemy to the left
+            enemy.x -= enemy.speed;
+
+            if (player.y >= 750) {
+                player.y = 749
+            }
+            if (player.x <= 1) {
+                player.x = 2
+            }
+            // Apply gravity to player
+            player.y += player.gravity;
+
+            // Move the player based on key input
+            document.onkeydown = function (e) {
+                switch (e.keyCode) {
+                    //case 37: // Left arrow
+                    // player.x -= player.speed;
+                    // break;
+                    case 38: // Up arrow
+                        if (!player.jumping) {
+                            player.y -= player.jump_speed; // subtract the jump speed to move the player upward
+                            player.jumping = true;
+                        }
+                    //case 39: // Right arrow
+                    // player.x += player.speed;
+                    // break;
+                    //case 40: // Down arrow
+                    // player.y += player.speed;
+                    //break;
+                }
+            }
+            if (player.jumping) {
+                if (player.y > player.max_jump_height) {
+                    player.y += player.gravity;
+                }
+                if (player.y >= canvas.height - player.height) {
+                    player.jumping = false;
+                }
+            }
+         
+            function gameOver() {
+                if (player.lives <= 0) {
+                    var dinoImg3 = new Image()
+                    dinoImg3.src = "images/front.png"
+                    ctx.drawImage(dinoImg3, -600, 20, 3200, 2000)
+                    ctx.filter = 'grayscale(1)'
+                    player.y = - 500
+                    player.x = -500
+                    
+                }
+            }
+
+            gameOver()
+        }
+        // Check for collision between player and enemies
+        function enemyCollision() {
+            if (player.x > enemy.x && player.x < enemy.x + enemy.width && player.y > enemy.y && player.y < enemy.y + enemy.height) {
+                console.log('hit');
+                player.lives -= 4
+                console.log(player.lives)
+                enemy.y = -100
+                enemy.x = -500
+
+            }
+        }
+        
+        canvas.style.border = "thick solid black"
+
+        setInterval(enemyCollision, 20)
+
+        // Call update function every 20 milliseconds
+        setInterval(update, 20);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<style>
+    body {
+        background-image: url("images/mart.png");
+        background-size: 100%;
+        text-align: center;
+    }
+</style>
+
+<head>
+    <title>PokéMart</title>
+</head>
+
+<body>
+    <h1>PokéMart</h1>
+    <p>Poké Balls: <span id="pokeballs">0</span></p>
+    <button onclick="addCookie()" style="margin: auto;"><img src="images/original.png" width="30" height="30"></button>
+    <br><br>
+    <h2>Shop</h2>
+    <button id="upgrade1" onclick="buyUpgrade(1)" style="margin: auto;">Great Ball - Cost: 10<img src="images/great.png"
+            width="30" height="30"></button><br><br>
+    <button id="upgrade2" onclick="buyUpgrade(2)" style="margin: auto;">Ultra Ball - Cost: 25<img src="images/ultra.png"
+            width="50" height="30"></button><br><br>
+    <button id="upgrade3" onclick="buyUpgrade(3)" style="margin: auto;">Quick Ball - Cost: 50<img src="images/quick.png"
+            width="40" height="30"></button><br><br>
+    <button id="upgrade4" onclick="buyUpgrade(4)" style="margin: auto;">Luxury Ball - Cost: 250<img
+            src="images/luxury.png" width="30" height="30"></button>
+    <script>
+        var pokeballs = 0;
+        var upgrade1 = false;
+        var upgrade2 = false;
+        var upgrade3 = false;
+        var upgrade4 = false;
+        var upgrade1Count = 0;
+        var upgrade2Count = 0;
+        var upgrade3Count = 0;
+        var upgrade4count = 0;
+
+        function addCookie() {
+            pokeballs++;
+            if (upgrade1Count > 0) {
+                pokeballs += 2 * upgrade1Count;
+            }
+            if (upgrade2Count > 0) {
+                pokeballs += 5 * upgrade2Count;
+            }
+            if (upgrade3Count > 0) {
+                pokeballs += 10 * upgrade3Count;
+            }
+            if (upgrade4count > 0) {
+                pokeballs += 25 * upgrade4count;
+            }
+            document.getElementById("pokeballs").innerHTML = pokeballs;
+        }
+
+        function buyUpgrade(upgrade) {
+            if (upgrade === 1 && pokeballs >= 10) {
+                upgrade1 = true;
+                pokeballs -= 10;
+            } else if (upgrade === 2 && pokeballs >= 25) {
+                upgrade2 = true;
+                pokeballs -= 25;
+            } else if (upgrade === 3 && pokeballs >= 50) {
+                upgrade3 = true;
+                pokeballs -= 50;
+            } else if (upgrade === 4 && pokeballs >= 250) {
+                upgrade4 = true;
+                pokeballs -= 250;
+            }
+            document.getElementById("pokeballs").innerHTML = pokeballs;
+        }
+        function buyUpgrade(upgrade) {
+            if (upgrade === 1 && pokeballs >= 10) {
+                upgrade1Count++;
+                pokeballs -= 10;
+            } else if (upgrade === 2 && pokeballs >= 25) {
+                upgrade2Count++;
+                pokeballs -= 25;
+            } else if (upgrade === 3 && pokeballs >= 50) {
+                upgrade3Count++;
+                pokeballs -= 50;
+            } else if (upgrade === 4 && pokeballs >= 250) {
+                upgrade4count++;
+                pokeballs -= 250;
+            }
+            document.getElementById("pokeballs").innerHTML = pokeballs;
+        }
+    </script>
+</body>
+
+</html>

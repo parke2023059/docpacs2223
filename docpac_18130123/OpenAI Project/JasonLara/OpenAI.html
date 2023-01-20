@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Clicker Game</title>
+    <script type="text/javascript">
+        // set initial score to 0
+        var score = 0;
+
+        // function to randomly show and hide button
+        function toggleButton() {
+            var button = document.getElementById("clickButton");
+            if (button.style.display === "none") {
+                button.style.display = "block";
+            } else {
+                button.style.display = "none";
+            }
+        }
+
+        // function to increase score and display on screen
+        function increaseScore() {
+            score++;
+            document.getElementById("score").innerHTML = "Score: " + score;
+        }
+
+        // call toggleButton function every 500 milliseconds
+        setInterval(toggleButton, 500);
+    </script>
+</head>
+<body>
+    <h1>Button Clicker Game</h1>
+    <button id="clickButton" onclick="increaseScore()">Click Me</button>
+    <p id="score">Score: 0</p>
+</body>
+</html>

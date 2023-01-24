@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 9-1</title>
+
+<script type="text/javascript">
+function changeButton()
+{
+  if(document.getElementById('radiobuttonWebdev').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonWebdev').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Web Developer!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonGovernment').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonGovernment').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Uncle Sam!";
+	alert("Hello " + header);
+  }
+  if (document.getElementById("radiobuttonw3Schools").checked === true) {
+    radioButton = document.getElementById("radiobuttonw3Schools").value;
+    var header = document.getElementById("radiobuttonWebdev").value.innerHTML = "Dev Student!";
+    alert("Hello " + header);
+  }
+  if (document.getElementById("radiobuttonGamepadAPI").checked === true) {
+    radioButton = document.getElementById("radiobuttonGamepadAPI").value;
+    var header = document.getElementById("radiobuttonWebdev").value.innerHTML = "Game Developer!";
+    alert("Hello " + header);
+  }
+  if (document.getElementById("radiobuttonJSONValidator").checked === true) {
+    radioButton = document.getElementById("radiobuttonJSONValidator").value;
+    var header = document.getElementById("radiobuttonWebdev").value.innerHTML = "Database Manager!";
+    alert("Hello " + header);
+  }
+  getTest();
+}
+</script>
+</head>
+
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<form>
+<p>Please select your favorite type of Web site:</p>
+<input id="radiobuttonWebdev" type="radio" name="group1" value="Web_Development" checked>Web Development</input><br />
+<input id="radiobuttonGovernment" type="radio" name="group1" value="Government">U.S. Government</input><br />
+<input id="radiobuttonw3Schools" type="radio" name="group1" value="w3Schools">Development/Code Hub</input><br />
+<input id="radiobuttonGamepadAPI" type="radio" name="group1" value="GamepadAPI">Gamepad API</input><br />
+<input id="radiobuttonJSONValidator" type="radio" name="group1" value="JSONValidator">JSON Validator</input><br />
+
+
+<script type="text/javascript">
+function getTest()
+{
+  document.write("<h3>CIW JavaScript Specialist</h3>");
+  document.write("<hr />");
+
+  if(radioButton == "Web_Development")
+  {
+	document.write("<p>Here's a great site for Web developers:</p><a href=http://www.CIWcertified.com/>CIW Certified</a>");
+  }
+	
+  if(radioButton == "Government")
+  {
+	document.write("<p>Here's a great site if you're interested in U.S. government:</p><a href=http://www.whitehouse.gov/>The White House</a>");
+  }
+
+  if (radioButton == "w3Schools") {
+    document.write("<p>Here's a great site if you need to reference code or learn specific functions:</p><a href=http://www.w3schools.com/>w3Schools</a>");
+  }
+
+  if (radioButton == "GamepadAPI") {
+    document.write("<p>Here's a great site that tells you how to use a JavaScript Gamepad API:</p><a href=http://www.javascripture.com/Gamepad>Gamepad API</a>");
+  }
+
+  if (radioButton == "JSONValidator") {
+    document.write("<p>Here's a great site that checks if your JSON code is valid or not:</p><a href=http://www.codebeautify.org/jsonvalidator>JSON Validator</a>");
+  }
+}
+</script>
+
+<p>
+<input type="button" onclick="changeButton()" value="Click Here" />
+</p>
+</form>
+
+</body>
+</html>

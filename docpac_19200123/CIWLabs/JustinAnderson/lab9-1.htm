@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 9-1</title>
+
+<script type="text/javascript">
+//<!--
+function changeButton()
+{
+  if(document.getElementById('radiobuttonWebdev').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonWebdev').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Web Developer!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonGovernment').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonGovernment').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Uncle Sam!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonRuneScape').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonRuneScape').value;
+	var header = document.getElementById('radiobuttonRuneScape').value.innerHTML = "RuneScape Player";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonRuneScape').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonRuneScape').value;
+	var header = document.getElementById('radiobuttonRuneScape').value.innerHTML = "RuneScape Player";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonWarHammer').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonWarHammer').value;
+	var header = document.getElementById('radiobuttonWarHammer').value.innerHTML = "WarHammer Player";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttongithub').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttongithub').value;
+	var header = document.getElementById('radiobuttongithub').value.innerHTML = "GitHub User";
+	alert("Hello " + header);
+  }
+  getTest();
+}
+//-->
+</script>
+</head>
+
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<form>
+<p>Please select your favorite type of Web site:</p>
+<input id="radiobuttonWebdev" type="radio" name="group1" value="Web_Development" checked>Web Development</input><br />
+<input id="radiobuttonGovernment" type="radio" name="group1" value="Government">U.S. Government</input><br />
+<input id="radiobuttonRuneScape" type="radio" name="group1" value="RuneScape">RuneScape</input><br />
+<input id="radiobuttonWarHammer" type="radio" name="group1" value="WarHammer">WarHammer</input><br />
+<input id="radiobuttongithub" type="radio" name="group1" value="github">GitHub</input><br />
+
+
+<script type="text/javascript">
+//<!--
+function getTest()
+{
+  document.write("<h3>CIW JavaScript Specialist</h3>");
+  document.write("<hr />");
+
+  if(radioButton == "Web_Development")
+  {
+	document.write("<p>Here's a great site for Web developers:</p><a href=http://www.CIWcertified.com/>CIW Certified</a>");
+  }
+	
+  if(radioButton == "Government")
+  {
+	document.write("<p>Here's a great site if you're interested in U.S. government:</p><a href=http://www.whitehouse.gov/>The White House</a>");
+  }
+
+  if(radioButton == "RuneScape")
+  {
+	document.write("<p>Here's a great site if you're interested in RuneScape:</p><a href=http://www.runescape.com/>RuneScape</a>");
+  }
+
+  if(radioButton == "WarHammer")
+  {
+	document.write("<p>Here's a great site if you're interested in WarHammer:</p><a href=https://warhammer40000.com/>WarHammer</a>");
+  }
+
+  if(radioButton == "github")
+  {
+	document.write("<p>Here's a great site if you're interested in github:</p><a href=https://github.com/>github</a>");
+  }
+}
+//-->
+</script>
+
+<p>
+<input type="button" onclick="changeButton()" value="Click Here" />
+</p>
+</form>
+
+</body>
+</html>

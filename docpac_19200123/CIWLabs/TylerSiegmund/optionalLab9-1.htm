@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title class="title1">Optional Lab 9-1</title>
+</head>
+
+<body>
+<h3 class="head3">CIW JavaScript Specialist</h3>
+ <div class="div1" id="div1" name="div1">
+   <p class="p1" id="p1">This is a sample webpage.</p>
+ </div>
+</body>
+
+<script>
+
+  document.getElementById("p1").innerHTML = "Destroyed"
+  const newTxt = document.createTextNode("lol")
+  const div1 = document.getElementById("div1")
+
+  div1.appendChild(newTxt)
+  div1.setAttribute("name", "lol")
+
+  document.getElementById("p1").style.color = "blue"
+</script>
+
+</html>

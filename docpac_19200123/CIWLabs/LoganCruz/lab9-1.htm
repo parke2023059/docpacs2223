@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 9-1</title>
+
+<script type="text/javascript">
+
+function changeButton()
+{
+  if(document.getElementById('radiobuttonWebdev').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonWebdev').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Web Developer!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonGovernment').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonGovernment').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Uncle Sam!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonShadowKeepers').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonShadowKeepers').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Fellow person of the Empire";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radionuttonCustodes').checked === true)
+  {
+	radioButton = document.getElementById('radionuttonCustodes').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Doomed Fellow";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonMarines').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonMarines').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Fellow Solider";
+	alert("Hello " + header);
+  }
+  getTest();
+}
+</script>
+</head>
+
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<form>
+<p>Please select your favorite type of Web site:</p>
+<input id="radiobuttonWebdev" type="radio" name="group1" value="Web_Development" checked>Web Development</input><br />
+<input id="radiobuttonGovernment" type="radio" name="group1" value="Government">U.S. Government</input><br />
+<input id="radiobuttonShadowKeepers" type="radio" name="group1" value="ShadowKeepers">ShadowKeepers</input><br />
+<input id="radionuttonCustodes" type="radio" name="group1" value="Custodes">Custodes</input><br />
+<input id="radiobuttonMarines" type="radio" name="group1" value="Marines">Marines</input><br />
+
+
+<script type="text/javascript">
+
+function getTest()
+{
+  document.write("<h3>CIW JavaScript Specialist</h3>");
+  document.write("<hr />");
+
+  if(radioButton == "Web_Development")
+  {
+	document.write("<p>Here's a great site for Web developers:</p><a href=http://www.CIWcertified.com/>CIW Certified</a>");
+  }
+	
+  if(radioButton == "Government")
+  {
+	document.write("<p>Here's a great site if you're interested in U.S. government:</p><a href=http://www.whitehouse.gov/>The White House</a>");
+  }
+  if (radioButton == "ShadowKeepers"){
+    document.write("<a href =https://warhammer40k.fandom.com/wiki/Shadowkeepers#Role>ShadowKeepers</a>")
+  }
+  if(radioButton =="Custodes"){
+    document.write("<a href =https://warhammer40k.fandom.com/wiki/Adeptus_Custodes> Custodes</a>")
+  }
+  if (radioButton == "Marines"){
+    document.write("<a href =https://warhammer40k.fandom.com/wiki/Space_Marines> Space Marines</a>")
+  }
+}
+
+</script>
+
+<p>
+<input type="button" onclick="changeButton()" value="Click Here" />
+</p>
+</form>
+
+</body>
+</html>

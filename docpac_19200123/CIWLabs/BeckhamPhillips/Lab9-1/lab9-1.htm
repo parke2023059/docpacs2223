@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 9-1</title>
+
+<script type="text/javascript">
+
+function changeButton()
+{
+  if(document.getElementById('radiobuttonWebdev').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonWebdev').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Web Developer!";
+	alert("Hello " + header);
+  }
+  if(document.getElementById('radiobuttonGovernment').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonGovernment').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Uncle Sam!";
+	alert("Hello " + header);
+  }
+
+  if(document.getElementById('radiobutton3dTetris').checked === true)
+  {
+	radioButton = document.getElementById('radiobutton3dTetris').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Tootris!";
+	alert("Hello " + header);
+  }
+
+  if(document.getElementById('radiobuttonstudy').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonstudy').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "STUDY TIME!";
+	alert("Hello " + header);
+  }
+
+  if(document.getElementById('radiobuttonformbar').checked === true)
+  {
+	radioButton = document.getElementById('radiobuttonformbar').value;
+	var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "MAX GAMER!";
+	alert("Hello " + header);
+  }
+
+  getTest();
+}
+
+</script>
+</head>
+
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<form>
+<p>Please select your favorite type of Web site:</p>
+<input id="radiobuttonWebdev" type="radio" name="group1" value="Web_Development" checked>Web Development</input><br />
+<input id="radiobuttonGovernment" type="radio" name="group1" value="Government">U.S. Government</input><br />
+<input id="radiobutton3dTetris" type="radio" name="group1" value="3D Tetris">Tetris</input><br />
+<input id="radiobuttonstudy" type="radio" name="group1" value="Study Resources">Study Resources</input><br />
+<input id="radiobuttonformbar" type="radio" name="group1" value="Formbar">Formbar</input><br />
+
+
+<script type="text/javascript">
+
+function getTest()
+{
+  document.write("<h3>CIW JavaScript Specialist</h3>");
+  document.write("<hr />");
+
+  if(radioButton == "Web_Development")
+  {
+	document.write("<p>Here's a great site for Web developers:</p><a href=http://www.CIWcertified.com/>CIW Certified</a>");
+  }
+	
+  if(radioButton == "Government")
+  {
+	document.write("<p>Here's a great site if you're interested in U.S. government:</p><a href=http://www.whitehouse.gov/>The White House</a>");
+  }
+
+  if(radioButton == "3D Tetris")
+  {
+	document.write("<p>Here's a great site if you're interested in being terrified:</p><a href=https://www.ebhasin.com/games/Tetris3D/index.html/>3dTetris</a>");
+  }
+
+  if(radioButton == "Study Resources")
+  {
+	document.write("<p>Here's a great site if you wanna study:</p><a href=https://www.youtube.com/watch?v=xvFZjo5PgG0>Study Resources</a>");
+  }
+
+  if(radioButton == "Formbar")
+  {
+	document.write("<p>Here's a great site if you're interested in being a max gamer:</p><a href=http://192.168.10.69:420/login>Formbar (Now with 20% more uranium)</a>");
+  }
+}
+
+</script>
+
+<p>
+<input type="button" onclick="changeButton()" value="Click Here" />
+</p>
+</form>
+
+</body>
+</html>

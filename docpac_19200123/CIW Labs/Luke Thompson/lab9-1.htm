@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Lab 9-1</title>
+
+  <script type="text/javascript">
+
+    function changeButton() {
+      if (document.getElementById('radiobuttonWebdev').checked === true) {
+        radioButton = document.getElementById('radiobuttonWebdev').value;
+        var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Web Developer!";
+        alert("Hello " + header);
+      }
+      if (document.getElementById('radiobuttonGovernment').checked === true) {
+        radioButton = document.getElementById('radiobuttonGovernment').value;
+        var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Uncle Sam!";
+        alert("Hello " + header);
+      }
+      if (document.getElementById('radiobuttonYoutube').checked === true) {
+        radioButton = document.getElementById('radiobuttonYoutube').value;
+        var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Hello, fellow youtuber.";
+        alert("Hello " + header);
+      }
+      if (document.getElementById('radiobuttonCodecademy').checked === true) {
+        radioButton = document.getElementById('radiobuttonCodecademy').value;
+        var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Welcome to programming.";
+        alert("Hello " + header);
+      }
+      if (document.getElementById('radiobuttonuCertify').checked === true) {
+        radioButton = document.getElementById('radiobuttonuCertify').value;
+        var header = document.getElementById('radiobuttonWebdev').value.innerHTML = "Welcome to programming.";
+        alert("Hello " + header);
+      }
+      getTest();
+    }
+
+  </script>
+</head>
+
+<body>
+  <h3>CIW JavaScript Specialist</h3>
+  <hr />
+  <form>
+    <p>Please select your favorite type of Web site:</p>
+    <input id="radiobuttonWebdev" type="radio" name="group1" value="Web_Development" checked>Web
+    Development</input><br />
+    <input id="radiobuttonGovernment" type="radio" name="group1" value="Government">U.S. Government</input><br />
+    <input id="radiobuttonYoutube" type="radio" name="group1" value="Youtube">Youtuber</input><br />
+    <input id="radiobuttonCodecademy" type="radio" name="group1" value="Codecademy">Programmer via Codecademy</input><br />
+    <input id="radiobuttonuCertify" type="radio" name="group1" value="uCertify">Programmer via uCertify</input><br />
+
+
+    <script type="text/javascript">
+
+      function getTest() {
+        document.write("<h3>CIW JavaScript Specialist</h3>");
+        document.write("<hr />");
+
+        if (radioButton == "Web_Development") {
+          document.write("<p>Here's a great site for Web developers:</p><a href=http://www.CIWcertified.com/>CIW Certified</a>");
+        }
+
+        if (radioButton == "Government") {
+          document.write("<p>Here's a great site if you're interested in U.S. government:</p><a href=http://www.whitehouse.gov/>The White House</a>");
+        }
+        if (radioButton == "Youtube") {
+          document.write("<p>Here's a great site if you're interested in making Youtube videos:</p><a href=https://www.youtube.com/>Youtube</a>");
+        }
+        if (radioButton == "Codecademy") {
+          document.write("<p>Here's a great site if you're interested in coding on Codecademy:</p><a href=https://www.codecademy.com/catalog>Codecademy</a>");
+        }
+        if (radioButton == "uCertify") {
+          document.write("<p>Here's a great site if you're interested in coding on uCertify:</p><a href=https://www.ucertify.com/>uCertify</a>");
+        }
+      }
+
+    </script>
+
+    <p>
+      <input type="button" onclick="changeButton()" value="Click Here" />
+    </p>
+  </form>
+
+</body>
+
+</html>

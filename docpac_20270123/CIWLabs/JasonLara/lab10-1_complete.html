@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lab 10-1</title>
+
+</script>
+</head>
+<body>
+<h3>CIW JavaScript Specialist</h3>
+<hr />
+<form name="myForm" id="myForm">
+	<label><b>Name</b></label>
+    <input type="text" placeholder="FirstName" name="fname" onchange="alert(myForm.fname.value + ' great first name')" required>  
+	<input type="text" placeholder="LastName" name="lname" onchange="alert(myForm.lname.value + ' Bad last name')" required> <br />
+    <label > <b>Address</b></label> <textarea name="Tarea" id="" cols="30" rows="10"  oninput="alert('thank for the input')">Put in your address</textarea> <br>
+
+	 <label><b>EMail</b></label>
+	<input type="text" placeholder="Enter Email ID" name="email" onchange="alert(myForm.email.value + ' Nice Email.')" required> <br />
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="pwd" required maxLength="10" onchange="alert(myForm.pwd.value + ' you password have been shown lol')"> <br />
+	 <label><b>Gender</b></label>
+    <input type="radio" name="gen" value="male" onchange="alert(myForm.gen.value)">Male
+	<input type="radio" name="gen" value="female" onchange="alert(myForm.gen.value)" onreset="alert('female be gone')">Female <br />
+    <input type="submit" onclick="alert('You hit the submit button')">
+    <input type="reset" onclick="alert('bye bye progress')">
+</form>
+</body>
+</html>

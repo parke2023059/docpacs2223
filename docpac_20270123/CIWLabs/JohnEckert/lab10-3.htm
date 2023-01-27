@@ -9,15 +9,14 @@
 
   function isSelected(form) {
     var len = form.mySelect.length;
-  
-// Create for loop
-  
-  
-  
-  
-  
-  } 
+ 
+ // Create for loop
 
+  for(var i = 0; i < len; i++) {
+    if(form.mySelect.options[i].selected)
+      alert("Value: " + form.mySelect.options[i].value);
+  }
+  } 
 //-->
 </script>
 </head>

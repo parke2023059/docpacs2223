@@ -28,7 +28,7 @@
 
 <!-- Add onchange event handler -->
 
-<select name="mySelect">
+<select name="mySelect" onchange="isSelected(this.form); this.selectedIndex = 0;">
 <option>Select an item</option>
 <option value="1">First option</option>
 <option value="2">Second option</option>

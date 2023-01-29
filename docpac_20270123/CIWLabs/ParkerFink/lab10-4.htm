@@ -13,9 +13,13 @@
   
 // Create for loop
   
-  for(let i = 0; i < len; i++){
-    alert("THe suk")
+for (let i = 0; i < len; i++) {
+    if(form.mySelect.options[i].selected){
+      theSelections += form.mySelect.options[i].text + "\n"
+    }
+    
   }
+alert(theSelections)  
   
   
   // Display selections

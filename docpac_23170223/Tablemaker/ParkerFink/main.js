@@ -1,6 +1,7 @@
-const { text } = require('express')
 const express = require('express')
 const app = express()
+
+let port = 1300
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended: true}))
@@ -35,6 +36,6 @@ app.post('/', function(req,res){
 
 
 
-app.listen(1300, function(){
-    console.log("Server up")
+app.listen(port, function(){
+    console.log(`Server Running on PORT: ${port}`)
 })

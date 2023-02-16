@@ -8,12 +8,14 @@ app.use(express.urlencoded({extended: true}))
 
 app.get('/', function(req,res){
     res.render('tableEntry.ejs', {
-        alert: ""
+        alert: "",
+        newTable: ""
     })
 })
 
-app.post('/', function(req,res){
-    let textArea = req.body.text_area
+
+app.get('/tablemaker', function(req,res){
+    
     if (textArea == ""){
         res.render('tableEntry.ejs', {
             alert: "Must Fill Out Form"
@@ -21,15 +23,30 @@ app.post('/', function(req,res){
     } else {
         let newTable = []
         let splitted = textArea.split('\r\n')
-        splitted.forEach(element => {
-            newTable.push(element.split(', ')
-        )});
-        
-        console.table(newTable)
-        res.redirect('/')
+        splitted.forEach(function(element){
+            newTable.push(element.split(','))
+           
+        })
 
-    }
+      
+
+        res.render('tableMaker.ejs', {
+            alert: "", 
+            newTable : newTable
+        })
+        console.table(newTable)
 })
+
+
+
+
+
+
+app.post('/', function(req,res){
+    let textArea = req.body.text_area
+        res.redirect('/tablemaker')
+        
+    })
 
 
 

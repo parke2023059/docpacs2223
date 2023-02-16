@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table viewer</title>
+</head>
+<body>
+    <table style="border: thick solid royalblue;padding: 2px;">
+        <tbody>
+            <% for (let i=0;i<Data.length;i++){ %>
+                <tr>
+                   <% for (let e=0;e<Data[i].length;e++){ %> 
+                    <td style ="border: thick double snow; padding: 10px;">
+                        <%= Data[i][e] %>
+
+                    </td>
+                    <% } %>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

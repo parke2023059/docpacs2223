@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Maker</title>
+</head>
+<style>
+    table, tr, td{
+        border: 3px;
+        border-style: solid;
+        border-collapse: collapse;
+    }   
+</style>
+<body>
+    
+
+   
+
+
+
+    <table id="mainTable">
+
+    </table>
+
+    
+
+</body>
+<script>
+    //var table = document.getElementById("myTable")
+    //var row = table.insertRow(0)
+    //var row2 = table.insertRow(1)
+
+    //var cell1 = row.insertCell(0)
+    //var cell2 = row.insertCell(1)
+    //var cell3 = row2.insertCell(0)
+
+    //cell1.innerHTML = "Test Data"
+    //cell2.innerHTML = "Test Data 2"
+    //cell3.innerHTML = "Test Data 3"
+
+
+
+
+   
+   var mainTable = document.getElementById("mainTable")
+   var newTable = <%- JSON.stringify(mainTable) %>
+   for (const i of newTable) {
+     
+     if (i != null) {
+        let tr = mainTable.insertRow()
+        for (const col of i) {
+             let td = tr.insertCell()
+              td.innerHTML = col
+            }
+            }
+        }
+    
+        
+        
+        
+
+</script>
+</html>

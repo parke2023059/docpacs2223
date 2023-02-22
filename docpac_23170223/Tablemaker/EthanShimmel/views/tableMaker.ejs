@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Maker</title>
+</head>
+<style>
+    table, th, td {
+      border:1px solid black;
+    }
+    td {
+        padding: 5px;
+    }
+</style>
+<body>
+    <table>
+    <% for (let i=0; i < data.length; i++) {%>
+        <tr>
+        <% for (let x=0; x < data[i].length; x++) {%>
+                <td><%-data[i][x]%></td>
+        <% }%>
+        </tr>
+    <% }%>
+    </table>
+    <br>
+    <a href="/">Return</a>
+</body>
+</html>

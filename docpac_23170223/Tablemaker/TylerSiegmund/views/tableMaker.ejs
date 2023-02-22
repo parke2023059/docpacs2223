@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            table {
+                border-collapse: collapse;
+            }
+            table td {
+                border: 1px solid #000;
+                padding: 10px;
+            }
+
+            button {
+                margin-top: 10px;
+            }
+        </style>
+    </head> 
+
+    <body>
+        <table id="table"></table>
+
+        <script>
+
+            table = document.getElementById('table')
+
+            var newTable = <%- JSON.stringify(newTable) %>
+
+            if (newTable != " ") {
+                
+                for (const i of newTable) {
+                    if (i != null) {
+                        let tr = table.insertRow()
+                        for (const col of i) {
+                            let td = tr.insertCell()
+                            td.innerHTML = col
+                        }
+                    }
+                }
+            }
+            
+        </script>
+
+        <form action="/">
+            <button>Back To Home</button>
+        </form>
+    </body>
+</html>

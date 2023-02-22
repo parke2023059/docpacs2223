@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Maker</title>
+</head>
+
+<body>
+
+    <table style="width:25%; border: 2px solid black; padding: 3px">
+        <body>
+            <% for (let i = 0; i < Data.length; i++) { %>
+                <tr>
+                    <% for (let t = 0; t < Data[i].length; t++) { %>
+                        <td style="border: 1px solid gray; padding: 2px">
+                            <% Data[i][t] %>
+                        </td>
+                    <% } %>
+                </tr>
+            <% } %>
+        </body>
+    </table>
+
+    <br>
+
+    <form action="/home" method="post">
+        <button type="submit" value="Submit">Go to home page</button>
+    </form>
+
+</body>
+
+</html>

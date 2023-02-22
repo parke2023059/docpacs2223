@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table style="border: 1px solid black;"><% for (let i = 0; i< data.length;i++){%> <tr style="border: 1px solid black;"> <% for (let index in data[i].split(',')){ %>
+        <th style="border: 1px solid black;"><%= data[i].split(',')[index] %></th> <%}}%>
+    </tr></table>
+    <button onclick="window.location.href='/'">back</button>
+</body>
+<!-- <script> for (let index in data[0].split(',')</script> -->
+</html>

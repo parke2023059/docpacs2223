@@ -1,0 +1,26 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Table Maker</title>
+</head>
+
+<body>
+  <table style="border: solid">
+    <tbody style="border: solid">
+      <% for(let i=0; i < data.length; i++){%>
+        <tr style="border: solid">
+          <% for(let j=0; j < data[i].length; j++){%>
+            <td style="border: solid">
+              <%= data[i][j] %>
+            </td>
+            <%}%>
+        </tr>
+        <%}%>
+    </tbody>
+  </table> <br>
+  <form action="/" method="get"><button>Home</button> </form>
+</body>
+
+</html>

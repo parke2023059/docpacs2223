@@ -1,0 +1,4 @@
+1. The geolocation api will allow his to get his friend's locations
+2. It'll allow him to see their current placement, but he should use webscokets to update his serverside with the newest data. He will also need the google maps api to build the map.
+3. He can use the google maps api to do this too I believe
+4. He can store it in the sesssion data 

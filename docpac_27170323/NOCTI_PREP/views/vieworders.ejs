@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Orders</title>
+</head>
+
+<body>
+    <!-- Frontend NP2a -->
+    <a href="/">Create New Order</a>
+    <!-- Frontend NP2b -->
+    <table border="1">
+    <% for (order of orders) { %>
+        <tr>
+            <td colspan="7">
+                <%= order.name %>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7">
+                <%= order.address %>
+            </td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>Quantity</td>
+            <td>Unit Price</td>
+            <td>Profit</td>
+            <td>Retail Price</td>
+            <td>Subtotal</td>
+            <td>Sales Tax</td>
+        </tr>
+        <% for (item of order.items) { %>
+            <tr>
+                <td><%= item.name %></td>
+                <td><%= item.qty %></td>
+                <td>$<%= item.unitPrice %></td>
+                <td>$<%= item.profit %></td>
+                <td>$<%= item.retailPrice %></td>
+                <td>$<%= item.subtotal %></td>
+                <td>$<%= item.salesTax %></td>
+            </tr>
+        <% } %>
+        <tr>
+            <td>Shipping</td>
+            <td>Profit</td>
+            <td>Subtotal</td>
+            <td>Sales Tax</td>
+            <td colspan="3">Total</td>
+        </tr>
+        <tr>
+            <td>$<%= order.shipping %></td>
+            <td>$<%= order.profit %></td>
+            <td>$<%= order.subtotal %></td>
+            <td>$<%= order.salesTax %></td>
+            <td colspan="3">$<%= order.total %></td>
+        </tr>
+
+    <% } %>
+            
+    </table>
+    <!-- Frontend 2c -->
+    <% let units = 0; let profit = 0; %>
+    <% for (let order in orders) { %>
+        <% units += order.items.length; profit += order.profit; %>
+    <% } %>
+    Units sold: <%= units %>, Total Profit: <%= profit %>
+</body>
+
+</html>

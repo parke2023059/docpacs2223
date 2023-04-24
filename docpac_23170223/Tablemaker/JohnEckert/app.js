@@ -1,7 +1,5 @@
 // Setting up modules
-const {
-  table
-} = require('console')
+
 const express = require('express')
 const app = express()
 const port = 3000
@@ -18,22 +16,16 @@ app.get('/', (req, res) => {
 // if there is an error, loads the error page.
 app.post('/', (req, res) => {
   let table = req.body.table
+  if (table == "") {
+    res.render('tableEntry.ejs')
+  } else {
+    let tableSplit = table.split('\r\n')
+    tableSplit.forEach(element => {
+      console.table(tableSplit)
+    });
+  }
 })
 
-// Endpoint for the table itself. Takes the data and makes a table. If there's
-// an error, print a message on screen and redirect to the root endpoint.
-app.get('/make', (req, res) {
-  if (table == "") {
-    alert("Form empty")
-    res.redirect('/')
-  } else {
-    let newTable = []
-    let splitTable = table.split('\r\n')
-    splitTable.forEach(element => {
-      newTable.push(element.split(','))
-    });
-  };
-});
 // Prints the port the server is running from, and acts as a quick check
 // to see if the website has any bugs to start
 app.listen(port, () => {

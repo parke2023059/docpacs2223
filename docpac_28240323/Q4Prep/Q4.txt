@@ -1,0 +1,30 @@
+John Eckert, Tyler Siegmund
+
+<! Game Idea !>
+A civilization game based around prior empires and their growth, with random events drastically changing how you play.
+For example, the Persian empire will be available and focused around economic growth, while the Romans will be around military power.
+
+
+Each faction will have their own special units, alongside of global units.
+For example, Romans would gain access to gladiators and hoplites while Persians gain merchant ships early
+
+
+As well as special units, the factions will gain passive buffs others do not have.
+For example, Romans will do increased damage when outnumbered and Persians will have increased crop yield and event luck.
+
+
+
+<! Determined classes !>
+
+Beginning of game:
+	Neanderthals - increased strength, morons
+	Homo Habilis - Quicker access to tools, stronger tool paths
+	Homo Erectis - Domestication of wolves to help w/ hunting, better crop yields	
+
+Bronze Age:
+	Persians - Better trade routes and increased luck + yields // Low firepower
+	Romans - Increased firepower + combat strategy choices // Less job opportunity + yields + worse economy
+	Germans - Increased intelligence with quicker access to late game weaponry,  // Increased worldwide animosity
+	Britain - Defensively advanced with higher ranged damage, split path into the Americans // Bad early economy
+		Americans - Incredible firepower // Terrible economy
+		Britain (late) - Incredible defensive abilities // Great economy
